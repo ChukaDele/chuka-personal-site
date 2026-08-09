@@ -11,7 +11,19 @@ Current local result on 9 August 2026:
 
 ## Remote evidence
 
-The first isolated Cloudflare preview proved remote deployment and passed Major web preflight. It predates the current local changes and is not acceptance evidence for the current tree. The current revision must be pushed, redeployed and tested before this report can record browser acceptance.
+Revision `5642d8c` was pushed to `origin/atelier-v1` and deployed to the isolated Worker at `https://chuka-personal-site-atelier-v1.thebredge.workers.dev`. Major remote-web preflight passed for that Cloudflare URL and the GitHub repository.
+
+Browser checks completed against the remote preview:
+
+- 1280px desktop: full identity and value hierarchy visible; no horizontal overflow; no console errors.
+- 1024px tablet: single-column Practice composition; no horizontal overflow.
+- 768px tablet: mobile navigation active and folio sticky positioning reset.
+- 390px mobile: no horizontal overflow; folios in normal flow; navigation opened with 46px route targets; hero and first Work folio inspected visually.
+- Reduced motion at 390px: media query active, preloader absent, system nodes and Practice stages fully visible, no overflow.
+- Invalid route: real HTTP 404, useful routes visible, fragment-control state changes correctly.
+- Phase 2 shells, `robots.txt`, `sitemap.xml` and the social image all return HTTP 200.
+
+The expected browser console resource error for the deliberately requested 404 is not an application failure.
 
 ## Required browser matrix
 
