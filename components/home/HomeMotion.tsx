@@ -5,9 +5,14 @@ import { useEffect } from "react";
 export function HomeMotion() {
   useEffect(() => {
     let cancelled = false;
+    let started = false;
     let cleanup = () => {};
+    const eligibility = window.matchMedia("(min-width: 1100px) and (prefers-reduced-motion: no-preference)");
 
-    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([gsapModule, triggerModule]) => {
+    const start = () => {
+      if (!eligibility.matches || started) return;
+      started = true;
+      Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([gsapModule, triggerModule]) => {
       if (cancelled) return;
       const gsap = gsapModule.gsap;
       const ScrollTrigger = triggerModule.ScrollTrigger;
@@ -42,9 +47,13 @@ export function HomeMotion() {
       });
 
       cleanup = () => motionMedia.revert();
-    });
+      });
+    };
+    start();
+    eligibility.addEventListener("change", start);
     return () => {
       cancelled = true;
+      eligibility.removeEventListener("change", start);
       cleanup();
     };
   }, []);

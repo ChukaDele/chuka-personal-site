@@ -10,21 +10,21 @@ export function Preloader() {
       const immediateTimer = window.setTimeout(() => setVisible(false), 0);
       return () => window.clearTimeout(immediateTimer);
     }
-    sessionStorage.setItem("atelier-intro-seen", "true");
     let active = true;
     const finish = () => {
-      if (active) setVisible(false);
+      if (!active) return;
+      sessionStorage.setItem("atelier-intro-seen", "true");
+      setVisible(false);
     };
+    const minimum = new Promise<void>((resolve) => window.setTimeout(resolve, 1050));
+    const ready = document.readyState === "complete"
+      ? document.fonts.ready
+      : new Promise<void>((resolve) => window.addEventListener("load", () => resolve(), { once: true }));
+    Promise.all([minimum, ready]).then(finish);
     const timeout = window.setTimeout(finish, 1150);
-    if (document.readyState === "complete") {
-      document.fonts.ready.then(finish);
-    } else {
-      window.addEventListener("load", finish, { once: true });
-    }
     return () => {
       active = false;
       window.clearTimeout(timeout);
-      window.removeEventListener("load", finish);
     };
   }, []);
 
