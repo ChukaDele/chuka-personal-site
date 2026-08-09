@@ -39,7 +39,13 @@ const worker = {
       }, allowedWidths);
     }
 
-    return handler.fetch(request, env, ctx);
+    const response = await handler.fetch(request, env, ctx);
+    if (url.hostname.startsWith("chuka-personal-site-atelier-v1.")) {
+      const headers = new Headers(response.headers);
+      headers.set("X-Robots-Tag", "noindex, nofollow");
+      return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+    }
+    return response;
   },
 };
 

@@ -1,8 +1,6 @@
 export const navigation = [
   { label: "Work", href: "/#work" },
   { label: "Approach", href: "/#approach" },
-  { label: "Library", href: "/library" },
-  { label: "About", href: "/about" },
 ];
 
 export const socialLinks = {
@@ -18,7 +16,7 @@ export const selectedWork = [
     context: "Senior Operations Manager · Insurtech",
     headline: "Building more reliable operations inside a growing insurtech.",
     description:
-      "Work across company operations, people and process design. Detailed outcomes will be published only when they can be verified and shared responsibly.",
+      "The scope spans company operations, people systems and process design across a growing insurtech.",
     signals: ["Company operations", "Process design", "Cross-functional delivery"],
   },
   {

@@ -21,7 +21,7 @@ export default function Home() {
             <p className="hero-summary">I work out what needs to be built, design how it should operate, and connect the people, workflows, data and tools required to make it work in practice.</p>
             <div className="hero-actions">
               <a href="#work" className="button button-light">View selected work <span aria-hidden="true">↓</span></a>
-              <a href={socialLinks.linkedin} className="text-link" target="_blank" rel="noreferrer">Professional profile <span aria-hidden="true">↗</span></a>
+              <a href={socialLinks.linkedin} className="text-link" target="_blank" rel="noreferrer">View LinkedIn <span aria-hidden="true">↗</span></a>
             </div>
           </div>
           <div className="hero-system" aria-hidden="true">
@@ -100,12 +100,12 @@ export default function Home() {
 
       <section className="library-teaser">
         <div><p className="section-marker">04 / LIBRARY</p><h2>A library with <em>margin notes.</em></h2></div>
-        <div><p>Books, essays, papers, videos, talks, tools and courses will sit beside the ideas they changed, the disagreements they prompted and the work they informed.</p><a href="/library" className="text-link">See the library brief <span aria-hidden="true">↗</span></a></div>
+        <div><p>Books, essays, papers, videos, talks, tools and courses will sit beside the ideas they changed, the disagreements they prompted and the work they informed.</p></div>
       </section>
 
       <section className="about-teaser">
         <p className="section-marker">05 / ABOUT</p>
-        <div><h2>The breadth comes from the <em>work.</em></h2><p>I repeatedly work on situations that cross strategy, operations, product, people, data and growth. The point is not to collect disciplines. It is to use the ones a real operating problem requires.</p><a href="/about" className="text-link">Read the working biography <span aria-hidden="true">↗</span></a></div>
+        <div><h2>The breadth comes from the <em>work.</em></h2><p>I repeatedly work on situations that cross strategy, operations, product, people, data and growth. The point is not to collect disciplines. It is to use the ones a real operating problem requires.</p></div>
       </section>
 
       <footer className="correspondence">
@@ -114,11 +114,11 @@ export default function Home() {
         <div className="correspondence-copy">
           <p className="footer-overline">When the work crosses functions</p>
           <h2>Turn the pieces into a system people can <em>use.</em></h2>
-          <a href={socialLinks.linkedin} className="button button-light" target="_blank" rel="noreferrer">Start on LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href={socialLinks.linkedin} className="button button-light" target="_blank" rel="noreferrer">View LinkedIn <span aria-hidden="true">↗</span></a>
         </div>
         <div className="footer-meta">
           <span>Chuka Dele-Oyeleru · Strategy &amp; Operations</span>
-          <div><a href="/#work">Work</a><a href="/about">About</a><a href={socialLinks.instagram} target="_blank" rel="noreferrer">Instagram</a></div>
+          <div><a href="/#work">Work</a><a href="/#approach">Approach</a><a href={socialLinks.instagram} target="_blank" rel="noreferrer">Instagram</a></div>
           <span>© {new Date().getFullYear()}</span>
         </div>
       </footer>
