@@ -21,4 +21,6 @@ Albrecht Dürer, *Melencolia I*, 1514. The Metropolitan Museum of Art, object 33
 
 ## Current status
 
-The source upload reached Flow. Flow is awaiting its one-time upload-rights confirmation in the authenticated browser. The source is public domain. No generation should be recorded as accepted until the two outputs are downloaded and inspected frame by frame.
+The one-time upload-rights confirmation was completed for the public-domain source. Flow accepted the source, the 9:16 / two-output / Veo 3.1 Quality settings, and the locked prompt above. Its agent panel then routed the request into prompt coaching instead of a paid Veo job, while the direct paid-submit control remained unavailable. No credits were spent and no video was generated.
+
+Phase 1 therefore keeps the static source artwork and deterministic GSAP depth/light treatment. This is the safer delivery method because it preserves the engraving exactly, works without video, respects reduced motion, and avoids paying for an output that cannot yet be inspected against the acceptance contract. A future video attempt must start from this contract and must not be integrated unless both generated variants pass frame-by-frame source-integrity, loop, crop and transfer-size checks.

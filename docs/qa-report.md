@@ -2,16 +2,16 @@
 
 ## Deterministic gate
 
-Current local result on 9 August 2026:
+Current local result on 10 August 2026:
 
 - ESLint: pass.
 - Production vinext build: pass.
 - Rendered-route tests: 7 pass, including all Phase 2 shells and the bespoke 404.
-- Diff check: script added; must be rerun after the final asset and documentation changes.
+- Diff check: pass after the final documentation update.
 
 ## Remote evidence
 
-Revision `5642d8c` was pushed to `origin/atelier-v1` and deployed to the isolated Worker at `https://chuka-personal-site-atelier-v1.thebredge.workers.dev`. Major remote-web preflight passed for that Cloudflare URL and the GitHub repository.
+Revision `571e0b9465c53594a0e1caafa599fd3cd0d930ad` was pushed to `origin/atelier-v1` and deployed to the isolated Worker. The immutable version URL is `https://9d65b2d7-chuka-personal-site-atelier-v1.thebredge.workers.dev/`; it returned the same revision in `X-Deploy-SHA`. Major remote-web preflight passed for the Cloudflare preview and the GitHub repository.
 
 Browser checks completed against the remote preview:
 
@@ -22,8 +22,14 @@ Browser checks completed against the remote preview:
 - Reduced motion at 390px: media query active, preloader absent, system nodes and Practice stages fully visible, no overflow.
 - Invalid route: real HTTP 404, useful routes visible, fragment-control state changes correctly.
 - Phase 2 shells, `robots.txt`, `sitemap.xml` and the social image all return HTTP 200.
+- Desktop hero-to-Work handoff, Correspondence resolution and reverse-scroll restoration were verified on the immutable revision.
+- At 1024px, every non-animated hero and Practice state is fully resolved after load and after crossing down from the desktop animation breakpoint.
 
 The expected browser console resource error for the deliberately requested 404 is not an application failure.
+
+## Flow / Veo decision
+
+The public-domain Dürer source was accepted in Flow with the documented 9:16, two-output, Veo 3.1 Quality contract. Flow routed the request into prompt coaching and did not expose a valid paid Veo submission for that configured request. No credits were spent. Phase 1 retains the deterministic static artwork treatment; `docs/veo-generations.md` records the exact acceptance contract for a future retry.
 
 ## Required browser matrix
 
