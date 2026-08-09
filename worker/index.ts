@@ -4,6 +4,7 @@ import handler from "vinext/server/app-router-entry";
 
 interface Env {
   ASSETS: Fetcher;
+  DEPLOY_SHA?: string;
   IMAGES: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
@@ -40,12 +41,19 @@ const worker = {
     }
 
     const response = await handler.fetch(request, env, ctx);
-    if (url.hostname.startsWith("chuka-personal-site-atelier-v1.")) {
-      const headers = new Headers(response.headers);
-      headers.set("X-Robots-Tag", "noindex, nofollow");
-      return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+    const headers = new Headers(response.headers);
+    let headersChanged = false;
+    if (env.DEPLOY_SHA) {
+      headers.set("X-Deploy-SHA", env.DEPLOY_SHA);
+      headersChanged = true;
     }
-    return response;
+    if (url.hostname.startsWith("chuka-personal-site-atelier-v1.")) {
+      headers.set("X-Robots-Tag", "noindex, nofollow");
+      headersChanged = true;
+    }
+    return headersChanged
+      ? new Response(response.body, { status: response.status, statusText: response.statusText, headers })
+      : response;
   },
 };
 

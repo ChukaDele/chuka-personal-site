@@ -10,7 +10,7 @@ export function SiteNav({ inverse = false }: { inverse?: boolean }) {
       <div className="nav-links">
         {navigation.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
         <a href={socialLinks.linkedin} className="nav-profile" target="_blank" rel="noreferrer">
-          Professional profile <span aria-hidden="true">↗</span>
+          View LinkedIn <span aria-hidden="true">↗</span>
         </a>
       </div>
       <details className="nav-menu">
