@@ -1,16 +1,20 @@
-import Link from "next/link";
+import { SiteNav } from "./layout/SiteNav";
+import { socialLinks } from "../content/site";
 
 export function RouteShell({ title, index }: { title: string; index: string }) {
   return (
-    <main className="route-shell">
-      <nav className="route-nav" aria-label="Primary navigation">
-        <Link href="/" className="wordmark">CDO <span>/ Atelier</span></Link>
-        <Link href="/">Return home <span aria-hidden="true">↗</span></Link>
-      </nav>
+    <main className="route-shell" id="main-content">
+      <SiteNav />
       <section className="route-intro">
-        <p className="eyebrow">{index} / IN DEVELOPMENT</p>
-        <h1>{title}</h1>
-        <p>This folio is being prepared with the same care as the work it will contain.</p>
+        <p className="eyebrow">{index} / PHASE TWO</p>
+        <div className="route-copy">
+          <h1>{title}</h1>
+          <p>This page is intentionally incomplete. Verified material will replace this shell when it is ready to publish.</p>
+          <div className="route-actions">
+            <a href="/" className="button">Return home <span aria-hidden="true">↗</span></a>
+            <a href={socialLinks.linkedin} className="text-link" target="_blank" rel="noreferrer">Professional profile <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
       </section>
     </main>
   );

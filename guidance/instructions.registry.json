@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "scope": "repository"
+    }
+  ]
+}

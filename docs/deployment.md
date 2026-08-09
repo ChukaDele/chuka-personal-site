@@ -1,15 +1,25 @@
 # Deployment
 
-The production target is Cloudflare Workers. The current official Cloudflare guidance supports Vite applications through the Cloudflare Vite plugin and Workers static assets.
+## Targets
 
-## Release checklist
+- Repository: `https://github.com/ChukaDele/chuka-personal-site`
+- Working branch: `atelier-v1`
+- Preview Worker: `chuka-personal-site-atelier-v1`
+- Production branch: `main`
+- Production Worker: `chuka-personal-site`
 
-1. Authenticate the intended GitHub account and create the dedicated repository.
-2. Push `main`, then a working branch such as `atelier-v1`.
-3. Authenticate the intended Cloudflare account with Wrangler and create or connect the Worker.
-4. Connect the repository in Cloudflare Workers Builds. Set `main` as production and enable preview URLs for non-production branches.
-5. Run `npm run build` and `npm test` locally without a persistent server.
-6. Use the generated branch URL for browser QA. Never use a local browser URL.
-7. Promote accepted code through `main`, then open the returned `workers.dev` URL for production checks.
+Cloudflare uses the generated vinext Worker configuration at `dist/server/wrangler.json`. `npm run deploy:preview` publishes the isolated preview Worker. `npm run deploy` publishes production and must run only from an accepted `main` revision.
 
-No custom domain is assumed. A `workers.dev` URL is the safe Phase 1 production endpoint until the owner chooses a domain.
+## Release gate
+
+1. `npm run lint`
+2. `npm run test`
+3. `npm run diff-check`
+4. Push the exact working revision.
+5. Deploy that revision to the isolated Cloudflare preview Worker.
+6. Run `major web preflight` against the HTTPS Cloudflare preview and GitHub repository.
+7. Run responsive, keyboard, reduced-motion, reverse-scroll, network and console QA on the remote preview.
+8. Repair P0 and P1 findings and repeat the preview gate.
+9. Fast-forward `main`, publish the production Worker and verify the exact deployed SHA.
+
+A successful build or deploy log is not acceptance evidence. Browser behavior on the exact remote revision is required.

@@ -1,8 +1,19 @@
 # Motion system
 
-The animation grammar is reveal, examine, separate, organise and complete.
+Motion explains a change in state. It does not stage ordinary reading.
 
-- Hero: the Panini image moves very slightly as the construction grid resolves. This connects ambiguity to structure.
-- Sections: editorial content has one brief, scroll-triggered reveal. It is not a generic cascade.
-- Practice: static diagramming and drawn source art carry the message. The section stays readable without motion.
-- Reduced motion: all content remains visible. The resolved grid is shown immediately and transitions are effectively removed.
+## Signature systems
+
+1. Hero handoff: the fixed composition shifts from unresolved source material to an operating diagram, then hands the reader directly to Selected Work.
+2. Practice sequence: one desktop-only pinned sequence maps Observe, Define, Construct, Organise and Improve to named visual states.
+
+## Runtime contract
+
+- GSAP and ScrollTrigger load dynamically only after hydration.
+- `gsap.matchMedia()` owns desktop and reduced-motion composition changes.
+- `gsap.context()` owns selectors and inline transforms. Teardown uses `context.revert()` and `matchMedia.revert()`.
+- Pinning starts only at 1100px and above. Tablet and mobile use the complete static composition.
+- Reduced motion keeps every node and stage visible. It removes pinning, parallax and transformation.
+- Generated video, if accepted, is a shallow desktop media layer. It never owns text, navigation, focus, layout or the system diagram.
+
+The canonical owner for every animated state is listed in `docs/motion-ownership.md`.

@@ -23,6 +23,11 @@ const eslintConfig = defineConfig([
   jsxA11y.flatConfigs.recommended,
   next.configs["core-web-vitals"],
   {
+    rules: {
+      // vinext beta currently throws during Next Link prefetch setup on Workers.
+      // Plain anchors preserve navigation without the runtime error.
+      "@next/next/no-html-link-for-pages": "off",
+    },
     languageOptions: {
       globals: {
         ...globals.browser,

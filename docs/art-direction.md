@@ -1,17 +1,28 @@
 # Art direction
 
-## Concept
+## Direction
 
-The page is a contemporary digital atelier. Its Renaissance reference is about practice, observation, studies and construction. It is not a museum or a costume theme.
+The public site is a contemporary operating studio. “Atelier” is an internal design principle, not the candidate’s job title. The visual system combines an editorial register for ideas with a precise operating register for evidence, diagrams and actions.
 
-## System
+The homepage must still communicate, without imagery or motion:
 
-- Paper: warm bone, not cream luxury branding.
-- Ink: deep blue-black for text and structural fields.
-- Accent: ultramarine for construction lines. Oxide red marks selected folio numbers.
-- Display: Newsreader. It gives the page an editorial humanist voice without imitation historical lettering.
-- Functional: DM Sans. Notation: DM Mono.
+1. Chuka Dele-Oyeleru.
+2. Strategy & Operations.
+3. Ambiguous cross-functional work becomes a system teams can run and improve.
+4. Selected work and a professional profile are the primary routes.
 
-## Image treatment
+## Guardrails
 
-Panini's architectural interiors set the page's visual world. Colonna's drawing supports the method section. Images are cropped as material within a composition, never presented as a gallery wall. Full attribution lives in `content/artworks.ts`.
+- Current professional evidence is more prominent than historical imagery.
+- Only two historical works appear in Phase 1.
+- No faux paper distress, seals, Latin, decorative coordinates, pseudo-catalogue labels or period cosplay.
+- Historical images must have verified provenance, rights and a specific explanatory role.
+- Present-day diagrams are labelled as editorial interpretations when they are not source artefacts.
+- Work claims do not include invented metrics, outcomes or seniority.
+
+## Image sources
+
+- Hero: Albrecht Dürer, *Melencolia I*, 1514. It supports the theme of observation, tools, geometry and unresolved systems.
+- Practice: anonymous Italian architectural study, circa 1490–1510. It supports the move from loose observation to organised structure.
+
+Both works are public-domain Open Access objects from The Metropolitan Museum of Art. Full provenance and usage intent live in `content/artworks.ts`.

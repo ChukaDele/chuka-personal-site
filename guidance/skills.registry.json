@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "name": "remote-first-web-development",
+      "purpose": "Require GitHub and an HTTPS Cloudflare preview before browser QA."
+    },
+    {
+      "name": "human-blocker-orchestration",
+      "purpose": "Surface authentication and consent blockers in the visible in-app browser."
+    }
+  ]
+}

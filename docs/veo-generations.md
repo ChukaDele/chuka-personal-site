@@ -1,21 +1,24 @@
 # Google Flow / Veo generation record
 
-## Status
+## Delivery contract
 
-No generation was submitted. Google Flow is reachable in the available browser, but creation requires selecting one of two Google accounts. Selecting an account is an authentication and identity choice that requires owner action.
+- Placement: contained portrait artwork panel on the desktop hero, never behind the copy.
+- Mobile and reduced motion: static poster only.
+- Duration: 6–8 seconds, muted, loop-compatible, locked camera.
+- Preserve: every figure, face, hand, tool, inscription, line and object from Dürer’s source.
+- Permitted motion: restrained illumination change and extremely shallow spatial separation only.
+- Forbidden: figure movement, facial or hand motion, new objects, geometry changes, line drift, morphing, melting, particles, camera whip, invented text or audio.
+- Budget: generate two initial variants. Do not spend further credits unless one variant is close enough to repair through prompting.
+- Acceptance: source integrity, unobtrusive loop, no visible synthesis artefacts, useful crop, and compressed delivery within 1.5 MB desktop.
 
-## Proposed hero loop after account selection
+## Source
 
-- Asset: `hero-atelier.webm`, `hero-atelier.mp4`, `hero-atelier-poster.webp`.
-- Purpose: give Panini's *Ancient Rome* a slow, spatial presence behind the hero.
-- Source: The Met Open Access, object 437244.
-- Method: image-to-video in Google Flow using the current Veo model available to the authenticated account.
-- Prompt: `Preserve this public-domain painting exactly. A six-second locked composition with only a nearly imperceptible slow camera drift, subtle depth between foreground sculpture and the gallery, and a restrained change in daylight. No talking, no facial movement, no hand movement, no object morphing, no melting, no new objects, no text, no audio.`
-- Acceptance: source integrity, no AI movement artefacts, no distracting motion, quiet loop, web payload suitable after H.264/WebM optimisation.
+Albrecht Dürer, *Melencolia I*, 1514. The Metropolitan Museum of Art, object 336228, Open Access and public domain.
 
-## Proposed practice loop after account selection
+## Reverse-engineered prompt
 
-- Asset: `practice-study.webm`, `practice-study.mp4`, `practice-study-poster.webp`.
-- Purpose: add a barely moving paper and graphite texture behind the deterministic method composition.
-- Source: The Met Open Access, object 399581.
-- Prompt: `Preserve the architectural pen drawing. Make a five-second still-life study with barely visible paper texture and slow illumination shift only. Keep all linework stable. No drawings appearing, no new ink, no morphing, no camera whip, no audio.`
+> Create a restrained 6-second portrait image-to-video study from this exact public-domain engraving. Keep the camera completely locked. Preserve every engraved line, face, hand, tool, object, inscription and geometric relationship exactly as supplied. The seated figure, putto, dog and all tools remain perfectly still. Add only an almost imperceptible change in raking daylight and extremely shallow depth separation between foreground, figure and distant sky. The first and last frames must be visually compatible for a quiet loop. No character motion. No facial movement. No hand movement. No moving fabric. No new marks or objects. No altered geometry. No line shimmer or crawling. No morphing, melting, particles, text generation, sound or camera movement.
+
+## Current status
+
+The source upload reached Flow. Flow is awaiting its one-time upload-rights confirmation in the authenticated browser. The source is public domain. No generation should be recorded as accepted until the two outputs are downloaded and inspected frame by frame.

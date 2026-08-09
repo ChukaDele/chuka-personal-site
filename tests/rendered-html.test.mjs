@@ -16,9 +16,12 @@ test("renders the Strategy & Operations home page", async () => {
   const html = await response.text();
   assert.match(html, /Chuka Dele-Oyeleru \| Strategy &amp; Operations/i);
   assert.match(html, /I build the systems that take ambitious ideas/);
+  assert.match(html, /CHUKA DELE-OYELERU/);
   assert.match(html, /Selected work/i);
-  assert.match(html, /Building faster, more reliable operations/);
-  assert.match(html, /data team growing companies can plug into/);
+  assert.match(html, /Building more reliable operations/);
+  assert.match(html, /data team companies can plug into/);
+  assert.match(html, /Observation becomes structure/);
+  assert.doesNotMatch(html, /href="\/resume"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
@@ -29,3 +32,11 @@ for (const [pathname, label] of [["/work", "Selected work"], ["/notes", "Notes"]
     assert.match(await response.text(), new RegExp(label));
   });
 }
+
+test("renders a useful bespoke 404", async () => {
+  const response = await render("/missing-folio-test");
+  assert.equal(response.status, 404);
+  const html = await response.text();
+  assert.match(html, /This page escaped the system/);
+  assert.match(html, /Return home/);
+});

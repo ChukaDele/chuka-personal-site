@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#ece7dc"/>
+  <rect x="760" width="440" height="630" fill="#101a22"/>
+  <path d="M808 120h290M808 176h216M808 232h250M808 288h170M808 344h276" stroke="#4067c7" stroke-width="3" opacity=".72"/>
+  <circle cx="850" cy="120" r="8" fill="#b64931"/>
+  <circle cx="1058" cy="288" r="8" fill="#ece7dc"/>
+  <text x="72" y="100" fill="#b64931" font-family="Arial, sans-serif" font-size="22" letter-spacing="5">CHUKA DELE-OYELERU</text>
+  <text x="72" y="202" fill="#101a22" font-family="Georgia, serif" font-size="76">Strategy &amp;</text>
+  <text x="72" y="286" fill="#101a22" font-family="Georgia, serif" font-size="76">Operations</text>
+  <text x="72" y="388" fill="#40515d" font-family="Arial, sans-serif" font-size="30">Turning ambiguous, cross-functional work</text>
+  <text x="72" y="430" fill="#40515d" font-family="Arial, sans-serif" font-size="30">into systems teams can run and improve.</text>
+  <text x="72" y="548" fill="#101a22" font-family="Arial, sans-serif" font-size="19" letter-spacing="2">SELECTED WORK · APPROACH · PROFESSIONAL PROFILE</text>
+</svg>
