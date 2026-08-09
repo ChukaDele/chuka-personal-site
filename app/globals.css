@@ -184,6 +184,15 @@ h2 em { color: var(--blue); font-weight: 400; }
   .practice-study { width: min(560px, 76vw); }
 }
 
+@media (max-width: 1099px) {
+  .system-node, .stage-list li { opacity: 1 !important; transform: none !important; }
+  .hero-copy, .hero-system, .section-head, .correspondence-copy { opacity: 1 !important; transform: none !important; }
+  .hero-system svg { opacity: .9 !important; }
+  .hero-handoff i, .stage-list i { transform: scaleX(1) !important; }
+  .study-axis { stroke-dashoffset: 0 !important; }
+  .study-loose, .practice-study rect, .practice-study circle { opacity: 1 !important; }
+}
+
 @media (max-width: 899px) {
   .nav-links { display: none; }.nav-menu { display: block; }
   .hero { min-height: auto; }.hero-layout { width: calc(100% - 44px); grid-template-columns: 1fr; padding: 80px 0 90px; }.hero-copy { max-width: 720px; }.hero h1 { font-size: clamp(3.5rem, 10vw, 6.4rem); }.hero-system { width: min(500px, 76vw); margin-left: auto; aspect-ratio: 1.4; }.art-caption { display: none; }

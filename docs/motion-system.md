@@ -4,8 +4,9 @@ Motion explains a change in state. It does not stage ordinary reading.
 
 ## Signature systems
 
-1. Hero handoff: the fixed composition shifts from unresolved source material to an operating diagram, then hands the reader directly to Selected Work.
+1. Hero handoff: the fixed composition shifts from unresolved source material to an operating diagram, then compacts as the Selected Work heading resolves into view.
 2. Practice sequence: one desktop-only pinned sequence maps Observe, Define, Construct, Organise and Improve to named visual states.
+3. Correspondence resolution: the closing grid and contact statement settle into a finished state without pinning or delaying the action.
 
 ## Runtime contract
 
