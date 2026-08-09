@@ -43,6 +43,10 @@ const worker = {
     const response = await handler.fetch(request, env, ctx);
     const headers = new Headers(response.headers);
     let headersChanged = false;
+    headers.set("X-Content-Type-Options", "nosniff");
+    headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+    headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+    headersChanged = true;
     if (env.DEPLOY_SHA) {
       headers.set("X-Deploy-SHA", env.DEPLOY_SHA);
       headersChanged = true;
