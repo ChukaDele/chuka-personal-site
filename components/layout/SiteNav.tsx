@@ -14,7 +14,7 @@ export function SiteNav({ inverse = false }: { inverse?: boolean }) {
         </a>
       </div>
       <details className="nav-menu">
-        <summary aria-label="Open navigation">Menu</summary>
+        <summary aria-label="Navigation menu">Menu</summary>
         <div className="nav-menu-panel">
           {navigation.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
           <a href={socialLinks.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
