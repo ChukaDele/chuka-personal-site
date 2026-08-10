@@ -1,4 +1,5 @@
 import { execFileSync, spawnSync } from "node:child_process";
+import { readFileSync, writeFileSync } from "node:fs";
 
 const runGit = (...args) => execFileSync("git", args, { encoding: "utf8" }).trim();
 const branch = runGit("branch", "--show-current");
@@ -18,6 +19,12 @@ function run(command, args, env = process.env) {
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
 
+function enableWorkersDev() {
+  const configPath = "dist/server/wrangler.json";
+  const config = JSON.parse(readFileSync(configPath, "utf8"));
+  writeFileSync(configPath, JSON.stringify({ ...config, workers_dev: true }));
+}
+
 assertReleaseTree();
 const productionEnv = {
   ...process.env,
@@ -26,6 +33,7 @@ const productionEnv = {
 };
 run("npm", ["run", "build"], productionEnv);
 assertReleaseTree();
+enableWorkersDev();
 run("./node_modules/.bin/wrangler", [
   "deploy",
   "--config", "dist/server/wrangler.json",
