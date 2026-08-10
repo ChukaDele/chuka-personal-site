@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
-import { RouteShell } from "../../components/RouteShell";
+import { PageFooter, PageFrame } from "../../components/editorial/PageFrame";
+import styles from "../phase-two.module.css";
 export const metadata: Metadata = { robots: { index: false, follow: true }, title: "Notes" };
-export default function NotesPage() { return <RouteShell title="Notes" index="02" />; }
+const shelves = [["Operating systems","Notes on ownership, workflows and repeatable execution."],["AI and judgement","Working questions about leverage, tools and human responsibility."],["Building in public","Experiments and lessons that are useful before they become polished doctrine."]];
+export default function NotesPage() { return <PageFrame><header className={styles.hero}><p className={styles.heroIndex}>04 / NOTES</p><div className={styles.heroCopy}><h1>The working <em>notebook.</em></h1><p>Notes will be published when the thinking is specific enough to be useful and honest enough to remain provisional.</p></div></header><section className={styles.notebook}><div className={styles.noteIndex}>{shelves.map(([title,body])=><article className={styles.noteColumn} key={title}><p className={styles.marker}>INDEX / OPEN</p><h2>{title}</h2><p>{body}</p></article>)}</div><aside className={styles.notice}><strong>Publication state</strong><span>No notes are presented as published yet. Draft titles and invented opinions have intentionally been excluded.</span></aside></section><PageFooter /></PageFrame>; }

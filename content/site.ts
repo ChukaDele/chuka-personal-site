@@ -1,6 +1,10 @@
 export const navigation = [
-  { label: "Work", href: "/#work" },
-  { label: "Approach", href: "/#approach" },
+  { label: "Work", href: "/work" },
+  { label: "Library", href: "/library" },
+  { label: "Speaking", href: "/speaking" },
+  { label: "About", href: "/about" },
+  { label: "Notes", href: "/notes" },
+  { label: "Résumé", href: "/resume" },
 ];
 
 export const socialLinks = {

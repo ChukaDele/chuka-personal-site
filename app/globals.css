@@ -37,6 +37,12 @@ button, summary, a { -webkit-tap-highlight-color: transparent; }
 .preloader-mark i:nth-child(1) { width: 118px; height: 1px; animation: line-x .75s ease both; }
 .preloader-mark i:nth-child(2) { width: 1px; height: 118px; animation: line-y .75s ease .1s both; }
 .preloader-mark i:nth-child(3) { width: 82px; height: 82px; border: 1px solid var(--oxide); background: none; transform: rotate(45deg) scale(.68); animation: diamond-in .75s ease .18s both; }
+.preloader-choice { pointer-events: auto; animation: none; }
+.preloader-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.preloader-actions button { min-height: 46px; padding: 0 17px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 12px var(--sans); cursor: pointer; transition: background .18s cubic-bezier(.23,1,.32,1), color .18s cubic-bezier(.23,1,.32,1); }
+.preloader-actions button:first-child { background: var(--ink); color: var(--paper); }
+.sound-toggle { position: fixed; right: 18px; bottom: 18px; z-index: 90; min-height: 42px; display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid rgba(238,233,223,.38); background: rgba(18,38,48,.9); color: #f2efe7; box-shadow: 0 8px 28px rgba(9,22,28,.16); backdrop-filter: blur(8px); cursor: pointer; font: 9px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.sound-toggle span { font-size: 14px; }
 @keyframes line-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes line-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @keyframes diamond-in { from { opacity: 0; transform: rotate(15deg) scale(.2); } to { opacity: 1; transform: rotate(45deg) scale(.68); } }
@@ -214,6 +220,7 @@ h2 em { color: var(--blue); font-weight: 400; }
 
 @media (hover: hover) and (pointer: fine) {
   .folio-fragment:hover { transform: rotate(0deg) scale(1.05); border-color: #d2e7ed; }
+  .preloader-actions button:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -35,14 +35,34 @@ export function HomeMotion() {
           const practiceTimeline = gsap.timeline({
             scrollTrigger: { trigger: ".practice", start: "top top", end: "+=180%", scrub: 0.75, pin: true, anticipatePin: 1 },
           });
-          practiceTimeline
-            .to(".study-loose", { opacity: 0.15, duration: 0.28 }, 0)
-            .fromTo(".study-axis", { strokeDashoffset: 420 }, { strokeDashoffset: 0, duration: 0.5 }, 0.12)
-            .fromTo(".practice-study rect, .practice-study circle", { opacity: 0 }, { opacity: 1, duration: 0.34 }, 0.28);
+          const blueprintLayers = {
+            observe: "[data-blueprint-layer='observe']",
+            define: "[data-blueprint-layer='define']",
+            construct: "[data-blueprint-layer='construct']",
+            organise: "[data-blueprint-layer='organise']",
+            improve: "[data-blueprint-layer='improve']",
+          };
+          const stageItems = gsap.utils.toArray<HTMLElement>(".stage-list li");
+          const stageIndicators = gsap.utils.toArray<HTMLElement>(".stage-list li i");
 
-          document.querySelectorAll<HTMLElement>(".stage-list li").forEach((item, index) => {
-            practiceTimeline.to(item, { opacity: 1, x: 0, duration: 0.12 }, 0.08 + index * 0.13);
-            practiceTimeline.to(item.querySelector("i"), { scaleX: 1, duration: 0.12 }, 0.08 + index * 0.13);
+          practiceTimeline
+            .set([blueprintLayers.define, blueprintLayers.construct, blueprintLayers.organise, blueprintLayers.improve], { opacity: 0 }, 0)
+            .set(blueprintLayers.observe, { opacity: 1 }, 0)
+            .set(stageItems, { opacity: 0.42, x: 14 }, 0)
+            .set(stageItems[0], { opacity: 1, x: 0 }, 0)
+            .set(stageIndicators, { scaleX: 0.15 }, 0)
+            .set(stageIndicators[0], { scaleX: 1 }, 0)
+            .to(blueprintLayers.observe, { opacity: 0.24, duration: 0.16, ease: "power1.inOut" }, 0.16)
+            .fromTo(blueprintLayers.define, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.inOut", immediateRender: false }, 0.16)
+            .fromTo(blueprintLayers.construct, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.inOut", immediateRender: false }, 0.34)
+            .fromTo(blueprintLayers.organise, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.inOut", immediateRender: false }, 0.52)
+            .fromTo(blueprintLayers.improve, { opacity: 0 }, { opacity: 1, duration: 0.22, ease: "power1.inOut", immediateRender: false }, 0.7)
+            .fromTo("[data-blueprint-loop]", { strokeDashoffset: 500 }, { strokeDashoffset: 0, duration: 0.22, ease: "power1.inOut", immediateRender: false }, 0.7);
+
+          stageItems.slice(1).forEach((item, index) => {
+            const position = 0.16 + index * 0.18;
+            practiceTimeline.to(item, { opacity: 1, x: 0, duration: 0.12, ease: "power1.out" }, position);
+            practiceTimeline.to(item.querySelector("i"), { scaleX: 1, duration: 0.12, ease: "power1.out" }, position);
           });
 
           gsap.timeline({

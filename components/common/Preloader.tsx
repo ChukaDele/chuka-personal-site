@@ -1,14 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSound } from "../sound/SoundProvider";
 
 export function Preloader() {
   const [visible, setVisible] = useState(true);
+  const [requiresChoice, setRequiresChoice] = useState(false);
+  const soundButtonRef = useRef<HTMLButtonElement>(null);
+  const { preferenceReady, chooseSound } = useSound();
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || sessionStorage.getItem("atelier-intro-seen")) {
+    if (!preferenceReady) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hasPreference = window.localStorage.getItem("atelier-sound-preference") !== null;
+    if (reduceMotion || sessionStorage.getItem("atelier-intro-seen")) {
       const immediateTimer = window.setTimeout(() => setVisible(false), 0);
       return () => window.clearTimeout(immediateTimer);
+    }
+    if (!hasPreference) {
+      const choiceTimer = window.setTimeout(() => setRequiresChoice(true), 0);
+      return () => window.clearTimeout(choiceTimer);
     }
     let active = true;
     const finish = () => {
@@ -26,17 +37,34 @@ export function Preloader() {
       active = false;
       window.clearTimeout(timeout);
     };
-  }, []);
+  }, [preferenceReady]);
+
+  useEffect(() => {
+    if (requiresChoice) soundButtonRef.current?.focus();
+  }, [requiresChoice]);
+
+  const enter = (withSound: boolean) => {
+    chooseSound(withSound, withSound);
+    sessionStorage.setItem("atelier-intro-seen", "true");
+    setRequiresChoice(false);
+    window.setTimeout(() => setVisible(false), 220);
+  };
 
   if (!visible) return null;
 
   return (
-    <div className="preloader" aria-hidden="true">
+    <div className={`preloader${requiresChoice ? " preloader-choice" : ""}`} role={requiresChoice ? "dialog" : undefined} aria-modal={requiresChoice || undefined} aria-label={requiresChoice ? "Choose how to enter the site" : undefined} aria-hidden={requiresChoice ? undefined : true}>
       <div className="preloader-mark">
         <i /><i /><i />
         <span>CD</span>
       </div>
       <p>Observation becomes structure.</p>
+      {requiresChoice && (
+        <div className="preloader-actions">
+          <button ref={soundButtonRef} type="button" onClick={() => enter(true)}>Enter with sound</button>
+          <button type="button" onClick={() => enter(false)}>Enter quietly</button>
+        </div>
+      )}
     </div>
   );
 }

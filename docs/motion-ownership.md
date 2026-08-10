@@ -1,5 +1,11 @@
 # Motion ownership
 
+## Phase 2 additions
+
+- Practice blueprint state: `components/home/PracticeBlueprint.tsx` owns semantic SVG layers; `components/home/HomeMotion.tsx` is the sole desktop scroll-progress owner; `PracticeBlueprint.module.css` owns the complete static tablet/mobile/reduced state.
+- Project media plates: `components/home/ProjectMediaPlate.tsx` owns source-type rendering; its scoped CSS owns static registration treatments. No duplicate project-number transform is permitted inside the media plate.
+- Site sound is separate from visual motion. `components/sound/SoundProvider.tsx` owns AudioContext state and cues; `Preloader.tsx` owns the first-visit gesture.
+
 One system owns each transform or visibility state.
 
 | State | Canonical owner | Static and reduced-motion outcome |

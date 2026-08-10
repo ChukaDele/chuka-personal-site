@@ -1,5 +1,7 @@
 import { Preloader } from "../components/common/Preloader";
 import { HomeMotion } from "../components/home/HomeMotion";
+import { PracticeBlueprint } from "../components/home/PracticeBlueprint";
+import { ProjectMediaPlate } from "../components/home/ProjectMediaPlate";
 import { SiteNav } from "../components/layout/SiteNav";
 import { operatingStages, selectedWork, socialLinks } from "../content/site";
 
@@ -55,10 +57,7 @@ export default function Home() {
                   {project.signals.map((signal) => <li key={signal}>{signal}</li>)}
                 </ul>
               </div>
-              <div className="folio-visual" aria-hidden="true">
-                <span /><span /><span /><span />
-                <b>{project.index}</b>
-              </div>
+              <ProjectMediaPlate project={project.slug as "etap" | "rvysion" | "bredge"} />
             </article>
           ))}
         </div>
@@ -74,15 +73,7 @@ export default function Home() {
           <p>A working sequence for bringing a complicated situation into focus, then making it usable.</p>
         </div>
         <div className="practice-sequence">
-          <div className="practice-study" aria-hidden="true">
-            <svg viewBox="0 0 100 100">
-              <path className="study-loose" d="M8 29 C20 7 28 83 40 37 S65 20 78 51 S85 89 95 32" />
-              <path className="study-axis" d="M14 78 H88 M25 14 V90 M67 8 V88" />
-              <rect x="25" y="23" width="42" height="55" />
-              <circle cx="46" cy="50" r="13" />
-            </svg>
-            <p><span>Loose observation</span><span>Working system</span></p>
-          </div>
+          <PracticeBlueprint />
           <ol className="stage-list">
             {operatingStages.map((stage) => (
               <li key={stage.index} data-stage={stage.index}>
@@ -100,12 +91,12 @@ export default function Home() {
 
       <section className="library-teaser">
         <div><p className="section-marker">04 / LIBRARY</p><h2>A library with <em>margin notes.</em></h2></div>
-        <div><p>Books, essays, papers, videos, talks, tools and courses will sit beside the ideas they changed, the disagreements they prompted and the work they informed.</p></div>
+        <div><p>Books, essays, papers, videos, talks, tools and courses sit beside the ideas they changed, the disagreements they prompted and the work they informed.</p><a className="text-link" href="/library">Enter the Commonplace <span aria-hidden="true">↗</span></a></div>
       </section>
 
       <section className="about-teaser">
         <p className="section-marker">05 / ABOUT</p>
-        <div><h2>The breadth comes from the <em>work.</em></h2><p>I repeatedly work on situations that cross strategy, operations, product, people, data and growth. The point is not to collect disciplines. It is to use the ones a real operating problem requires.</p></div>
+        <div><h2>The breadth comes from the <em>work.</em></h2><p>I repeatedly work on situations that cross strategy, operations, product, people, data and growth. The point is not to collect disciplines. It is to use the ones a real operating problem requires.</p><a className="text-link" href="/about">Read the working principles <span aria-hidden="true">↗</span></a></div>
       </section>
 
       <footer className="correspondence">
@@ -118,7 +109,7 @@ export default function Home() {
         </div>
         <div className="footer-meta">
           <span>Chuka Dele-Oyeleru · Strategy &amp; Operations</span>
-          <div><a href="/#work">Work</a><a href="/#approach">Approach</a><a href={socialLinks.instagram} target="_blank" rel="noreferrer">Instagram</a></div>
+          <div><a href="/work">Work</a><a href="/library">Library</a><a href="/speaking">Speaking</a><a href="/press">Press</a></div>
           <span>© {new Date().getFullYear()}</span>
         </div>
       </footer>

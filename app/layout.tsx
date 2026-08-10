@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { SoundProvider } from "../components/sound/SoundProvider";
+import { SoundToggle } from "../components/sound/SoundToggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -53,7 +55,10 @@ export default function RootLayout({
             }),
           }}
         />
-        {children}
+        <SoundProvider>
+          {children}
+          <SoundToggle />
+        </SoundProvider>
       </body>
     </html>
   );

@@ -21,17 +21,30 @@ test("renders the Strategy & Operations home page", async () => {
   assert.match(html, /Building more reliable operations/);
   assert.match(html, /data team companies can plug into/);
   assert.match(html, /Observation becomes structure/);
-  assert.doesNotMatch(html, /href="\/resume"/i);
+  assert.match(html, /From observation to operating system/);
+  assert.match(html, /href="\/library"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
-for (const [pathname, label] of [["/work", "Selected work"], ["/notes", "Notes"], ["/library", "Library"], ["/about", "About"], ["/resume", "Résumé"]]) {
-  test(`renders ${pathname} as an intentional placeholder`, async () => {
+for (const [pathname, label] of [["/work", "Project archive"], ["/notes", "Publication state"], ["/about", "The breadth comes from"], ["/resume", "CURRENT VERIFIED POSITIONING"], ["/speaking", "How ambitious work becomes"], ["/press", "A working kit"]]) {
+  test(`renders the ${pathname} Phase 2 page`, async () => {
     const response = await render(pathname);
     assert.equal(response.status, 200);
     assert.match(await response.text(), new RegExp(label));
   });
 }
+
+test("renders the Commonplace without an eager YouTube player", async () => {
+  const response = await render("/library");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /The Commonplace/);
+  assert.match(html, /The Alchemist/);
+  assert.match(html, /Founders/);
+  assert.match(html, /Paul Graham essays/);
+  assert.doesNotMatch(html, /<iframe/i);
+  assert.doesNotMatch(html, /youtube-nocookie\.com\/embed/i);
+});
 
 test("renders a useful bespoke 404", async () => {
   const response = await render("/missing-folio-test");
