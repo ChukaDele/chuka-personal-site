@@ -13,8 +13,8 @@ export function SoundToggle() {
       aria-pressed={enabled}
       onClick={() => chooseSound(!enabled, !enabled)}
     >
-      <span aria-hidden="true">{enabled ? "◒" : "○"}</span>
-      Sound {enabled ? "on" : "off"}
+      <span className="sound-toggle-mark" aria-hidden="true">{enabled ? "◒" : "○"}</span>
+      <span className="sound-toggle-label">Sound {enabled ? "on" : "off"}</span>
     </button>
   );
 }

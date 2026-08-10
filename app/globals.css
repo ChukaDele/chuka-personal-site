@@ -46,7 +46,7 @@ button, summary, a { -webkit-tap-highlight-color: transparent; }
 .preloader-actions button { min-height: 46px; padding: 0 17px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 12px var(--sans); cursor: pointer; transition: background .18s cubic-bezier(.23,1,.32,1), color .18s cubic-bezier(.23,1,.32,1); }
 .preloader-actions button:first-child { background: var(--ink); color: var(--paper); }
 .sound-toggle { position: fixed; right: 18px; bottom: 18px; z-index: 90; min-height: 42px; display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid rgba(238,233,223,.38); background: rgba(18,38,48,.9); color: #f2efe7; box-shadow: 0 8px 28px rgba(9,22,28,.16); backdrop-filter: blur(8px); cursor: pointer; font: 9px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
-.sound-toggle span { font-size: 14px; }
+.sound-toggle-mark { font-size: 14px; }
 @keyframes line-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes line-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @keyframes diamond-in { from { opacity: 0; transform: rotate(15deg) scale(.2); } to { opacity: 1; transform: rotate(45deg) scale(.68); } }
@@ -214,6 +214,8 @@ h2 em { color: var(--blue); font-weight: 400; }
 }
 
 @media (max-width: 680px) {
+  .sound-toggle { right: 10px; bottom: 10px; width: 44px; min-height: 44px; justify-content: center; padding: 0; }
+  .sound-toggle-label { display: none; }
   .site-nav { min-height: 70px; padding: 13px 22px; }.wordmark-name { max-width: 120px; font-size: 11px; line-height: 1.15; }.wordmark-mark { width: 32px; height: 32px; }
   .hero-art { background-image: url("/art/durer-melencolia-mobile.webp"); background-position: 63% center; }.hero-wash { background: linear-gradient(0deg, rgba(8,22,28,.95), rgba(8,22,28,.68)); }.hero-layout { padding: 62px 0 70px; gap: 55px; }.hero-name { font-size: 9px; }.hero h1 { margin: 22px 0 25px; font-size: clamp(3.35rem, 15vw, 5.4rem); line-height: .88; text-wrap: auto; }.hero-summary { max-width: 93%; font-size: 16px; }.hero-actions { align-items: flex-start; flex-direction: column; }.hero-system { width: 100%; aspect-ratio: 1.05; }.hero-handoff { width: calc(100% - 44px); }
   .work-section { padding-left: 22px; padding-right: 22px; }.section-head h2, .practice h2 { font-size: clamp(3.5rem, 15vw, 5.3rem); }.work-folio { padding: 25px 20px 30px; grid-template-columns: 1fr; gap: 30px; }.folio-index { min-height: 0; padding: 0 0 20px; border-right: 0; border-bottom: 1px solid currentColor; flex-direction: row; align-items: end; }.folio-index span { font-size: 4.3rem; }.folio-copy h3 { font-size: clamp(2.65rem, 12vw, 4rem); }.folio-copy li { font-size: 10px; }.folio-visual { grid-column: 1; width: min(280px, 78vw); }
