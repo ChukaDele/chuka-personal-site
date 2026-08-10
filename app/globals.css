@@ -37,8 +37,11 @@ button, summary, a { -webkit-tap-highlight-color: transparent; }
 .preloader-mark i:nth-child(1) { width: 118px; height: 1px; animation: line-x .75s ease both; }
 .preloader-mark i:nth-child(2) { width: 1px; height: 118px; animation: line-y .75s ease .1s both; }
 .preloader-mark i:nth-child(3) { width: 82px; height: 82px; border: 1px solid var(--oxide); background: none; transform: rotate(45deg) scale(.68); animation: diamond-in .75s ease .18s both; }
-.preloader-choice { pointer-events: auto; animation: none; }
-body.sound-gate-open { overflow: hidden; }
+.preloader-choice { place-items: end; align-content: end; gap: 0; padding: 18px; background: transparent; pointer-events: none; animation: none; }
+.preloader-choice .preloader-mark { display: none; }
+.preloader-choice > p, .preloader-choice .preloader-actions { width: min(430px, calc(100vw - 36px)); border-color: var(--line); background: rgba(238,233,223,.96); pointer-events: auto; }
+.preloader-choice > p { padding: 16px 18px 0; border: 1px solid var(--line); border-bottom: 0; }
+.preloader-choice .preloader-actions { justify-content: flex-start; padding: 12px 18px 18px; border: 1px solid var(--line); border-top: 0; }
 .preloader-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 .preloader-actions button { min-height: 46px; padding: 0 17px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 12px var(--sans); cursor: pointer; transition: background .18s cubic-bezier(.23,1,.32,1), color .18s cubic-bezier(.23,1,.32,1); }
 .preloader-actions button:first-child { background: var(--ink); color: var(--paper); }

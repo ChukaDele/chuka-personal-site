@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSound } from "../sound/SoundProvider";
 
 export function Preloader() {
   const [visible, setVisible] = useState(true);
   const [requiresChoice, setRequiresChoice] = useState(false);
-  const soundButtonRef = useRef<HTMLButtonElement>(null);
-  const quietButtonRef = useRef<HTMLButtonElement>(null);
   const { preferenceReady, chooseSound } = useSound();
 
   useEffect(() => {
@@ -40,24 +38,6 @@ export function Preloader() {
     };
   }, [preferenceReady]);
 
-  useEffect(() => {
-    if (requiresChoice) soundButtonRef.current?.focus();
-  }, [requiresChoice]);
-
-  useEffect(() => {
-    if (!requiresChoice) return;
-    const targets = Array.from(document.querySelectorAll<HTMLElement>(
-      "body > .skip-link, body > .sound-toggle, main > :not(.preloader)",
-    ));
-    const newlyInert = targets.filter((target) => !target.hasAttribute("inert"));
-    newlyInert.forEach((target) => target.setAttribute("inert", ""));
-    document.body.classList.add("sound-gate-open");
-    return () => {
-      newlyInert.forEach((target) => target.removeAttribute("inert"));
-      document.body.classList.remove("sound-gate-open");
-    };
-  }, [requiresChoice]);
-
   const enter = (withSound: boolean) => {
     chooseSound(withSound, withSound);
     sessionStorage.setItem("atelier-intro-seen", "true");
@@ -65,37 +45,19 @@ export function Preloader() {
     window.setTimeout(() => setVisible(false), 220);
   };
 
-  const handleDialogKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      enter(false);
-      return;
-    }
-    if (event.key !== "Tab") return;
-    const first = soundButtonRef.current;
-    const last = quietButtonRef.current;
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last?.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first?.focus();
-    }
-  };
-
   if (!visible) return null;
 
   return (
-    <div className={`preloader${requiresChoice ? " preloader-choice" : ""}`} role={requiresChoice ? "dialog" : undefined} aria-modal={requiresChoice || undefined} aria-label={requiresChoice ? "Choose how to enter the site" : undefined} aria-hidden={requiresChoice ? undefined : true} onKeyDown={requiresChoice ? handleDialogKeyDown : undefined}>
+    <div className={`preloader${requiresChoice ? " preloader-choice" : ""}`} role={requiresChoice ? "region" : undefined} aria-label={requiresChoice ? "Optional site sound" : undefined} aria-hidden={requiresChoice ? undefined : true}>
       <div className="preloader-mark">
         <i /><i /><i />
         <span>CD</span>
       </div>
-      <p>Observation becomes structure.</p>
+      <p>{requiresChoice ? "Sound is optional. Choose your preference." : "Observation becomes structure."}</p>
       {requiresChoice && (
         <div className="preloader-actions">
-          <button ref={soundButtonRef} type="button" onClick={() => enter(true)}>Enter with sound</button>
-          <button ref={quietButtonRef} type="button" onClick={() => enter(false)}>Enter quietly</button>
+          <button type="button" onClick={() => enter(true)}>Enable sound</button>
+          <button type="button" onClick={() => enter(false)}>Keep sound off</button>
         </div>
       )}
     </div>
