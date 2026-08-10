@@ -37,11 +37,11 @@ button, summary, a { -webkit-tap-highlight-color: transparent; }
 .preloader-mark i:nth-child(1) { width: 118px; height: 1px; animation: line-x .75s ease both; }
 .preloader-mark i:nth-child(2) { width: 1px; height: 118px; animation: line-y .75s ease .1s both; }
 .preloader-mark i:nth-child(3) { width: 82px; height: 82px; border: 1px solid var(--oxide); background: none; transform: rotate(45deg) scale(.68); animation: diamond-in .75s ease .18s both; }
-.preloader-choice { place-items: end; align-content: end; gap: 0; padding: 18px; background: transparent; pointer-events: none; animation: none; }
+.preloader-choice { position: relative; inset: auto; z-index: 30; width: 100%; min-height: 0; display: grid; grid-template-columns: minmax(0,1fr) auto; place-items: center stretch; align-content: center; gap: 18px; padding: 12px clamp(22px,4.8vw,76px); border-bottom: 1px solid var(--line); background: var(--paper); pointer-events: auto; animation: none; }
 .preloader-choice .preloader-mark { display: none; }
-.preloader-choice > p, .preloader-choice .preloader-actions { width: min(430px, calc(100vw - 36px)); border-color: var(--line); background: rgba(238,233,223,.96); pointer-events: auto; }
-.preloader-choice > p { padding: 16px 18px 0; border: 1px solid var(--line); border-bottom: 0; }
-.preloader-choice .preloader-actions { justify-content: flex-start; padding: 12px 18px 18px; border: 1px solid var(--line); border-top: 0; }
+.preloader-choice > p, .preloader-choice .preloader-actions { width: auto; border: 0; background: transparent; pointer-events: auto; }
+.preloader-choice > p { padding: 0; }
+.preloader-choice .preloader-actions { justify-content: flex-end; padding: 0; }
 .preloader-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 .preloader-actions button { min-height: 46px; padding: 0 17px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: 12px var(--sans); cursor: pointer; transition: background .18s cubic-bezier(.23,1,.32,1), color .18s cubic-bezier(.23,1,.32,1); }
 .preloader-actions button:first-child { background: var(--ink); color: var(--paper); }
@@ -215,6 +215,12 @@ h2 em { color: var(--blue); font-weight: 400; }
 }
 
 @media (max-width: 680px) {
+  .preloader-choice { grid-template-columns: 1fr; gap: 0; padding: 8px 22px; }
+  .preloader-choice > p { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .preloader-choice .preloader-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .preloader-choice .preloader-actions button { min-width: 0; padding: 0 8px; }
+  main:has(> .preloader-choice) .hero-layout { padding-top: 30px; }
+  main:has(> .preloader-choice) .hero-actions { flex-direction: row; gap: 14px; }
   .sound-toggle { right: 10px; bottom: 10px; width: 44px; min-height: 44px; justify-content: center; padding: 0; }
   .sound-toggle-label { display: none; }
   .site-nav { min-height: 70px; padding: 13px 22px; }.wordmark-name { max-width: 120px; font-size: 11px; line-height: 1.15; }.wordmark-mark { width: 32px; height: 32px; }
