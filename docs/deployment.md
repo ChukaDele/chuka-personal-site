@@ -8,7 +8,7 @@
 - Production branch: `main`
 - Production Worker: `chuka-personal-site`
 
-Cloudflare uses the generated vinext Worker configuration at `dist/server/wrangler.json`. `npm run deploy:preview` publishes the isolated preview Worker without an indexable origin. `npm run deploy` builds and publishes production with `SITE_URL=https://chukadele.com` and `ALLOW_INDEXING=true` at both build time and Worker runtime. Production deployment must run only from an accepted `main` revision. Both commands inject the current Git SHA. The Worker returns it as `X-Deploy-SHA` so browser acceptance can be bound to the actual runtime.
+Cloudflare uses the generated vinext Worker configuration at `dist/server/wrangler.json`. `npm run deploy:preview` publishes the isolated preview Worker without an indexable origin. `npm run deploy` refuses a non-`main` branch or dirty worktree, then builds and publishes production with `SITE_URL=https://chukadele.com` and `ALLOW_INDEXING=true` at both build time and Worker runtime. Both commands inject the current Git SHA. The Worker returns it as `X-Deploy-SHA` so browser acceptance can be bound to the actual runtime.
 
 Search indexing is default-deny. Preview deployments omit `SITE_URL` and `ALLOW_INDEXING`, so the Worker sends `X-Robots-Tag: noindex, nofollow`, metadata omits canonical URLs, `robots.txt` disallows crawling and the sitemap is empty. Production may become indexable only when both build-time and runtime environments receive the same verified HTTPS `SITE_URL` and `ALLOW_INDEXING=true`. The runtime also requires the request hostname to match `SITE_URL` exactly.
 

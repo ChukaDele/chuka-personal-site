@@ -259,6 +259,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :global(.practice) .observe,
+  :global(.practice) .define,
+  :global(.practice) .construct,
+  :global(.practice) .organise,
+  :global(.practice) .improve { transition: none !important; }
   :global(.practice) .observe { opacity: .2 !important; }
   :global(.practice) .define { opacity: .38 !important; }
   :global(.practice) .construct { opacity: .82 !important; }

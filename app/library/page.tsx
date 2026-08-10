@@ -9,7 +9,7 @@ import { books, essayCollections, podcasts, videos } from "../../content/library
 import "./library.css";
 import { createPageMetadata } from "../../lib/seo";
 
-export const metadata: Metadata = createPageMetadata({ title: "The Commonplace", description: "A working library of books, films, podcasts and essays that Chuka Dele-Oyeleru returns to.", path: "/library", image: "/images/social/library.jpg", imageAlt: "The Almanack of Naval Ravikant in Chuka's library" });
+export const metadata: Metadata = createPageMetadata({ title: "The Commonplace", description: "A reference library of books, films, podcasts and essays selected by Chuka Dele-Oyeleru.", path: "/library", image: "/images/social/library.jpg", imageAlt: "The Almanack of Naval Ravikant in Chuka's library" });
 
 export default function LibraryPage() {
   return (
@@ -21,7 +21,7 @@ export default function LibraryPage() {
           <p>THE COMMONPLACE / A WORKING LIBRARY</p>
           <h1>Ideas kept<br />{" "}within <em>reach.</em></h1>
           <div>
-            <p>Books, films, podcasts and essays kept close enough to revisit, question and annotate.</p>
+            <p>A selected shelf of books, films, podcasts and essays for further reading, watching and listening.</p>
             <nav aria-label="Library sections">
               <ResourceAction href="#books" variant="button" sound="none">Books</ResourceAction>
               <ResourceAction href="#screening-room" variant="button" sound="none">Films</ResourceAction>
@@ -30,7 +30,7 @@ export default function LibraryPage() {
             </nav>
           </div>
         </div>
-        <p className="library-hero-note">A commonplace for material worth returning to.</p>
+        <p className="library-hero-note">A commonplace of selected reference material.</p>
       </header>
 
       <BookShelf books={books} />
