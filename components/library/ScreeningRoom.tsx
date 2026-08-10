@@ -10,14 +10,22 @@ export function ScreeningRoom({ videos }: { videos: readonly VideoResource[] }) 
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const playButtonRefs = useRef(new Map<string, HTMLButtonElement>());
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const restoreVideoRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (activeVideo) closeButtonRef.current?.focus();
+    if (activeVideo) {
+      closeButtonRef.current?.focus();
+      return;
+    }
+    const videoId = restoreVideoRef.current;
+    if (!videoId) return;
+    restoreVideoRef.current = null;
+    window.requestAnimationFrame(() => playButtonRefs.current.get(videoId)?.focus());
   }, [activeVideo]);
 
   const closePlayer = (videoId: string) => {
+    restoreVideoRef.current = videoId;
     setActiveVideo(null);
-    window.requestAnimationFrame(() => playButtonRefs.current.get(videoId)?.focus());
   };
 
   return (
