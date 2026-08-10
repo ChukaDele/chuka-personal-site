@@ -2,12 +2,23 @@
 
 /* eslint-disable @next/next/no-img-element -- Direct YouTube thumbnails avoid loading the player or image optimiser before consent. */
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { VideoResource } from "../../content/library";
 import { AnnotationStatus } from "./AnnotationStatus";
 
 export function ScreeningRoom({ videos }: { videos: readonly VideoResource[] }) {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const playButtonRefs = useRef(new Map<string, HTMLButtonElement>());
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (activeVideo) closeButtonRef.current?.focus();
+  }, [activeVideo]);
+
+  const closePlayer = (videoId: string) => {
+    setActiveVideo(null);
+    window.requestAnimationFrame(() => playButtonRefs.current.get(videoId)?.focus());
+  };
 
   return (
     <section className="screening-room" id="screening-room" aria-labelledby="screening-title">
@@ -32,6 +43,10 @@ export function ScreeningRoom({ videos }: { videos: readonly VideoResource[] }) 
                   />
                 ) : (
                   <button
+                    ref={(node) => {
+                      if (node) playButtonRefs.current.set(video.id, node);
+                      else playButtonRefs.current.delete(video.id);
+                    }}
                     className="projection-trigger"
                     type="button"
                     onClick={() => setActiveVideo(video.id)}
@@ -56,7 +71,7 @@ export function ScreeningRoom({ videos }: { videos: readonly VideoResource[] }) 
                 <h3>{video.title}</h3>
                 <div className="screening-actions">
                   {isActive ? (
-                    <button type="button" className="library-text-button" onClick={() => setActiveVideo(null)}>Close player</button>
+                    <button ref={closeButtonRef} type="button" className="library-text-button" onClick={() => closePlayer(video.id)}>Close player</button>
                   ) : null}
                   <a href={video.href} target="_blank" rel="noreferrer">Open on YouTube <span aria-hidden="true">↗</span></a>
                 </div>
