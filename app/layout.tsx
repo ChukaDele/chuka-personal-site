@@ -27,10 +27,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preload" as="image" href="/art/durer-melencolia-hero.webp" type="image/webp" media="(min-width: 681px)" fetchPriority="high" />
-        <link rel="preload" as="image" href="/art/durer-melencolia-mobile.webp" type="image/webp" media="(max-width: 680px)" fetchPriority="high" />
-      </head>
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <SoundProvider>

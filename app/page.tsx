@@ -12,6 +12,8 @@ export const metadata: Metadata = createPageMetadata({ title: "Chuka Dele-Oyeler
 export default function Home() {
   return (
     <main id="main-content">
+      <link rel="preload" as="image" href="/art/durer-melencolia-hero.webp" type="image/webp" media="(min-width: 681px)" fetchPriority="high" />
+      <link rel="preload" as="image" href="/art/durer-melencolia-mobile.webp" type="image/webp" media="(max-width: 680px)" fetchPriority="high" />
       {siteUrl ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "WebSite", "@id": `${absoluteSiteUrl("/")}#website`, url: absoluteSiteUrl("/"), name: "Chuka Dele-Oyeleru" }, { "@type": "Person", "@id": `${absoluteSiteUrl("/")}#chuka`, name: "Chuka Dele-Oyeleru", jobTitle: "Strategy & Operations", url: absoluteSiteUrl("/"), sameAs: [socialLinks.linkedin] }] }) }} /> : null}
       <Preloader />
       <HomeMotion />
