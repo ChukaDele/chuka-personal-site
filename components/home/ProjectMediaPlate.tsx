@@ -54,7 +54,11 @@ function ProjectDiagram({ project }: Pick<ProjectMediaPlateProps, "project">) {
   );
 }
 
-const diagramLabels = { etap: "Operations map", rvysion: "Integrated venture system", bredge: "Embedded data service model" };
+const diagramLabels = {
+  etap: "Editorial model · Operations map",
+  rvysion: "Editorial model · Integrated venture system",
+  bredge: "Editorial model · Embedded data service model",
+};
 
 export function ProjectMediaPlate({ project, media = { kind: "diagram", label: diagramLabels[project] } }: ProjectMediaPlateProps) {
   return (

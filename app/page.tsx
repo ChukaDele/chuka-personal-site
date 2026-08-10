@@ -72,7 +72,7 @@ export default function Home() {
         <ResourceAction className="text-link work-archive-link" href="/work" indicator="forward">Browse the work archive</ResourceAction>
       </section>
 
-      <section className="practice" id="approach" data-mobile-stage="01">
+      <section className="practice" id="approach" data-mobile-stage="01" tabIndex={-1}>
         <PracticeMobileController />
         <div className="practice-art" aria-hidden="true" />
         <div className="practice-grid" aria-hidden="true" />
@@ -94,8 +94,8 @@ export default function Home() {
       </section>
 
       <section className="library-teaser">
-        <div><p className="section-marker">03 / LIBRARY</p><h2>A library with <em>margin notes.</em></h2></div>
-        <div><p>Books, essays, papers, videos, talks, tools and courses sit beside the ideas they changed, the disagreements they prompted and the work they informed.</p><ResourceAction className="text-link" href="/library" indicator="forward">Enter the Commonplace</ResourceAction></div>
+        <div><p className="section-marker">03 / LIBRARY</p><h2>A working <em>library.</em></h2></div>
+        <div><p>Books, essays, papers, videos, talks, tools and courses gathered as a practical reference shelf.</p><ResourceAction className="text-link" href="/library" indicator="forward">Enter the Commonplace</ResourceAction></div>
       </section>
 
       <section className="about-teaser">
@@ -113,7 +113,7 @@ export default function Home() {
         </div>
         <div className="footer-meta">
           <span>Chuka Dele-Oyeleru · Strategy &amp; Operations</span>
-          <div><ResourceAction href="/work" variant="compact">Work</ResourceAction><ResourceAction href="/about" variant="compact">About</ResourceAction><ResourceAction href="/speaking" variant="compact">Speaking</ResourceAction><ResourceAction href="/library" variant="compact">Library</ResourceAction><ResourceAction href="/notes" variant="compact">Notes</ResourceAction><ResourceAction href="/resume" variant="compact">Résumé</ResourceAction><ResourceAction href="/press" variant="compact">Press kit</ResourceAction></div>
+          <div><ResourceAction href="/work" variant="compact">Work</ResourceAction><ResourceAction href="/about" variant="compact">About</ResourceAction><ResourceAction href="/speaking" variant="compact">Speaking</ResourceAction><ResourceAction href="/library" variant="compact">Library</ResourceAction><ResourceAction href="/resume" variant="compact">Résumé</ResourceAction><ResourceAction href="/press" variant="compact">Press kit</ResourceAction></div>
           <span>© {new Date().getFullYear()}</span>
         </div>
       </footer>

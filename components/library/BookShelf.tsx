@@ -10,7 +10,7 @@ export function BookShelf({ books }: { books: readonly BookResource[] }) {
         <p>01 / BOOKS</p>
         <div>
           <h2 id="books-title">Volumes handled,<br /><em>not displayed.</em></h2>
-          <p>Four books kept as working objects: handled, revisited and connected to the ideas around them.</p>
+          <p>Four books on the current reference shelf, with source links for further reading.</p>
         </div>
       </header>
 

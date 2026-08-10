@@ -57,7 +57,18 @@ export function Preloader() {
 
   useEffect(() => {
     if (visible || !preferenceReady) return;
-    document.querySelector<HTMLElement>(".wordmark")?.focus();
+    const frame = window.requestAnimationFrame(() => {
+      const hashTarget = window.location.hash
+        ? document.getElementById(decodeURIComponent(window.location.hash.slice(1)))
+        : null;
+      if (hashTarget) {
+        hashTarget.scrollIntoView({ block: "start" });
+        hashTarget.focus({ preventScroll: true });
+        return;
+      }
+      document.querySelector<HTMLElement>(".wordmark")?.focus();
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [preferenceReady, visible]);
 
   const enter = (withSound: boolean) => {
