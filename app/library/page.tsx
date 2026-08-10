@@ -6,12 +6,9 @@ import { ScreeningRoom } from "../../components/library/ScreeningRoom";
 import { SiteNav } from "../../components/layout/SiteNav";
 import { books, essayCollections, podcasts, videos } from "../../content/library";
 import "./library.css";
+import { createPageMetadata } from "../../lib/seo";
 
-export const metadata: Metadata = {
-  robots: { index: false, follow: true },
-  title: "The Commonplace",
-  description: "A working library of books, films, podcasts and essays that Chuka Dele-Oyeleru returns to.",
-};
+export const metadata: Metadata = createPageMetadata({ title: "The Commonplace", description: "A working library of books, films, podcasts and essays that Chuka Dele-Oyeleru returns to.", path: "/library", image: "/images/social/library.jpg", imageAlt: "The Almanack of Naval Ravikant in Chuka's library" });
 
 export default function LibraryPage() {
   return (
@@ -32,7 +29,7 @@ export default function LibraryPage() {
             </nav>
           </div>
         </div>
-        <p className="library-hero-note">Annotations remain deliberately empty until Chuka writes them.</p>
+        <p className="library-hero-note">A commonplace for material worth returning to.</p>
       </header>
 
       <BookShelf books={books} />
@@ -42,8 +39,8 @@ export default function LibraryPage() {
 
       <footer className="library-footer">
         <p>THE COMMONPLACE · VOLUME 01</p>
-        <a href="/">Return to the atelier <span aria-hidden="true">↗</span></a>
-        <p>Notes accrue through use.</p>
+        <a href="/">Return to homepage <span aria-hidden="true">↗</span></a>
+        <p>Books · films · podcasts · essays</p>
       </footer>
     </main>
   );

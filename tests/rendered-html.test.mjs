@@ -26,8 +26,16 @@ test("renders the Strategy & Operations home page", async () => {
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
-for (const [pathname, label] of [["/work", "Project archive"], ["/notes", "Publication state"], ["/about", "The breadth comes from"], ["/resume", "CURRENT VERIFIED POSITIONING"], ["/speaking", "How ambitious work becomes"], ["/press", "A working kit"]]) {
+for (const [pathname, label] of [["/work", "Project archive"], ["/notes", "The working"], ["/about", "The breadth comes from"], ["/resume", "Professional record"], ["/speaking", "Turning ambiguity into"], ["/press", "Press kit"]]) {
   test(`renders the ${pathname} Phase 2 page`, async () => {
+    const response = await render(pathname);
+    assert.equal(response.status, 200);
+    assert.match(await response.text(), new RegExp(label));
+  });
+}
+
+for (const [pathname, label] of [["/work/etap", "ETAP in context"], ["/work/rvysion", "Rvysion"], ["/work/the-bredge", "The Bredge"]]) {
+  test(`renders the ${pathname} work file`, async () => {
     const response = await render(pathname);
     assert.equal(response.status, 200);
     assert.match(await response.text(), new RegExp(label));
@@ -44,6 +52,17 @@ test("renders the Commonplace without an eager YouTube player", async () => {
   assert.match(html, /Paul Graham essays/);
   assert.doesNotMatch(html, /<iframe/i);
   assert.doesNotMatch(html, /youtube-nocookie\.com\/embed/i);
+  assert.match(html, /Watch on YouTube/);
+  assert.match(html, /Listen on Spotify/);
+  assert.match(html, /images\/library\/the-alchemist\.webp/);
+});
+
+test("keeps the unconfigured build out of search indexes", async () => {
+  const response = await render("/speaking");
+  const html = await response.text();
+  assert.match(html, /name="robots" content="noindex, follow"/);
+  assert.doesNotMatch(html, /thebredge\.workers\.dev/);
+  assert.doesNotMatch(html, /rel="canonical"/);
 });
 
 test("renders a useful bespoke 404", async () => {

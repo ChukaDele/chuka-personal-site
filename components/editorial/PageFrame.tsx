@@ -15,7 +15,7 @@ export function PageFooter() {
     <footer className={styles.footer}>
       <span>Chuka Dele-Oyeleru · Strategy &amp; Operations</span>
       <nav aria-label="Footer navigation">
-        <a href="/">Home</a><a href="/work">Work</a><a href="/library">Library</a><a href="/speaking">Speaking</a>
+        <a href="/">Home</a><a href="/work">Work</a><a href="/about">About</a><a href="/speaking">Speaking</a><a href="/library">Library</a><a href="/notes">Notes</a><a href="/resume">Résumé</a><a href="/press">Press kit</a>
       </nav>
     </footer>
   );

@@ -12,7 +12,7 @@ export function Preloader() {
     if (!preferenceReady) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const hasPreference = window.localStorage.getItem("atelier-sound-preference") !== null;
-    if (reduceMotion || sessionStorage.getItem("atelier-intro-seen")) {
+    if (reduceMotion || hasPreference || sessionStorage.getItem("atelier-intro-seen")) {
       const immediateTimer = window.setTimeout(() => setVisible(false), 0);
       return () => window.clearTimeout(immediateTimer);
     }
@@ -20,22 +20,6 @@ export function Preloader() {
       const choiceTimer = window.setTimeout(() => setRequiresChoice(true), 0);
       return () => window.clearTimeout(choiceTimer);
     }
-    let active = true;
-    const finish = () => {
-      if (!active) return;
-      sessionStorage.setItem("atelier-intro-seen", "true");
-      setVisible(false);
-    };
-    const minimum = new Promise<void>((resolve) => window.setTimeout(resolve, 1050));
-    const ready = document.readyState === "complete"
-      ? document.fonts.ready
-      : new Promise<void>((resolve) => window.addEventListener("load", () => resolve(), { once: true }));
-    Promise.all([minimum, ready]).then(finish);
-    const timeout = window.setTimeout(finish, 1150);
-    return () => {
-      active = false;
-      window.clearTimeout(timeout);
-    };
   }, [preferenceReady]);
 
   const enter = (withSound: boolean) => {

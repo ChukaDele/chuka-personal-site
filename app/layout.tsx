@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { SoundProvider } from "../components/sound/SoundProvider";
 import { SoundToggle } from "../components/sound/SoundToggle";
+import { siteUrl } from "../lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://chuka-personal-site.thebredge.workers.dev"),
-  alternates: { canonical: "/" },
+  metadataBase: siteUrl ?? undefined,
   title: {
     default: "Chuka Dele-Oyeleru | Strategy & Operations",
     template: "%s | Chuka Dele-Oyeleru",
@@ -14,20 +14,6 @@ export const metadata: Metadata = {
   applicationName: "Chuka Dele-Oyeleru",
   authors: [{ name: "Chuka Dele-Oyeleru" }],
   creator: "Chuka Dele-Oyeleru",
-  openGraph: {
-    type: "website",
-    title: "Chuka Dele-Oyeleru | Strategy & Operations",
-    description: "I build the systems that take ambitious ideas from first brief to repeatable execution.",
-    url: "/",
-    siteName: "Chuka Dele-Oyeleru",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Chuka Dele-Oyeleru, Strategy & Operations" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Chuka Dele-Oyeleru | Strategy & Operations",
-    description: "I build the systems that take ambitious ideas from first brief to repeatable execution.",
-    images: ["/og-image.png"],
-  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -41,20 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" as="image" href="/art/durer-melencolia-hero.webp" type="image/webp" media="(min-width: 681px)" fetchPriority="high" />
+        <link rel="preload" as="image" href="/art/durer-melencolia-mobile.webp" type="image/webp" media="(max-width: 680px)" fetchPriority="high" />
+      </head>
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Chuka Dele-Oyeleru",
-              jobTitle: "Strategy & Operations",
-              sameAs: ["https://www.linkedin.com/in/chuka1"],
-            }),
-          }}
-        />
         <SoundProvider>
           {children}
           <SoundToggle />

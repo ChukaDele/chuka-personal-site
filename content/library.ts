@@ -11,6 +11,10 @@ export type BookResource = LibraryResourceBase & {
   kind: "book";
   volume: string;
   tone: "oxide" | "ink" | "paper" | "blue";
+  cover: string;
+  coverSource: string;
+  coverWidth: number;
+  coverHeight: number;
 };
 
 export type VideoResource = LibraryResourceBase & {
@@ -21,6 +25,9 @@ export type VideoResource = LibraryResourceBase & {
 export type PodcastResource = LibraryResourceBase & {
   kind: "podcast";
   format: "series";
+  website: string;
+  youtube: string;
+  spotify: string;
 };
 
 export type EssayCollectionResource = LibraryResourceBase & {
@@ -36,6 +43,10 @@ export const books: readonly BookResource[] = [
     tone: "oxide",
     title: "The Alchemist",
     creator: "Paulo Coelho",
+    cover: "/images/library/the-alchemist.webp",
+    coverSource: "https://www.harpercollins.com/products/the-alchemist-paulo-coelho",
+    coverWidth: 428,
+    coverHeight: 648,
     personalNote: null,
     ideaIKept: null,
   },
@@ -45,6 +56,11 @@ export const books: readonly BookResource[] = [
     volume: "II",
     tone: "ink",
     title: "Zero to One",
+    creator: "Peter Thiel with Blake Masters",
+    cover: "/images/library/zero-to-one.webp",
+    coverSource: "https://www.penguinrandomhouse.com/books/234730/zero-to-one-by-peter-thiel-with-blake-masters/9780804139304/",
+    coverWidth: 300,
+    coverHeight: 450,
     personalNote: null,
     ideaIKept: null,
   },
@@ -55,6 +71,10 @@ export const books: readonly BookResource[] = [
     tone: "paper",
     title: "The Hard Thing About Hard Things",
     creator: "Ben Horowitz",
+    cover: "/images/library/hard-thing.webp",
+    coverSource: "https://www.harpercollins.com/products/the-hard-thing-about-hard-things-ben-horowitz",
+    coverWidth: 429,
+    coverHeight: 648,
     personalNote: null,
     ideaIKept: null,
   },
@@ -64,6 +84,11 @@ export const books: readonly BookResource[] = [
     volume: "IV",
     tone: "blue",
     title: "The Almanack of Naval Ravikant",
+    creator: "Eric Jorgenson",
+    cover: "/images/library/almanack.webp",
+    coverSource: "https://www.navalmanack.com/home",
+    coverWidth: 760,
+    coverHeight: 1173,
     personalNote: null,
     ideaIKept: null,
   },
@@ -99,6 +124,9 @@ export const podcasts: readonly PodcastResource[] = [
     format: "series",
     title: "Founders",
     creator: "David Senra",
+    website: "https://www.founderspodcast.com/",
+    youtube: "https://www.youtube.com/@founderspodcast1",
+    spotify: "https://open.spotify.com/show/7txiovdzPARhjm18NwMUYj",
     personalNote: null,
     ideaIKept: null,
   },

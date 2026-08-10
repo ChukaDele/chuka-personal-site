@@ -54,7 +54,9 @@ function ProjectDiagram({ project }: Pick<ProjectMediaPlateProps, "project">) {
   );
 }
 
-export function ProjectMediaPlate({ project, media = { kind: "diagram", label: "Abstract operating diagram" } }: ProjectMediaPlateProps) {
+const diagramLabels = { etap: "Operations map", rvysion: "Integrated venture system", bredge: "Embedded data service model" };
+
+export function ProjectMediaPlate({ project, media = { kind: "diagram", label: diagramLabels[project] } }: ProjectMediaPlateProps) {
   return (
     <figure className={`${styles.plate}${project === "etap" ? "" : ` ${styles[project]}`}`} data-media-kind={media.kind}>
       <div className={styles.registration} aria-hidden="true"><i /><i /><i /><i /></div>
@@ -66,7 +68,7 @@ export function ProjectMediaPlate({ project, media = { kind: "diagram", label: "
       ) : (
         <ProjectDiagram project={project} />
       )}
-      <figcaption>{media.kind === "diagram" ? media.label : media.kind}</figcaption>
+      <figcaption>{media.kind === "diagram" ? media.label : media.kind === "loop" ? media.label : media.alt}</figcaption>
     </figure>
   );
 }

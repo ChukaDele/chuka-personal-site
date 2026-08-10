@@ -5,6 +5,8 @@ import handler from "vinext/server/app-router-entry";
 interface Env {
   ASSETS: Fetcher;
   DEPLOY_SHA?: string;
+  SITE_URL?: string;
+  ALLOW_INDEXING?: string;
   IMAGES: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
@@ -54,7 +56,16 @@ const worker = {
       headers.set("X-Deploy-SHA", env.DEPLOY_SHA);
       headersChanged = true;
     }
-    if (url.hostname.startsWith("chuka-personal-site-atelier-v1.")) {
+    let isExactIndexableOrigin = false;
+    if (env.ALLOW_INDEXING === "true" && env.SITE_URL) {
+      try {
+        const productionUrl = new URL(env.SITE_URL);
+        isExactIndexableOrigin = productionUrl.protocol === "https:" && productionUrl.hostname === url.hostname;
+      } catch {
+        isExactIndexableOrigin = false;
+      }
+    }
+    if (!isExactIndexableOrigin) {
       headers.set("X-Robots-Tag", "noindex, nofollow");
       headersChanged = true;
     }

@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
+import { absoluteSiteUrl, siteIndexable } from "../lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: { userAgent: "*", allow: "/" },
-    sitemap: "https://chuka-personal-site.thebredge.workers.dev/sitemap.xml",
-  };
+  if (!siteIndexable) return { rules: { userAgent: "*", disallow: "/" } };
+  const sitemap = absoluteSiteUrl("/sitemap.xml");
+  return { rules: { userAgent: "*", allow: "/" }, sitemap: sitemap ?? undefined };
 }

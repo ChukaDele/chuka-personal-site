@@ -2,16 +2,16 @@
 
 ## Deterministic gate
 
-Phase 2 verification on 10 August 2026:
+Phase 3 implementation verification on 10 August 2026:
 
 - ESLint: pass.
 - Production vinext build: pass.
-- Rendered-route tests: 9 pass, covering the homepage, all seven Phase 2 routes and the bespoke 404.
+- Rendered-route tests: 13 pass, covering the homepage, the Work archive, three Work files, Notes, About, Résumé, Speaking, Press, Library, default-deny indexing and the bespoke 404.
 - Diff check: pass.
 
-## Remote evidence
+## Prior remote evidence
 
-Phase 2 was pushed to `origin/atelier-v1` and published through immutable Cloudflare Worker versions. Each acceptance run first matched the full `X-Deploy-SHA` response header to the pushed Git revision and passed Major remote-web preflight.
+Phase 2 was pushed to `origin/atelier-v1` and published through immutable Cloudflare Worker versions. Each acceptance run first matched the full `X-Deploy-SHA` response header to the pushed Git revision and passed Major remote-web preflight. Phase 3 remote acceptance must be recorded against its own exact revision after deployment.
 
 The remote matrix covered:
 
@@ -32,6 +32,6 @@ Preview responses include noindex, exact deployment provenance, HSTS, anti-frami
 
 The public-domain Dürer source was accepted in Flow with the documented 9:16, two-output, Veo 3.1 Quality contract. Flow routed the request into prompt coaching and did not expose a valid paid Veo submission for that configured request. No credits were spent. The site retains the deterministic static artwork treatment; `docs/veo-generations.md` records the acceptance contract for a future retry.
 
-## Production blockers
+## Production gate
 
-The preview is not production approval. The canonical production Worker is not live. Project outcomes, a résumé file, an email address, personal Library annotations, Speaking evidence, press assets and final Chuka imagery have not been verified. The implementation uses explicit provisional and empty states and must not invent those inputs.
+The preview is not production approval. Indexing remains disabled until a verified production domain is supplied through `SITE_URL`, `ALLOW_INDEXING=true` is deliberately enabled at build and runtime, and the production deployment passes exact-revision acceptance. The site does not claim unsupported project outcomes, speaking engagements, a direct email address or a downloadable résumé.

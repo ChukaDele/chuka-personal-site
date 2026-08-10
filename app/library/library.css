@@ -64,10 +64,14 @@
 .book-spine { min-height: clamp(350px, 38vw, 560px); padding: 18px 4px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; border-right: 1px solid rgba(255,255,255,.25); background: #803a2a; color: #fff1e8; }
 .book-spine i { writing-mode: vertical-rl; font: 400 clamp(12px, 1.25vw, 18px) var(--serif); }
 .book-spine span { font: 9px var(--mono); }
-.book-cover { min-height: clamp(350px, 38vw, 560px); padding: clamp(18px, 2.4vw, 34px); position: relative; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(22, 42, 51, .22); background: #a64b34; color: #fff3e8; }
-.book-cover::before { content: ""; position: absolute; inset: 12px; border: 1px solid currentColor; opacity: .25; pointer-events: none; }
+.book-cover { min-height: clamp(350px, 38vw, 560px); position: relative; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(22, 42, 51, .22); background: #a64b34; color: #fff3e8; }
+.book-cover-link { min-height: 0; flex: 1; position: relative; display: block; overflow: hidden; background: #ddd; }
+.book-cover-link img { width: 100%; height: 100%; min-height: clamp(285px, 31vw, 455px); display: block; object-fit: cover; object-position: center; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.book-cover-link > span { position: absolute; right: 10px; bottom: 10px; width: 28px; height: 28px; display: grid; place-items: center; color: #fff; background: rgba(10,22,28,.76); font: 9px var(--mono); }
+.book-cover-link:focus-visible, .projection-trigger:focus-visible { outline-offset:-5px; }
+.book-meta { padding: 14px 16px 18px; background: inherit; }
 .book-number, .book-creator { margin: 0; font: 9px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-.book-cover h3 { max-width: 95%; margin: auto 0 20px; font: 400 clamp(2rem, 3.3vw, 4.6rem)/.86 var(--serif); letter-spacing: -.055em; }
+.book-cover h3 { max-width: 95%; margin: 8px 0 7px; font: 400 clamp(1.2rem, 1.7vw, 2rem)/.92 var(--serif); letter-spacing: -.04em; }
 .book-mark { position: absolute; right: 10%; top: 12%; width: clamp(48px, 5vw, 74px); aspect-ratio: 1; display: grid; place-items: center; border: 1px solid currentColor; transform: rotate(45deg); opacity: .4; }
 .book-mark span { transform: rotate(-45deg); font: 9px var(--mono); }
 .book-ink .book-cover { background: #17313b; }.book-ink .book-spine { background: #10252d; }
@@ -111,6 +115,8 @@
 .tape-waveform { position: absolute; left: 10%; right: 10%; bottom: 4%; height: 10%; display: flex; align-items: center; gap: 1.5%; }
 .tape-waveform i { width: 2px; height: 28%; background: var(--library-blue); }.tape-waveform i:nth-child(3n) { height: 90%; }.tape-waveform i:nth-child(5n) { height: 55%; }
 .listening-copy h2 { margin: 22px 0 45px; }.listening-format { margin: 0; color: var(--library-blue); font: 10px var(--mono); text-transform: uppercase; letter-spacing: .12em; }.listening-copy h3 { margin: 13px 0 7px; font: 400 clamp(2.6rem, 4vw, 5rem) var(--serif); }.listening-copy > p:not(.library-section-index, .listening-format) { margin: 0 0 45px; color: var(--graphite); }
+.listening-links { display: flex; flex-wrap: wrap; gap: 12px 20px; margin: 0 0 42px; }
+.listening-links a { min-height: 44px; display: inline-flex; align-items: center; border-bottom: 1px solid currentColor; font: 500 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 
 .essay-index { padding: clamp(100px, 13vw, 190px) clamp(22px, 7.8vw, 124px); background: var(--library-paper); }
 .essay-index > header { display: flex; justify-content: space-between; gap: 30px; border-bottom: 1px solid rgba(22,42,51,.28); padding-bottom: 18px; }
@@ -129,6 +135,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .book-object:hover { transform: translateY(-34px) rotate(0deg); }
+  .book-cover-link:hover img { transform: scale(1.025); }
   .projection-trigger:hover .projection-play { background: #fff; color: var(--library-ink); }
 }
 

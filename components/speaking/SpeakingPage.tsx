@@ -1,11 +1,10 @@
+import Image from "next/image";
 import { SiteNav } from "../layout/SiteNav";
 import { socialLinks } from "../../content/site";
-import {
-  speakingFormats,
-  speakingPropositions,
-  speakingVerificationNote,
-} from "../../content/speaking";
+import { primarySpeakingFormats, secondarySpeakingFormats, speakingSessions } from "../../content/speaking";
 import styles from "./speaking.module.css";
+
+const portraitAlt = "Chuka Dele-Oyeleru smiling in a light grey suit against a dark studio backdrop.";
 
 export function SpeakingPage() {
   return (
@@ -14,74 +13,39 @@ export function SpeakingPage() {
         <SiteNav inverse />
         <section className={styles.hero} aria-labelledby="speaking-title">
           <div className={styles.heroCopy}>
-            <p className={styles.kicker}>Speaking / Working propositions</p>
-            <p className={styles.provisional}>Provisional · pending Chuka verification</p>
-            <h1 id="speaking-title">
-              How ambitious work becomes <em>operable.</em>
-            </h1>
-            <p className={styles.lede}>
-              Proposed sessions about ambiguity, cross-disciplinary operating and using AI for leverage without handing over judgement.
-            </p>
+            <p className={styles.kicker}>Available for speaking</p>
+            <h1 id="speaking-title">Turning ambiguity into <em>execution.</em></h1>
+            <p className={styles.lede}>Chuka speaks about making ambitious ideas operable, working across disciplines without losing accountability, and using AI as leverage without outsourcing judgement.</p>
+            <p className={styles.audience}>For leadership teams, operators, builders and organisations working across functions.</p>
             <div className={styles.actions}>
-              <a className={styles.primaryAction} href={socialLinks.linkedin} target="_blank" rel="noreferrer">
-                Discuss a possible session <span aria-hidden="true">↗</span>
-              </a>
-              <a className={styles.secondaryAction} href="/press">
-                View press kit <span aria-hidden="true">→</span>
-              </a>
+              <a className={styles.primaryAction} href={socialLinks.linkedin} target="_blank" rel="noreferrer">Enquire about a session <span aria-hidden="true">↗</span></a>
+              <a className={styles.secondaryAction} href="/press">Open press kit <span aria-hidden="true">→</span></a>
             </div>
           </div>
-
-          <aside className={styles.formatLedger} aria-labelledby="format-ledger-title">
-            <p id="format-ledger-title">Available formats to verify</p>
-            <ol>
-              {speakingFormats.map((format, index) => (
-                <li key={format.name}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{format.name}</strong>
-                </li>
-              ))}
-            </ol>
-          </aside>
+          <figure className={styles.heroPortrait}>
+            <Image src="/images/portraits/chuka-speaking.webp" width="1400" height="1751" priority sizes="(max-width: 900px) 100vw, 38vw" alt={portraitAlt} />
+            <figcaption>Chuka Dele-Oyeleru · Strategy &amp; Operations</figcaption>
+          </figure>
         </section>
-        <div className={styles.heroRule} aria-hidden="true">
-          <span>Question</span><i /><span>Working proposition</span><i /><span>Conversation</span>
-        </div>
       </div>
 
-      <section className={styles.propositions} aria-labelledby="propositions-title">
+      <section className={styles.propositions} aria-labelledby="sessions-title">
         <header className={styles.sectionHeader}>
-          <p>01 / Propositions in formation</p>
-          <div>
-            <h2 id="propositions-title">Three arguments to test in public.</h2>
-            <p>{speakingVerificationNote}</p>
-          </div>
+          <p>01 / Sessions</p>
+          <div><h2 id="sessions-title">Three useful arguments for <em>rooms in motion.</em></h2></div>
         </header>
-
         <div className={styles.propositionList}>
-          {speakingPropositions.map((proposition) => (
-            <article className={styles.proposition} key={proposition.index}>
-              <div className={styles.propositionIndex}>
-                <span>{proposition.index}</span>
-                <p>Provisional</p>
-              </div>
+          {speakingSessions.map((session) => (
+            <article className={styles.proposition} key={session.index}>
+              <div className={styles.propositionIndex}><span>{session.index}</span></div>
               <div className={styles.propositionBody}>
-                <h3>{proposition.title}</h3>
-                <p className={styles.premise}>{proposition.premise}</p>
+                <h3>{session.title}</h3>
+                <p className={styles.premise}>{session.proposition}</p>
                 <div className={styles.propositionDetails}>
-                  <div>
-                    <h4>Evidence basis</h4>
-                    <ul>
-                      {proposition.evidenceBasis.map((item) => <li key={item}>{item}</li>)}
-                    </ul>
-                  </div>
-                  <div>
-                    <h4>Questions for the room</h4>
-                    <ul>
-                      {proposition.questions.map((question) => <li key={question}>{question}</li>)}
-                    </ul>
-                  </div>
+                  <div><h4>Best-fit audience</h4><ul>{session.audiences.map((item) => <li key={item}>{item}</li>)}</ul></div>
+                  <div><h4>Audience takeaways</h4><ol>{session.takeaways.map((item) => <li key={item}>{item}</li>)}</ol></div>
                 </div>
+                <p className={styles.sessionFormats}>{session.formats.join(" · ")}</p>
               </div>
             </article>
           ))}
@@ -89,39 +53,21 @@ export function SpeakingPage() {
       </section>
 
       <section className={styles.formats} aria-labelledby="formats-title">
-        <header>
-          <p>02 / Formats</p>
-          <h2 id="formats-title">The format should serve the question.</h2>
-        </header>
-        <div className={styles.formatGrid}>
-          {speakingFormats.map((format) => (
-            <article key={format.name}>
-              <h3>{format.name}</h3>
-              <p>{format.description}</p>
-            </article>
-          ))}
-        </div>
+        <header><p>02 / Formats</p><h2 id="formats-title">Shape the format around the <em>room.</em></h2></header>
+        <div className={styles.formatGrid}>{primarySpeakingFormats.map((format) => <article key={format.name}><h3>{format.name}</h3><p>{format.description}</p></article>)}</div>
+        <p className={styles.secondaryFormats}>Also available for {secondarySpeakingFormats.join(" · ")}</p>
       </section>
 
-      <section className={styles.engagements} aria-labelledby="engagements-title">
-        <p>03 / Verified engagements</p>
-        <div>
-          <h2 id="engagements-title">No engagement history is published yet.</h2>
-          <p>
-            Nothing has been inferred or invented. Confirmed events, recordings, hosts and dates can be added after Chuka verifies them.
-          </p>
-        </div>
+      <section className={styles.why} aria-labelledby="why-title">
+        <Image src="/images/portraits/chuka-about.webp" width="1400" height="1751" sizes="(max-width: 900px) 100vw, 42vw" alt="Chuka Dele-Oyeleru seated in a black T-shirt against a dark studio backdrop." />
+        <div><p>03 / Perspective</p><h2 id="why-title">A practitioner’s view from where strategy meets execution.</h2><p>Chuka works on situations that cross strategy, operations, product, people, data and growth. His perspective focuses on determining what should exist, making the first version work, and organising it so people can execute and improve it.</p><a href="/work">See the work behind the talks <span aria-hidden="true">→</span></a></div>
       </section>
 
       <footer className={styles.booking}>
-        <p>Booking / interim route</p>
-        <h2>Have a room, audience or question in mind?</h2>
-        <p>
-          Until a direct booking address is verified, LinkedIn is the public contact route.
-        </p>
-        <a href={socialLinks.linkedin} target="_blank" rel="noreferrer">
-          Contact Chuka on LinkedIn <span aria-hidden="true">↗</span>
-        </a>
+        <p>Speaking enquiries</p>
+        <h2>Planning an event, leadership session or recorded conversation?</h2>
+        <p>Share the audience, topic and format you have in mind.</p>
+        <div className={styles.actions}><a href={socialLinks.linkedin} target="_blank" rel="noreferrer">Enquire on LinkedIn <span aria-hidden="true">↗</span></a><a href="/press">Open press kit <span aria-hidden="true">→</span></a></div>
       </footer>
     </main>
   );

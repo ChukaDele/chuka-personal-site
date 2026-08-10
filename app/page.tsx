@@ -1,13 +1,18 @@
+import type { Metadata } from "next";
 import { Preloader } from "../components/common/Preloader";
 import { HomeMotion } from "../components/home/HomeMotion";
 import { PracticeBlueprint } from "../components/home/PracticeBlueprint";
 import { ProjectMediaPlate } from "../components/home/ProjectMediaPlate";
 import { SiteNav } from "../components/layout/SiteNav";
 import { operatingStages, selectedWork, socialLinks } from "../content/site";
+import { absoluteSiteUrl, createPageMetadata, siteUrl } from "../lib/seo";
+
+export const metadata: Metadata = createPageMetadata({ title: "Chuka Dele-Oyeleru | Strategy & Operations", description: "Chuka Dele-Oyeleru builds the systems that take ambitious ideas from first brief to repeatable execution.", path: "/", imageAlt: "Chuka Dele-Oyeleru, Strategy & Operations" });
 
 export default function Home() {
   return (
     <main id="main-content">
+      {siteUrl ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "WebSite", "@id": `${absoluteSiteUrl("/")}#website`, url: absoluteSiteUrl("/"), name: "Chuka Dele-Oyeleru" }, { "@type": "Person", "@id": `${absoluteSiteUrl("/")}#chuka`, name: "Chuka Dele-Oyeleru", jobTitle: "Strategy & Operations", url: absoluteSiteUrl("/"), sameAs: [socialLinks.linkedin] }] }) }} /> : null}
       <Preloader />
       <HomeMotion />
 
@@ -18,7 +23,7 @@ export default function Home() {
         <div className="hero-layout">
           <div className="hero-copy">
             <p className="hero-name">CHUKA DELE-OYELERU</p>
-            <p className="eyebrow">STRATEGY &amp; OPERATIONS <span>·</span> LONDON</p>
+            <p className="eyebrow">STRATEGY &amp; OPERATIONS</p>
             <h1>I build the systems that take ambitious ideas from first brief to <em>repeatable execution.</em></h1>
             <p className="hero-summary">I work out what needs to be built, design how it should operate, and connect the people, workflows, data and tools required to make it work in practice.</p>
             <div className="hero-actions">
@@ -56,12 +61,13 @@ export default function Home() {
                 <ul aria-label={`${project.organisation} areas`}>
                   {project.signals.map((signal) => <li key={signal}>{signal}</li>)}
                 </ul>
+                <a className="folio-link" href={project.href}>{project.linkLabel} <span aria-hidden="true">→</span></a>
               </div>
               <ProjectMediaPlate project={project.slug as "etap" | "rvysion" | "bredge"} />
             </article>
           ))}
         </div>
-        <p className="work-note">Detailed case evidence will be published only when outcomes and artefacts can be verified and shared responsibly.</p>
+        <a className="text-link work-archive-link" href="/work">Browse the work archive <span aria-hidden="true">→</span></a>
       </section>
 
       <section className="practice" id="approach">
@@ -84,24 +90,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="studio-note">
-        <p className="section-marker">03 / STUDIES</p>
-        <div><h2>Work in progress stays <em>work in progress.</em></h2><p>This part of the site will hold prototypes, operating experiments and questions that are still being tested. Nothing is presented as finished before it is.</p></div>
-      </section>
-
       <section className="library-teaser">
-        <div><p className="section-marker">04 / LIBRARY</p><h2>A library with <em>margin notes.</em></h2></div>
+        <div><p className="section-marker">03 / LIBRARY</p><h2>A library with <em>margin notes.</em></h2></div>
         <div><p>Books, essays, papers, videos, talks, tools and courses sit beside the ideas they changed, the disagreements they prompted and the work they informed.</p><a className="text-link" href="/library">Enter the Commonplace <span aria-hidden="true">↗</span></a></div>
       </section>
 
       <section className="about-teaser">
-        <p className="section-marker">05 / ABOUT</p>
+        <p className="section-marker">04 / ABOUT</p>
         <div><h2>The breadth comes from the <em>work.</em></h2><p>I repeatedly work on situations that cross strategy, operations, product, people, data and growth. The point is not to collect disciplines. It is to use the ones a real operating problem requires.</p><a className="text-link" href="/about">Read the working principles <span aria-hidden="true">↗</span></a></div>
       </section>
 
       <footer className="correspondence">
         <div className="correspondence-grid" aria-hidden="true"><i /><i /><i /><i /></div>
-        <p className="section-marker">06 / CORRESPONDENCE</p>
+        <p className="section-marker">05 / CORRESPONDENCE</p>
         <div className="correspondence-copy">
           <p className="footer-overline">When the work crosses functions</p>
           <h2>Turn the pieces into a system people can <em>use.</em></h2>
@@ -109,7 +110,7 @@ export default function Home() {
         </div>
         <div className="footer-meta">
           <span>Chuka Dele-Oyeleru · Strategy &amp; Operations</span>
-          <div><a href="/work">Work</a><a href="/library">Library</a><a href="/speaking">Speaking</a><a href="/press">Press</a></div>
+          <div><a href="/work">Work</a><a href="/about">About</a><a href="/speaking">Speaking</a><a href="/library">Library</a><a href="/notes">Notes</a><a href="/resume">Résumé</a><a href="/press">Press kit</a></div>
           <span>© {new Date().getFullYear()}</span>
         </div>
       </footer>

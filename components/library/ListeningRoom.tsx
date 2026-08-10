@@ -19,6 +19,11 @@ export function ListeningRoom({ podcast }: { podcast: PodcastResource }) {
         <p className="listening-format">Podcast series</p>
         <h3>{podcast.title}</h3>
         <p>By {podcast.creator}</p>
+        <nav className="listening-links" aria-label="Founders podcast links">
+          <a href={podcast.youtube} target="_blank" rel="noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
+          <a href={podcast.spotify} target="_blank" rel="noreferrer">Listen on Spotify <span aria-hidden="true">↗</span></a>
+          <a href={podcast.website} target="_blank" rel="noreferrer">Visit Founders <span aria-hidden="true">↗</span></a>
+        </nav>
         <AnnotationStatus personalNote={podcast.personalNote} ideaIKept={podcast.ideaIKept} />
       </div>
     </section>

@@ -1,8 +1,8 @@
 export const navigation = [
   { label: "Work", href: "/work" },
-  { label: "Library", href: "/library" },
-  { label: "Speaking", href: "/speaking" },
   { label: "About", href: "/about" },
+  { label: "Speaking", href: "/speaking" },
+  { label: "Library", href: "/library" },
   { label: "Notes", href: "/notes" },
   { label: "Résumé", href: "/resume" },
 ];
@@ -21,7 +21,9 @@ export const selectedWork = [
     headline: "Building more reliable operations inside a growing insurtech.",
     description:
       "The scope spans company operations, people systems and process design across a growing insurtech.",
-    signals: ["Company operations", "Process design", "Cross-functional delivery"],
+    signals: ["Company operations", "People systems", "Process design", "Cross-functional delivery"],
+    href: "/work/etap",
+    linkLabel: "Open ETAP work file",
   },
   {
     index: "02",
@@ -32,6 +34,8 @@ export const selectedWork = [
     description:
       "Opportunity evaluation, proposition design, service architecture and delivery across work that spans product, brand and growth.",
     signals: ["Opportunity", "Offer", "Delivery"],
+    href: "/work/rvysion",
+    linkLabel: "Open Rvysion work file",
   },
   {
     index: "03",
@@ -42,6 +46,8 @@ export const selectedWork = [
     description:
       "Positioning, service architecture, delivery and go-to-market for a senior data partner that connects systems and makes business data useful.",
     signals: ["Positioning", "Service model", "Go-to-market"],
+    href: "/work/the-bredge",
+    linkLabel: "Open The Bredge venture file",
   },
 ];
 
