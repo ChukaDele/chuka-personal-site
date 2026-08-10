@@ -33,7 +33,26 @@ export function Preloader() {
     ].filter((element): element is HTMLElement => element instanceof HTMLElement);
     inertTargets.forEach((element) => element.setAttribute("inert", ""));
     soundButtonRef.current?.focus();
-    return () => inertTargets.forEach((element) => element.removeAttribute("inert"));
+    const dialog = document.querySelector<HTMLElement>(".preloader-choice");
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Tab" || !dialog) return;
+      const controls = Array.from(dialog.querySelectorAll<HTMLElement>("button:not([disabled]), a[href]"));
+      if (!controls.length) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      inertTargets.forEach((element) => element.removeAttribute("inert"));
+    };
   }, [requiresChoice]);
 
   const enter = (withSound: boolean) => {
