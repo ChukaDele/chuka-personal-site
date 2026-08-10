@@ -35,7 +35,9 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
 
   const ensureContext = useCallback(() => {
     const AudioContextClass = window.AudioContext;
-    if (!contextRef.current) contextRef.current = new AudioContextClass();
+    if (!contextRef.current || contextRef.current.state === "closed") {
+      contextRef.current = new AudioContextClass();
+    }
     if (contextRef.current.state === "suspended") void contextRef.current.resume();
     return contextRef.current;
   }, []);
@@ -106,9 +108,12 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibility);
       document.removeEventListener("click", handleInternalNavigation, true);
-      void contextRef.current?.close();
     };
   }, [enabled, playCue]);
+
+  useEffect(() => () => {
+    void contextRef.current?.close();
+  }, []);
 
   const value = useMemo(() => ({ enabled, preferenceReady, chooseSound, playCue }), [enabled, preferenceReady, chooseSound, playCue]);
   return <SoundContext.Provider value={value}>{children}</SoundContext.Provider>;
