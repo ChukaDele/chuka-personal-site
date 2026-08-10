@@ -18,8 +18,11 @@ test("renders the Strategy & Operations home page", async () => {
   assert.match(html, /I build the systems that take ambitious ideas/);
   assert.match(html, /CHUKA DELE-OYELERU/);
   assert.match(html, /Selected work/i);
-  assert.match(html, /Building more reliable operations/);
-  assert.match(html, /data team companies can plug into/);
+  assert.match(html, /seven-figure enterprise premiums/i);
+  assert.match(html, /57% faster claims turnaround/i);
+  assert.match(html, /35% client-base growth/i);
+  assert.match(html, /data team growing companies can plug into/i);
+  assert.match(html, /MANCHESTER/i);
   assert.match(html, /Observation becomes structure/);
   assert.match(html, /An operating system taking shape/);
   assert.match(html, /OBSERVE \/ AMBIGUOUS SIGNALS/);
@@ -27,7 +30,7 @@ test("renders the Strategy & Operations home page", async () => {
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
-for (const [pathname, label] of [["/work", "Project archive"], ["/notes", "The working"], ["/about", "The breadth comes from"], ["/resume", "Professional record"], ["/speaking", "Turning ambiguity into"], ["/press", "Press kit"]]) {
+for (const [pathname, label] of [["/work", "Project archive"], ["/notes", "The working"], ["/about", "The breadth comes from"], ["/resume", "Professional"], ["/speaking", "Turning ambiguity into"], ["/press", "Press kit"]]) {
   test(`renders the ${pathname} Phase 2 page`, async () => {
     const response = await render(pathname);
     assert.equal(response.status, 200);
@@ -42,6 +45,34 @@ for (const [pathname, label] of [["/work/etap", "ETAP in context"], ["/work/rvys
     assert.match(await response.text(), new RegExp(label));
   });
 }
+
+test("publishes the conservative, owner-authorized ETAP evidence", async () => {
+  const response = await render("/work/etap");
+  const html = await response.text();
+  assert.match(html, /seven-figure gross premiums within its first few months/i);
+  assert.match(html, /Reduced claims turnaround by 57%/i);
+  assert.match(html, /financial modelling, investor materials and data-room work/i);
+  assert.doesNotMatch(html, /£1m|\$1\.6m|68%|18 NPS|raised \$8m/i);
+});
+
+test("renders a decision-ready web résumé from the authoritative fact pack", async () => {
+  const response = await render("/resume");
+  const html = await response.text();
+  assert.match(html, /Manchester, UK/i);
+  assert.match(html, /Mar 2024–Present/i);
+  assert.match(html, /Alliance Manchester Business School/i);
+  assert.match(html, /BSc Quantity Surveying/i);
+  assert.match(html, /SHRM-SCP/i);
+  assert.match(html, /View LinkedIn/i);
+});
+
+test("keeps the current Bredge proposition and rejects legacy language", async () => {
+  const response = await render("/work/the-bredge");
+  const html = await response.text();
+  assert.match(html, /embedded data partner for growing businesses/i);
+  assert.match(html, /data team growing companies can plug into/i);
+  assert.doesNotMatch(html, /job stacking|proxy delivery|talent outsourcing|job-search service/i);
+});
 
 test("renders the Commonplace without an eager YouTube player", async () => {
   const response = await render("/library");

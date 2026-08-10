@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { absoluteSiteUrl, siteIndexable } from "../lib/seo";
 
-const canonicalPaths = ["/", "/work", "/work/etap", "/work/rvysion", "/work/the-bredge", "/about", "/speaking", "/library", "/resume", "/press"];
+const canonicalPaths = ["/", "/work", "/work/etap", "/work/rvysion", "/work/the-bredge", "/about", "/speaking", "/library", "/notes", "/resume", "/press"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!siteIndexable) return [];

@@ -25,7 +25,7 @@ export default function Home() {
         <div className="hero-layout">
           <div className="hero-copy">
             <p className="hero-name">CHUKA DELE-OYELERU</p>
-            <p className="eyebrow">STRATEGY &amp; OPERATIONS</p>
+            <p className="eyebrow">STRATEGY &amp; OPERATIONS · MANCHESTER</p>
             <h1>I build the systems that take ambitious ideas from first brief to <em>repeatable execution.</em></h1>
             <p className="hero-summary">I work out what needs to be built, design how it should operate, and connect the people, workflows, data and tools required to make it work in practice.</p>
             <div className="hero-actions">
@@ -60,6 +60,9 @@ export default function Home() {
                 <p className="eyebrow">{project.context}</p>
                 <h3>{project.headline}</h3>
                 <p>{project.description}</p>
+                <ol className="folio-proof" aria-label={`${project.organisation} evidence`}>
+                  {project.proof.map((item) => <li key={item}>{item}</li>)}
+                </ol>
                 <ul aria-label={`${project.organisation} areas`}>
                   {project.signals.map((signal) => <li key={signal}>{signal}</li>)}
                 </ul>
@@ -113,7 +116,7 @@ export default function Home() {
         </div>
         <div className="footer-meta">
           <span>Chuka Dele-Oyeleru · Strategy &amp; Operations</span>
-          <div><ResourceAction href="/work" variant="compact">Work</ResourceAction><ResourceAction href="/about" variant="compact">About</ResourceAction><ResourceAction href="/speaking" variant="compact">Speaking</ResourceAction><ResourceAction href="/library" variant="compact">Library</ResourceAction><ResourceAction href="/resume" variant="compact">Résumé</ResourceAction><ResourceAction href="/press" variant="compact">Press kit</ResourceAction></div>
+          <div><ResourceAction href="/work" variant="compact">Work</ResourceAction><ResourceAction href="/about" variant="compact">About</ResourceAction><ResourceAction href="/speaking" variant="compact">Speaking</ResourceAction><ResourceAction href="/library" variant="compact">Library</ResourceAction><ResourceAction href="/notes" variant="compact">Notes</ResourceAction><ResourceAction href="/resume" variant="compact">Résumé</ResourceAction><ResourceAction href="/press" variant="compact">Press kit</ResourceAction></div>
           <span>© {new Date().getFullYear()}</span>
         </div>
       </footer>

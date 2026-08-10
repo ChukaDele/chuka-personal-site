@@ -13,13 +13,17 @@
 .caseNumber { color: var(--oxide); font: 400 clamp(4.5rem,8vw,9rem)/.75 var(--serif); }
 .case h2 { max-width: 770px; margin: 13px 0 24px; font: 400 clamp(2.8rem,5vw,6rem)/.88 var(--serif); letter-spacing: -.06em; }
 .case p { max-width: 640px; color: var(--graphite); line-height: 1.58; }
+.case .caseRole { margin:-9px 0 22px; color:var(--ink); font:500 11px var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.proofList { max-width:700px; margin:30px 0 0; padding:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); list-style:none; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.proofList li { padding:14px 12px 14px 0; font:500 11px/1.4 var(--mono); }
+.proofList li + li { padding-left:12px; border-left:1px solid var(--line); }
 .signals { display: flex; flex-wrap: wrap; gap: 8px; margin: 27px 0 0; padding: 0; list-style: none; }
 .signals li { padding: 8px 10px; border: 1px solid currentColor; font: 9px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .caseLink { min-height:44px; margin-top:24px; display:inline-flex; align-items:center; gap:10px; border-bottom:1px solid currentColor; font-size:13px; }
 .workFileHero .heroCopy > .marker { margin:0 0 18px; }
 .fileOverview { padding:clamp(80px,10vw,150px) clamp(22px,8vw,124px); display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(50px,9vw,145px); background:#dce7e6; }
 .fileOverview h2,.fieldMaterial h2,.systemMaterial h2 { margin:18px 0 0; font:400 clamp(3.7rem,7vw,8rem)/.84 var(--serif); letter-spacing:-.065em; }
-.fileOverview>div:last-child>p { margin:0 0 45px; font-size:17px; line-height:1.7; }.fileOverview h3 { font:500 10px var(--mono); letter-spacing:.12em; text-transform:uppercase; }
+.fileOverview>div:last-child>p { margin:0 0 32px; font-size:17px; line-height:1.7; }.fileOverview .fileRole { margin-bottom:12px; color:var(--ink); font:500 10px var(--mono); letter-spacing:.12em; text-transform:uppercase; }.fileOverview h3 { margin-top:42px; font:500 10px var(--mono); letter-spacing:.12em; text-transform:uppercase; }
 .fieldMaterial,.systemMaterial { padding:clamp(90px,11vw,165px) clamp(22px,8vw,124px); color:#f2eee5; background:#152a34; }.fieldMaterial header,.systemMaterial header { display:grid; grid-template-columns:22% 1fr; gap:40px; }.fieldGrid { margin-top:70px; display:grid; grid-template-columns:1.15fr .85fr; gap:20px; align-items:start; }.fieldGrid figure { margin:0; }.fieldGrid img { width:100%; height:auto; display:block; }.fieldGrid figcaption { padding:12px 0; color:#a9cad6; font:9px var(--mono); letter-spacing:.09em; text-transform:uppercase; }.systemMaterial>figure { width:min(620px,100%); margin:70px auto 0; }
 .workFileNav { display:grid; grid-template-columns:1fr auto 1fr; border-top:1px solid var(--line); }.workFileNav a { min-height:130px; padding:28px clamp(22px,4vw,60px); display:flex; flex-direction:column; justify-content:center; font:400 28px var(--serif); }.workFileNav a:nth-child(2){border-left:1px solid var(--line);border-right:1px solid var(--line);text-align:center}.workFileNav a:last-child{text-align:right}.workFileNav span{margin-bottom:8px;color:var(--graphite);font:9px var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .caseStudy { padding: clamp(90px,11vw,165px) clamp(22px,8vw,124px); background:#17313b; color:#f2eee5; }
@@ -29,9 +33,24 @@
 .caseStudyGrid article { min-height:240px; padding:28px 28px 28px 0; border-right:1px solid rgba(255,255,255,.25); }
 .caseStudyGrid article + article { padding-left:28px; }
 .caseStudyGrid h3 { margin:0 0 22px; font:400 30px var(--serif); }.caseStudyGrid p { color:#c7d3d7; line-height:1.55; }
+.caseStudyGrid article>.marker { margin-bottom:18px; color:#9fc0d0; }
+.caseStudyGrid strong { display:block; margin-top:24px; color:#f2eee5; font:500 13px/1.55 var(--sans); }
+.fileReflection { padding:clamp(80px,10vw,145px) clamp(22px,8vw,124px); display:grid; grid-template-columns:22% minmax(0,760px); gap:40px; background:#dce7e6; }
+.fileReflection h2 { margin:0 0 28px; font:400 clamp(3.4rem,6vw,6.8rem)/.86 var(--serif); letter-spacing:-.06em; }
+.fileReflection div>p { color:var(--graphite); font-size:17px; line-height:1.7; }
+.fileReflection .recognition { width:fit-content; margin-top:30px; padding:11px 13px; border:1px solid var(--oxide); color:var(--ink); font:500 10px var(--mono); letter-spacing:.08em; text-transform:uppercase; }
 .aboutBody { padding: 0 clamp(22px,8vw,124px) clamp(100px,12vw,180px); display:grid; grid-template-columns: .7fr 1.3fr; gap:clamp(50px,9vw,140px); }
 .aboutHero { grid-template-columns:minmax(130px,.22fr) minmax(0,1fr) minmax(300px,.65fr); align-items:center; }.aboutHero figure{margin:0;height:min(70svh,760px);overflow:hidden}.aboutHero img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 30%}.aboutIntro{padding:clamp(90px,11vw,165px) clamp(22px,8vw,124px);display:grid;grid-template-columns:22% 1fr;gap:40px;background:#dce7e6}.aboutIntro h2{max-width:930px;margin:0;font:400 clamp(3.7rem,7vw,8rem)/.84 var(--serif);letter-spacing:-.065em}.aboutIntro div>p{max-width:700px;margin:32px 0;line-height:1.7}.aboutIntro nav{display:flex;flex-wrap:wrap;gap:18px 28px}.aboutIntro a{min-height:44px;display:inline-flex;align-items:center;border-bottom:1px solid currentColor}
+.aboutPath { padding:clamp(90px,11vw,165px) clamp(22px,8vw,124px); display:grid; grid-template-columns:22% 1fr; gap:40px; color:#f2eee5; background:#17313b; }
+.aboutPath h2 { max-width:930px; margin:0; font:400 clamp(3.5rem,6.5vw,7.3rem)/.85 var(--serif); letter-spacing:-.06em; }
+.aboutPath ol { margin:65px 0 0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); list-style:none; border-top:1px solid rgba(255,255,255,.25); }
+.aboutPath li { padding:24px 24px 0 0; border-right:1px solid rgba(255,255,255,.25); }
+.aboutPath li + li { padding-left:24px; }
+.aboutPath span { display:block; margin-bottom:18px; color:#9fc0d0; font:500 9px var(--mono); letter-spacing:.1em; text-transform:uppercase; }
+.aboutPath strong { font:400 27px var(--serif); }
+.aboutPath li p { color:#c7d3d7; line-height:1.55; }
 .aboutStatement { font:400 clamp(2.6rem,4.7vw,5.4rem)/.96 var(--serif); letter-spacing:-.05em; }
+.aboutPersonal { max-width:470px; color:var(--graphite); line-height:1.65; }
 .principles { margin:0; padding:0; list-style:none; counter-reset:item; }
 .principles li { display:grid; grid-template-columns:48px 1fr; gap:20px; padding:24px 0; border-top:1px solid var(--line); }
 .principles li::before { counter-increment:item; content:"0" counter(item); color:var(--oxide); font:10px var(--mono); }
@@ -41,8 +60,19 @@
 .noteColumn { min-height:330px; padding:28px 28px 28px 0; border-right:1px solid var(--line); }
 .noteColumn + .noteColumn { padding-left:28px; }.noteColumn h2 { margin:0 0 70px; font:400 35px var(--serif); }.noteColumn p { color:var(--graphite); line-height:1.55; }
 .resumeSheet { margin:0 clamp(22px,8vw,124px) clamp(100px,12vw,180px); padding:clamp(32px,5vw,70px); border:1px solid var(--line); background:#f4f0e8; }
-.resumeTop { display:grid; grid-template-columns:1fr auto; gap:30px; align-items:end; padding-bottom:35px; border-bottom:1px solid var(--line); }.resumeTop h2 { margin:0; font:400 clamp(2.8rem,5vw,5.8rem)/.9 var(--serif); }.resumeTop a { min-height:46px; display:inline-flex; align-items:center; padding:0 15px; border:1px solid currentColor; }
+.resumeTop { display:grid; grid-template-columns:1fr auto; gap:30px; align-items:end; padding-bottom:35px; border-bottom:1px solid var(--line); }.resumeTop h2 { margin:8px 0; font:400 clamp(2.8rem,5vw,5.8rem)/.9 var(--serif); }.resumeTop>div>p:last-child { margin:0; color:var(--graphite); }.resumeTop a { min-height:46px; display:inline-flex; align-items:center; padding:0 15px; border:1px solid currentColor; }
+.resumeExperience { padding-top:42px; }
+.resumeHeading { margin:0 0 14px; font:500 10px var(--mono); letter-spacing:.12em; text-transform:uppercase; }
+.resumeExperience article { padding:34px 0; display:grid; grid-template-columns:minmax(220px,.65fr) minmax(0,1fr); gap:10px 55px; border-top:1px solid var(--line); }
+.resumeRecordHead { grid-row:1 / span 4; }
+.resumeRecordHead h4 { margin:10px 0 14px; font:400 38px var(--serif); }
+.resumeRecordHead>p { margin:0; color:var(--graphite); font:500 11px/1.5 var(--mono); }
+.resumeExperience article>p { margin:0; color:var(--graphite); line-height:1.6; }
+.resumeExperience article>ul { margin:18px 0 0; padding-left:18px; }
+.resumeExperience article>li,.resumeExperience li { margin:8px 0; line-height:1.55; }
+.resumeExperience article>a { width:fit-content; min-height:44px; margin-top:10px; display:inline-flex; align-items:center; gap:9px; border-bottom:1px solid currentColor; }
 .resumeSections { display:grid; grid-template-columns:1fr 1fr; gap:0 50px; }.resumeSections section { padding:32px 0; border-bottom:1px solid var(--line); }.resumeSections h3 { font:500 10px var(--mono); letter-spacing:.12em; text-transform:uppercase; }.resumeSections p { color:var(--graphite); line-height:1.55; }
+.resumeItem { margin-top:24px; }.resumeItem h4 { margin:7px 0 4px; font:400 26px var(--serif); }.resumeItem p { margin:0; }
 .resumeRecords{display:grid;grid-template-columns:repeat(3,1fr);gap:0}.resumeRecords article{padding:36px 28px 36px 0;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}.resumeRecords article+article{padding-left:28px}.resumeRecords h3{margin:14px 0;font:400 36px var(--serif)}.resumeRecords article>p:not(.marker){color:var(--graphite);line-height:1.55}.resumeRecords article>a{min-height:44px;margin-top:22px;display:inline-flex;align-items:center;border-bottom:1px solid currentColor}
-@media (max-width: 899px) { .hero,.notice,.aboutHero { grid-template-columns:1fr; }.aboutHero figure{height:720px}.case { grid-template-columns:110px 1fr; }.caseStudyGrid,.noteIndex,.fileOverview,.fieldGrid,.resumeRecords { grid-template-columns:1fr; }.resumeRecords article{padding:28px 0!important;border-right:0}.fieldMaterial header,.systemMaterial header{grid-template-columns:1fr}.caseStudyGrid article,.noteColumn { min-height:auto; padding:28px 0!important; border-right:0; border-bottom:1px solid currentColor; }.aboutBody,.aboutIntro { grid-template-columns:1fr; }.caseStudyHead { grid-template-columns:1fr; } }
-@media (max-width: 680px) { .hero { min-height:auto; padding-top:70px; }.hero h1 { font-size:clamp(3rem,16vw,6rem); }.notice { margin-left:22px; margin-right:22px; }.case { grid-template-columns:1fr; }.caseNumber { font-size:4.8rem; }.resumeTop,.resumeSections { grid-template-columns:1fr; }.workFileNav{grid-template-columns:1fr}.workFileNav a,.workFileNav a:last-child{text-align:left;border:0;border-bottom:1px solid var(--line)!important} }
+@media (max-width: 899px) { .hero,.notice,.aboutHero { grid-template-columns:1fr; }.aboutHero figure{height:720px}.case { grid-template-columns:110px 1fr; }.caseStudyGrid,.noteIndex,.fileOverview,.fieldGrid,.resumeRecords { grid-template-columns:1fr; }.resumeRecords article{padding:28px 0!important;border-right:0}.fieldMaterial header,.systemMaterial header{grid-template-columns:1fr}.caseStudyGrid article,.noteColumn { min-height:auto; padding:28px 0!important; border-right:0; border-bottom:1px solid currentColor; }.fileReflection,.aboutBody,.aboutIntro,.aboutPath { grid-template-columns:1fr; }.aboutPath ol { grid-template-columns:1fr 1fr; }.aboutPath li { padding-bottom:24px; border-bottom:1px solid rgba(255,255,255,.25); }.caseStudyHead { grid-template-columns:1fr; }.resumeExperience article { grid-template-columns:1fr; }.resumeRecordHead { grid-row:auto; } }
+@media (max-width: 680px) { .hero { min-height:auto; padding-top:70px; }.hero h1 { font-size:clamp(3rem,16vw,6rem); }.notice { margin-left:22px; margin-right:22px; }.case { grid-template-columns:1fr; }.caseNumber { font-size:4.8rem; }.proofList { grid-template-columns:1fr; }.proofList li { padding:12px 0; }.proofList li + li { padding-left:0; border-left:0; border-top:1px solid var(--line); }.aboutPath ol { grid-template-columns:1fr; }.aboutPath li,.aboutPath li+li { padding:22px 0; border-right:0; }.resumeTop,.resumeSections { grid-template-columns:1fr; }.workFileNav{grid-template-columns:1fr}.workFileNav a,.workFileNav a:last-child{text-align:left;border:0;border-bottom:1px solid var(--line)!important} }
