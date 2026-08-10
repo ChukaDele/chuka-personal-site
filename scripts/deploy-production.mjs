@@ -4,6 +4,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 const runGit = (...args) => execFileSync("git", args, { encoding: "utf8" }).trim();
 const branch = runGit("branch", "--show-current");
 const sha = runGit("rev-parse", "HEAD");
+const enableIndexing = process.argv.includes("--enable-indexing");
+const allowIndexing = enableIndexing ? "true" : "false";
 
 function assertReleaseTree() {
   if (branch !== "main") {
@@ -11,6 +13,9 @@ function assertReleaseTree() {
   }
   if (runGit("status", "--porcelain")) {
     throw new Error("Production deploy refused: the worktree is not clean.");
+  }
+  if (enableIndexing && process.env.INDEXING_APPROVED_SHA !== sha) {
+    throw new Error("Indexing promotion refused: INDEXING_APPROVED_SHA must equal the exact production-QA Git SHA.");
   }
 }
 
@@ -29,7 +34,7 @@ assertReleaseTree();
 const productionEnv = {
   ...process.env,
   SITE_URL: "https://chukadele.com",
-  ALLOW_INDEXING: "true",
+  ALLOW_INDEXING: allowIndexing,
 };
 run("npm", ["run", "build"], productionEnv);
 assertReleaseTree();
@@ -40,5 +45,5 @@ run("./node_modules/.bin/wrangler", [
   "--name", "chuka-personal-site",
   "--var", `DEPLOY_SHA:${sha}`,
   "--var", "SITE_URL:https://chukadele.com",
-  "--var", "ALLOW_INDEXING:true",
+  "--var", `ALLOW_INDEXING:${allowIndexing}`,
 ], { ...productionEnv, WRANGLER_LOG_PATH: ".wrangler/wrangler.log" });
