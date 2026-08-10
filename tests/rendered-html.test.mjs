@@ -21,7 +21,8 @@ test("renders the Strategy & Operations home page", async () => {
   assert.match(html, /Building more reliable operations/);
   assert.match(html, /data team companies can plug into/);
   assert.match(html, /Observation becomes structure/);
-  assert.match(html, /From observation to operating system/);
+  assert.match(html, /An operating system taking shape/);
+  assert.match(html, /OBSERVE \/ AMBIGUOUS SIGNALS/);
   assert.match(html, /href="\/library"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });

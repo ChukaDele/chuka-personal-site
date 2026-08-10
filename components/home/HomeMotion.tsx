@@ -1,8 +1,39 @@
 "use client";
 
 import { useEffect } from "react";
+import { useSound } from "../sound/SoundProvider";
 
 export function HomeMotion() {
+  const { playChapterCue, playScrollCue, setAmbientSection } = useSound();
+
+  useEffect(() => {
+    const sections = [
+      [".hero", "hero", null],
+      [".work-section", "work", "work"],
+      [".practice", "practice", "practice"],
+      [".library-teaser", "library", "library"],
+      [".correspondence", "correspondence", "correspondence"],
+    ] as const;
+    let activeSection = "";
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      const match = sections.find(([selector]) => visible.target.matches(selector));
+      if (!match || activeSection === match[1]) return;
+      activeSection = match[1];
+      setAmbientSection(match[1]);
+      if (match[2]) playChapterCue(match[2]);
+    }, { rootMargin: "-28% 0px -48%", threshold: [0.15, 0.35, 0.6] });
+    sections.forEach(([selector]) => {
+      const element = document.querySelector(selector);
+      if (element) observer.observe(element);
+    });
+    return () => {
+      observer.disconnect();
+      setAmbientSection(null);
+    };
+  }, [playChapterCue, setAmbientSection]);
+
   useEffect(() => {
     let cancelled = false;
     let started = false;
@@ -33,7 +64,18 @@ export function HomeMotion() {
             .fromTo(".section-head", { y: 50, opacity: 0.55 }, { y: 0, opacity: 1, immediateRender: false, ease: "power1.out" }, 0.62);
 
           const practiceTimeline = gsap.timeline({
-            scrollTrigger: { trigger: ".practice", start: "top top", end: "+=180%", scrub: 0.75, pin: true, anticipatePin: 1 },
+            scrollTrigger: {
+              trigger: ".practice",
+              start: "top top",
+              end: "+=200%",
+              scrub: 0.75,
+              pin: true,
+              anticipatePin: 1,
+              onUpdate: (self) => {
+                const stage = Math.min(5, Math.floor(self.progress * 5) + 1);
+                document.querySelector<HTMLElement>("[data-blueprint]")?.setAttribute("data-blueprint-active-state", ["observe", "define", "construct", "organise", "improve"][stage - 1]);
+              },
+            },
           });
           const blueprintLayers = {
             observe: "[data-blueprint-layer='observe']",
@@ -50,12 +92,22 @@ export function HomeMotion() {
             .set(blueprintLayers.observe, { opacity: 1 }, 0)
             .set(stageItems.slice(1), { opacity: 0.42, x: 14 }, 0)
             .set(stageIndicators.slice(1), { scaleX: 0.15 }, 0)
-            .to(blueprintLayers.observe, { opacity: 0.24, duration: 0.16, ease: "power1.inOut" }, 0.16)
-            .fromTo(blueprintLayers.define, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.inOut", immediateRender: false }, 0.16)
-            .fromTo(blueprintLayers.construct, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.inOut", immediateRender: false }, 0.34)
-            .fromTo(blueprintLayers.organise, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.inOut", immediateRender: false }, 0.52)
-            .fromTo(blueprintLayers.improve, { opacity: 0 }, { opacity: 1, duration: 0.22, ease: "power1.inOut", immediateRender: false }, 0.7)
-            .fromTo("[data-blueprint-loop]", { strokeDashoffset: 500 }, { strokeDashoffset: 0, duration: 0.22, ease: "power1.inOut", immediateRender: false }, 0.7);
+            .to(blueprintLayers.observe, { opacity: 0.16, duration: 0.12, ease: "power2.inOut" }, 0.17)
+            .fromTo(blueprintLayers.define, { opacity: 0 }, { opacity: 1, duration: 0.13, ease: "power2.inOut", immediateRender: false }, 0.17)
+            .to(blueprintLayers.define, { opacity: 0.28, duration: 0.12, ease: "power2.inOut" }, 0.36)
+            .fromTo(blueprintLayers.construct, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.inOut", immediateRender: false }, 0.36)
+            .fromTo("[data-blueprint-part='module']", { y: 10 }, { y: 0, duration: 0.13, stagger: 0.025, ease: "power2.out", immediateRender: false }, 0.36)
+            .to(blueprintLayers.construct, { opacity: 0.62, duration: 0.11, ease: "power2.inOut" }, 0.56)
+            .fromTo(blueprintLayers.organise, { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power2.inOut", immediateRender: false }, 0.56)
+            .fromTo(blueprintLayers.improve, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.inOut", immediateRender: false }, 0.76)
+            .fromTo("[data-blueprint-loop]", { strokeDashoffset: 620 }, { strokeDashoffset: 0, duration: 0.18, ease: "power2.inOut", immediateRender: false }, 0.76)
+            .fromTo("[data-blueprint-part='reinforcement']", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "power2.out", immediateRender: false }, 0.88);
+
+          practiceTimeline
+            .call(() => playScrollCue("threshold"), [], 0.17)
+            .call(() => playScrollCue("construction"), [], 0.36)
+            .call(() => playScrollCue("threshold"), [], 0.56)
+            .call(() => playScrollCue("completion"), [], 0.76);
 
           stageItems.slice(1).forEach((item, index) => {
             const position = 0.16 + index * 0.18;
@@ -83,7 +135,7 @@ export function HomeMotion() {
       eligibility.removeEventListener("change", start);
       cleanup();
     };
-  }, []);
+  }, [playScrollCue]);
 
   return null;
 }

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Preloader } from "../components/common/Preloader";
 import { HomeMotion } from "../components/home/HomeMotion";
 import { PracticeBlueprint } from "../components/home/PracticeBlueprint";
+import { PracticeMobileController } from "../components/home/PracticeMobileController";
 import { ProjectMediaPlate } from "../components/home/ProjectMediaPlate";
 import { SiteNav } from "../components/layout/SiteNav";
+import { ResourceAction } from "../components/common/ResourceAction";
 import { operatingStages, selectedWork, socialLinks } from "../content/site";
 import { absoluteSiteUrl, createPageMetadata, siteUrl } from "../lib/seo";
 
@@ -15,7 +16,6 @@ export default function Home() {
       <link rel="preload" as="image" href="/art/durer-melencolia-hero.webp" type="image/webp" media="(min-width: 681px)" fetchPriority="high" />
       <link rel="preload" as="image" href="/art/durer-melencolia-mobile.webp" type="image/webp" media="(max-width: 680px)" fetchPriority="high" />
       {siteUrl ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "WebSite", "@id": `${absoluteSiteUrl("/")}#website`, url: absoluteSiteUrl("/"), name: "Chuka Dele-Oyeleru" }, { "@type": "Person", "@id": `${absoluteSiteUrl("/")}#chuka`, name: "Chuka Dele-Oyeleru", jobTitle: "Strategy & Operations", url: absoluteSiteUrl("/"), sameAs: [socialLinks.linkedin] }] }) }} /> : null}
-      <Preloader />
       <HomeMotion />
 
       <section className="hero" id="top">
@@ -29,8 +29,8 @@ export default function Home() {
             <h1>I build the systems that take ambitious ideas from first brief to <em>repeatable execution.</em></h1>
             <p className="hero-summary">I work out what needs to be built, design how it should operate, and connect the people, workflows, data and tools required to make it work in practice.</p>
             <div className="hero-actions">
-              <a href="#work" className="button button-light">View selected work <span aria-hidden="true">↓</span></a>
-              <a href={socialLinks.linkedin} className="text-link" target="_blank" rel="noreferrer">View LinkedIn <span aria-hidden="true">↗</span></a>
+              <ResourceAction href="#work" className="button button-light" variant="button" indicator="down">View selected work</ResourceAction>
+              <ResourceAction href={socialLinks.linkedin} className="text-link" target="_blank" rel="noreferrer" indicator="external">View LinkedIn</ResourceAction>
             </div>
           </div>
           <div className="hero-system" aria-hidden="true">
@@ -63,16 +63,17 @@ export default function Home() {
                 <ul aria-label={`${project.organisation} areas`}>
                   {project.signals.map((signal) => <li key={signal}>{signal}</li>)}
                 </ul>
-                <a className="folio-link" href={project.href}>{project.linkLabel} <span aria-hidden="true">→</span></a>
+                <ResourceAction className="folio-link" href={project.href} indicator="forward">{project.linkLabel}</ResourceAction>
               </div>
               <ProjectMediaPlate project={project.slug as "etap" | "rvysion" | "bredge"} />
             </article>
           ))}
         </div>
-        <a className="text-link work-archive-link" href="/work">Browse the work archive <span aria-hidden="true">→</span></a>
+        <ResourceAction className="text-link work-archive-link" href="/work" indicator="forward">Browse the work archive</ResourceAction>
       </section>
 
-      <section className="practice" id="approach">
+      <section className="practice" id="approach" data-mobile-stage="01">
+        <PracticeMobileController />
         <div className="practice-art" aria-hidden="true" />
         <div className="practice-grid" aria-hidden="true" />
         <div className="practice-intro">
@@ -94,12 +95,12 @@ export default function Home() {
 
       <section className="library-teaser">
         <div><p className="section-marker">03 / LIBRARY</p><h2>A library with <em>margin notes.</em></h2></div>
-        <div><p>Books, essays, papers, videos, talks, tools and courses sit beside the ideas they changed, the disagreements they prompted and the work they informed.</p><a className="text-link" href="/library">Enter the Commonplace <span aria-hidden="true">↗</span></a></div>
+        <div><p>Books, essays, papers, videos, talks, tools and courses sit beside the ideas they changed, the disagreements they prompted and the work they informed.</p><ResourceAction className="text-link" href="/library" indicator="forward">Enter the Commonplace</ResourceAction></div>
       </section>
 
       <section className="about-teaser">
         <p className="section-marker">04 / ABOUT</p>
-        <div><h2>The breadth comes from the <em>work.</em></h2><p>I repeatedly work on situations that cross strategy, operations, product, people, data and growth. The point is not to collect disciplines. It is to use the ones a real operating problem requires.</p><a className="text-link" href="/about">Read the working principles <span aria-hidden="true">↗</span></a></div>
+        <div><h2>The breadth comes from the <em>work.</em></h2><p>I repeatedly work on situations that cross strategy, operations, product, people, data and growth. The point is not to collect disciplines. It is to use the ones a real operating problem requires.</p><ResourceAction className="text-link" href="/about" indicator="forward">Read the working principles</ResourceAction></div>
       </section>
 
       <footer className="correspondence">
@@ -108,11 +109,11 @@ export default function Home() {
         <div className="correspondence-copy">
           <p className="footer-overline">When the work crosses functions</p>
           <h2>Turn the pieces into a system people can <em>use.</em></h2>
-          <a href={socialLinks.linkedin} className="button button-light" target="_blank" rel="noreferrer">View LinkedIn <span aria-hidden="true">↗</span></a>
+          <ResourceAction href={socialLinks.linkedin} className="button button-light" variant="button" target="_blank" rel="noreferrer" indicator="external">View LinkedIn</ResourceAction>
         </div>
         <div className="footer-meta">
           <span>Chuka Dele-Oyeleru · Strategy &amp; Operations</span>
-          <div><a href="/work">Work</a><a href="/about">About</a><a href="/speaking">Speaking</a><a href="/library">Library</a><a href="/notes">Notes</a><a href="/resume">Résumé</a><a href="/press">Press kit</a></div>
+          <div><ResourceAction href="/work" variant="compact">Work</ResourceAction><ResourceAction href="/about" variant="compact">About</ResourceAction><ResourceAction href="/speaking" variant="compact">Speaking</ResourceAction><ResourceAction href="/library" variant="compact">Library</ResourceAction><ResourceAction href="/notes" variant="compact">Notes</ResourceAction><ResourceAction href="/resume" variant="compact">Résumé</ResourceAction><ResourceAction href="/press" variant="compact">Press kit</ResourceAction></div>
           <span>© {new Date().getFullYear()}</span>
         </div>
       </footer>

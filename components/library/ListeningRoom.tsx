@@ -1,5 +1,6 @@
 import type { PodcastResource } from "../../content/library";
 import { AnnotationStatus } from "./AnnotationStatus";
+import { ResourceAction } from "../common/ResourceAction";
 
 export function ListeningRoom({ podcast }: { podcast: PodcastResource }) {
   return (
@@ -20,9 +21,9 @@ export function ListeningRoom({ podcast }: { podcast: PodcastResource }) {
         <h3>{podcast.title}</h3>
         <p>By {podcast.creator}</p>
         <nav className="listening-links" aria-label="Founders podcast links">
-          <a href={podcast.youtube} target="_blank" rel="noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>
-          <a href={podcast.spotify} target="_blank" rel="noreferrer">Listen on Spotify <span aria-hidden="true">↗</span></a>
-          <a href={podcast.website} target="_blank" rel="noreferrer">Visit Founders <span aria-hidden="true">↗</span></a>
+          <ResourceAction href={podcast.youtube} target="_blank" rel="noreferrer" indicator="external" variant="compact">Watch on YouTube</ResourceAction>
+          <ResourceAction href={podcast.spotify} target="_blank" rel="noreferrer" indicator="external" variant="compact">Listen on Spotify</ResourceAction>
+          <ResourceAction href={podcast.website} target="_blank" rel="noreferrer" indicator="external" variant="compact">Visit Founders</ResourceAction>
         </nav>
         <AnnotationStatus personalNote={podcast.personalNote} ideaIKept={podcast.ideaIKept} />
       </div>

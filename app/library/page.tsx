@@ -4,6 +4,7 @@ import { EssayIndex } from "../../components/library/EssayIndex";
 import { ListeningRoom } from "../../components/library/ListeningRoom";
 import { ScreeningRoom } from "../../components/library/ScreeningRoom";
 import { SiteNav } from "../../components/layout/SiteNav";
+import { ResourceAction } from "../../components/common/ResourceAction";
 import { books, essayCollections, podcasts, videos } from "../../content/library";
 import "./library.css";
 import { createPageMetadata } from "../../lib/seo";
@@ -22,10 +23,10 @@ export default function LibraryPage() {
           <div>
             <p>Books, films, podcasts and essays kept close enough to revisit, question and annotate.</p>
             <nav aria-label="Library sections">
-              <a href="#books">Books</a>
-              <a href="#screening-room">Films</a>
-              <a href="#listening-room">Podcast</a>
-              <a href="#essays">Essays</a>
+              <ResourceAction href="#books" variant="button" sound="none">Books</ResourceAction>
+              <ResourceAction href="#screening-room" variant="button" sound="none">Films</ResourceAction>
+              <ResourceAction href="#listening-room" variant="button" sound="none">Podcast</ResourceAction>
+              <ResourceAction href="#essays" variant="button" sound="none">Essays</ResourceAction>
             </nav>
           </div>
         </div>
@@ -39,7 +40,7 @@ export default function LibraryPage() {
 
       <footer className="library-footer">
         <p>THE COMMONPLACE · VOLUME 01</p>
-        <a href="/">Return to homepage <span aria-hidden="true">↗</span></a>
+        <ResourceAction href="/" indicator="forward">Return to homepage</ResourceAction>
         <p>Books · films · podcasts · essays</p>
       </footer>
     </main>

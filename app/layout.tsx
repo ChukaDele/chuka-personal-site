@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { SoundProvider } from "../components/sound/SoundProvider";
 import { SoundToggle } from "../components/sound/SoundToggle";
+import { Preloader } from "../components/common/Preloader";
+import { PageSoundscape } from "../components/sound/PageSoundscape";
 import { siteUrl } from "../lib/seo";
 import "./globals.css";
 
@@ -31,6 +33,8 @@ export default function RootLayout({
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <SoundProvider>
+          <Preloader />
+          <PageSoundscape />
           {children}
           <SoundToggle />
         </SoundProvider>

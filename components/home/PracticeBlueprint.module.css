@@ -1,42 +1,53 @@
 .study {
-  width: 100%;
-  max-width: 540px;
+  width: min(100%, 680px);
   margin: 0;
+  justify-self: center;
 }
 
-.study svg {
+.blueprint {
   display: block;
   width: 100%;
   height: auto;
-  overflow: visible;
+  overflow: hidden;
 }
 
-.study path,
-.study rect,
-.study circle {
+.blueprint path,
+.blueprint rect,
+.blueprint circle {
   fill: none;
   stroke: #b9d9e7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   stroke-width: 1.25;
   vector-effect: non-scaling-stroke;
 }
 
-.study text {
+.blueprint text {
   fill: #d7e7ed;
-  font: 8px "DM Mono", monospace;
-  letter-spacing: .12em;
+  font: 500 10px "DM Mono", monospace;
+  letter-spacing: .11em;
 }
 
 .grid {
-  opacity: .14;
+  opacity: .12;
 }
 
 .grid path {
   stroke-width: .75;
 }
 
+.grid .majorAxis {
+  opacity: .7;
+  stroke-dasharray: 2 7;
+}
+
+.observe {
+  opacity: .3;
+}
+
 .observe path {
   stroke: #d48b76;
-  stroke-width: 1.5;
+  stroke-width: 1.35;
 }
 
 .observe circle {
@@ -44,55 +55,213 @@
   stroke: none;
 }
 
-.define {
-  opacity: .75;
+.stateLabel,
+.eyebrow,
+.boundaryLabel,
+.moduleStatus {
+  font-size: 8px;
 }
 
-.define > path:first-child,
+.stateLabel {
+  fill: #d9a08f !important;
+}
+
+.define {
+  opacity: .5;
+}
+
+.define .focusRay {
+  opacity: .45;
+  stroke: #d48b76;
+  stroke-dasharray: 3 7;
+}
+
+.define rect,
+.define path:not(.focusRay),
 .define circle {
   stroke: #d48b76;
 }
 
-.construct rect {
-  fill: rgba(21, 40, 50, .82);
+.define rect {
+  fill: rgba(21, 40, 50, .88);
+  stroke-width: 1.75;
+}
+
+.define circle {
+  fill: #d48b76;
+  stroke: #152832;
+  stroke-width: 3;
+}
+
+.eyebrow {
+  fill: #d9a08f !important;
+}
+
+.constraintLabel {
+  fill: #f4e6df !important;
+  font-size: 9px;
+}
+
+.construct {
+  opacity: .78;
+}
+
+.module path {
   stroke: #edf2ef;
+  stroke-width: 1.5;
+}
+
+.module .moduleGap {
+  opacity: .32;
+  stroke-dasharray: 2 5;
+}
+
+.module circle {
+  fill: #152832;
+  stroke: #edf2ef;
+  stroke-width: 1.5;
+}
+
+.moduleStatus {
+  fill: #9fc0d0 !important;
+  letter-spacing: .08em !important;
 }
 
 .organise path,
 .organise circle,
-.improve path {
+.organise rect {
   stroke: #9fc0d0;
   stroke-width: 1.75;
 }
 
-.organise circle {
+.systemBoundary {
+  stroke-dasharray: 5 6;
+  opacity: .7;
+}
+
+.crossLink {
+  opacity: .34;
+  stroke-dasharray: 3 6;
+}
+
+.organise .hubOuter {
+  fill: rgba(21, 40, 50, .96);
+  stroke-width: 2;
+}
+
+.organise .hubInner {
   fill: #9fc0d0;
 }
 
-.improve path:first-child {
-  stroke-dasharray: 500;
+.hubLabel {
+  fill: #edf2ef !important;
+  font-size: 7px !important;
+  letter-spacing: .05em !important;
+}
+
+.boundaryLabel {
+  fill: #9fc0d0 !important;
+}
+
+.improve path,
+.improve circle {
+  stroke: #d48b76;
+  stroke-width: 2;
+}
+
+.feedbackLoop {
+  stroke-dasharray: 620;
   stroke-dashoffset: 0;
 }
 
-.study figcaption {
-  display: flex;
-  justify-content: space-between;
+.feedbackArrow {
+  stroke-width: 2.5 !important;
+}
+
+.improve .reinforcement {
+  stroke: #edf2ef;
+  stroke-width: 3;
+}
+
+.improve .feedbackNode {
+  fill: #d48b76;
+  stroke: #152832;
+  stroke-width: 3;
+}
+
+.feedbackLabel {
+  fill: #e3ad9c !important;
+  font-size: 8px !important;
+}
+
+.caption {
+  display: grid;
+  grid-template-columns: auto minmax(30px, 1fr) auto;
+  gap: 14px;
+  align-items: center;
   margin-top: 12px;
   color: #a7bdc7;
-  font: 8px "DM Mono", monospace;
+  font: 500 8px "DM Mono", monospace;
   letter-spacing: .1em;
   text-transform: uppercase;
 }
 
-@media (max-width: 1100px) {
-  .study { width: min(560px, 76vw); }
+.captionLine {
+  height: 1px;
+  background: linear-gradient(90deg, #d48b76, #9fc0d0 58%, #edf2ef);
 }
 
-@media (max-width: 899px) {
-  .study { width: min(560px, 85vw); }
+@media (max-width: 1100px) {
+  .study {
+    width: min(680px, 88vw);
+  }
+
+  .observe,
+  .define,
+  .construct,
+  .organise,
+  .improve { opacity: .08; transition: opacity 220ms cubic-bezier(.22, 1, .36, 1); }
+
+  :global(.practice[data-mobile-stage="01"]) .observe { opacity: 1; }
+  :global(.practice[data-mobile-stage="02"]) .observe { opacity: .16; }
+  :global(.practice[data-mobile-stage="02"]) .define { opacity: 1; }
+  :global(.practice[data-mobile-stage="03"]) .define { opacity: .26; }
+  :global(.practice[data-mobile-stage="03"]) .construct { opacity: 1; }
+  :global(.practice[data-mobile-stage="04"]) .construct { opacity: .62; }
+  :global(.practice[data-mobile-stage="04"]) .organise { opacity: 1; }
+  :global(.practice[data-mobile-stage="05"]) .construct { opacity: .54; }
+  :global(.practice[data-mobile-stage="05"]) .organise,
+  :global(.practice[data-mobile-stage="05"]) .improve { opacity: 1; }
 }
 
 @media (max-width: 680px) {
-  .study { width: 100%; }
-  .study text { font-size: 9px; }
+  .study {
+    width: 100%;
+  }
+
+  .blueprint text {
+    font-size: 11px;
+  }
+
+  .stateLabel,
+  .eyebrow,
+  .boundaryLabel,
+  .moduleStatus,
+  .feedbackLabel {
+    font-size: 9px !important;
+  }
+
+  .caption {
+    gap: 9px;
+    font-size: 7px;
+    letter-spacing: .07em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(.practice) .observe { opacity: .2 !important; }
+  :global(.practice) .define { opacity: .38 !important; }
+  :global(.practice) .construct { opacity: .82 !important; }
+  :global(.practice) .organise,
+  :global(.practice) .improve { opacity: 1 !important; }
 }

@@ -1,5 +1,6 @@
 import type { EssayCollectionResource } from "../../content/library";
 import { AnnotationStatus } from "./AnnotationStatus";
+import { ResourceAction } from "../common/ResourceAction";
 
 export function EssayIndex({ collection }: { collection: EssayCollectionResource }) {
   return (
@@ -16,7 +17,7 @@ export function EssayIndex({ collection }: { collection: EssayCollectionResource
       <div className="essay-rule" aria-hidden="true"><span /><span /><span /><span /><span /></div>
       <div className="essay-actions">
         <AnnotationStatus personalNote={collection.personalNote} ideaIKept={collection.ideaIKept} />
-        {collection.href ? <a href={collection.href} target="_blank" rel="noreferrer">Open the essay index <span aria-hidden="true">↗</span></a> : null}
+        {collection.href ? <ResourceAction href={collection.href} target="_blank" rel="noreferrer" indicator="external">Open the essay index</ResourceAction> : null}
       </div>
     </section>
   );

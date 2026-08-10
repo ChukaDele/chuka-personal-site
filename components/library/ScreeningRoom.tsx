@@ -5,8 +5,11 @@
 import { useEffect, useRef, useState } from "react";
 import type { VideoResource } from "../../content/library";
 import { AnnotationStatus } from "./AnnotationStatus";
+import { ResourceAction } from "../common/ResourceAction";
+import { useSound } from "../sound/SoundProvider";
 
 export function ScreeningRoom({ videos }: { videos: readonly VideoResource[] }) {
+  const { playInteractionCue, setVideoActive } = useSound();
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const playButtonRefs = useRef(new Map<string, HTMLButtonElement>());
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -23,9 +26,33 @@ export function ScreeningRoom({ videos }: { videos: readonly VideoResource[] }) 
     window.requestAnimationFrame(() => playButtonRefs.current.get(videoId)?.focus());
   }, [activeVideo]);
 
+  useEffect(() => {
+    if (!activeVideo) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        restoreVideoRef.current = activeVideo;
+        setVideoActive(false);
+        playInteractionCue("video-close");
+        setActiveVideo(null);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [activeVideo, playInteractionCue, setVideoActive]);
+
+  useEffect(() => () => setVideoActive(false), [setVideoActive]);
+
   const closePlayer = (videoId: string) => {
     restoreVideoRef.current = videoId;
+    setVideoActive(false);
+    playInteractionCue("video-close");
     setActiveVideo(null);
+  };
+
+  const openPlayer = (videoId: string) => {
+    setVideoActive(true);
+    playInteractionCue("video-open");
+    setActiveVideo(videoId);
   };
 
   return (
@@ -55,9 +82,10 @@ export function ScreeningRoom({ videos }: { videos: readonly VideoResource[] }) 
                       if (node) playButtonRefs.current.set(video.id, node);
                       else playButtonRefs.current.delete(video.id);
                     }}
-                    className="projection-trigger"
+                    className="projection-trigger resource-action resource-action-plain"
+                    data-resource-action
                     type="button"
-                    onClick={() => setActiveVideo(video.id)}
+                    onClick={() => openPlayer(video.id)}
                     aria-label={`Play ${video.title} by ${video.creator}`}
                   >
                     {/* A direct thumbnail avoids loading the video iframe or image optimiser before consent. */}
@@ -79,9 +107,9 @@ export function ScreeningRoom({ videos }: { videos: readonly VideoResource[] }) 
                 <h3>{video.title}</h3>
                 <div className="screening-actions">
                   {isActive ? (
-                    <button ref={closeButtonRef} type="button" className="library-text-button" onClick={() => closePlayer(video.id)}>Close player</button>
+                    <button ref={closeButtonRef} type="button" className="library-text-button resource-action resource-action-text" data-resource-action onClick={() => closePlayer(video.id)}>Close player</button>
                   ) : null}
-                  <a href={video.href} target="_blank" rel="noreferrer">Open on YouTube <span aria-hidden="true">↗</span></a>
+                  <ResourceAction href={video.href} target="_blank" rel="noreferrer" indicator="external">Open on YouTube</ResourceAction>
                 </div>
                 <AnnotationStatus personalNote={video.personalNote} ideaIKept={video.ideaIKept} inverse />
               </div>

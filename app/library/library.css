@@ -57,7 +57,7 @@
 
 .library-books { padding: clamp(90px, 12vw, 180px) clamp(22px, 7.8vw, 124px); }
 .book-shelf { margin: clamp(70px, 10vw, 150px) 0 0; padding: 0 0 30px; display: flex; align-items: flex-end; gap: clamp(12px, 2.4vw, 38px); list-style: none; border-bottom: 8px solid var(--library-ink); perspective: 1400px; }
-.book-object { flex: 1; min-width: 0; display: grid; grid-template-columns: clamp(22px, 3vw, 42px) minmax(0, 1fr); filter: drop-shadow(12px 18px 16px rgba(22, 42, 51, .15)); transform-origin: bottom; transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+.book-object { flex: 1; min-width: 0; display: grid; grid-template-columns: clamp(22px, 3vw, 42px) minmax(0, 1fr); filter: drop-shadow(12px 18px 16px rgba(22, 42, 51, .15)); transform-origin: bottom; transition: transform .2s cubic-bezier(.22, 1, .36, 1); }
 .book-object:nth-child(2) { transform: translateY(-28px) rotate(.7deg); }
 .book-object:nth-child(3) { transform: translateY(12px) rotate(-.5deg); }
 .book-object:nth-child(4) { transform: translateY(-11px) rotate(.35deg); }
@@ -66,7 +66,7 @@
 .book-spine span { font: 9px var(--mono); }
 .book-cover { min-height: clamp(350px, 38vw, 560px); position: relative; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(22, 42, 51, .22); background: #a64b34; color: #fff3e8; }
 .book-cover-link { min-height: 0; flex: 1; position: relative; display: block; overflow: hidden; background: #ddd; }
-.book-cover-link img { width: 100%; height: 100%; min-height: clamp(285px, 31vw, 455px); display: block; object-fit: cover; object-position: center; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.book-cover-link img { width: 100%; height: 100%; min-height: clamp(285px, 31vw, 455px); display: block; object-fit: cover; object-position: center; transition: transform .2s cubic-bezier(.22,1,.36,1); }
 .book-cover-link > span { position: absolute; right: 10px; bottom: 10px; width: 28px; height: 28px; display: grid; place-items: center; color: #fff; background: rgba(10,22,28,.76); font: 9px var(--mono); }
 .book-cover-link:focus-visible, .projection-trigger:focus-visible { outline-offset:-5px; }
 .book-meta { padding: 14px 16px 18px; background: inherit; }
@@ -96,7 +96,7 @@
 .projection-trigger { padding: 0; position: relative; display: block; cursor: pointer; color: #fff; background: #071419; }
 .projection-trigger img { width: 100%; height: 100%; display: block; object-fit: cover; filter: grayscale(.72) sepia(.12) contrast(1.12); }
 .projection-shade { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(4,14,18,.9), transparent 65%); }
-.projection-play { position: absolute; left: 50%; top: 50%; width: 76px; aspect-ratio: 1; display: grid; place-items: center; border: 1px solid #fff; border-radius: 50%; transform: translate(-50%, -50%); font: 9px var(--mono); letter-spacing: .12em; }
+.projection-play { position: absolute; left: 50%; top: 50%; width: 76px; aspect-ratio: 1; display: grid; place-items: center; border: 1px solid #fff; border-radius: 50%; transform: translate(-50%, -50%); font: 9px var(--mono); letter-spacing: .12em; transition: background-color .16s cubic-bezier(.22,1,.36,1), color .16s cubic-bezier(.22,1,.36,1), transform .12s cubic-bezier(.22,1,.36,1); }
 .projection-index { position: absolute; left: 18px; bottom: 16px; font: 9px var(--mono); letter-spacing: .12em; }
 .screening-copy > p:first-child { margin: 0; color: #9ebeca; font: 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 .screening-copy h3 { margin: 20px 0 32px; font: 400 clamp(2.7rem, 4.5vw, 5.4rem)/.88 var(--serif); letter-spacing: -.055em; }
@@ -134,8 +134,8 @@
 .library-footer p { margin: 0; font: 9px var(--mono); letter-spacing: .1em; text-transform: uppercase; }.library-footer p:last-child { text-align: right; }.library-footer a { min-height: 44px; display: inline-flex; align-items: center; border-bottom: 1px solid currentColor; font-size: 12px; }
 
 @media (hover: hover) and (pointer: fine) {
-  .book-object:hover { transform: translateY(-34px) rotate(0deg); }
-  .book-cover-link:hover img { transform: scale(1.025); }
+  .book-object:hover { transform: translateY(-8px) rotate(0deg); }
+  .book-cover-link:hover img { transform: scale(1.012); }
   .projection-trigger:hover .projection-play { background: #fff; color: var(--library-ink); }
 }
 
@@ -153,7 +153,7 @@
   .library-hero-copy > div { grid-template-columns: 1fr; }.library-hero-copy nav { justify-content: flex-start; }
   .library-hero-note { grid-column: 1; line-height: 1.5; }
   .library-section-heading, .screening-heading { grid-template-columns: 1fr; }.library-section-heading h2, .screening-heading h2, .listening-copy h2 { font-size: clamp(4rem, 18vw, 6.4rem); }
-  .book-shelf { grid-template-columns: 1fr; gap: 24px; }.book-object { grid-template-columns: 28px 1fr; }.book-cover, .book-spine { min-height: 430px; }.book-cover h3 { font-size: clamp(3rem, 14vw, 4.5rem); }
+  .book-shelf { width: calc(100vw - 22px); margin-right: -22px; padding: 12px 22px 30px 0; display: flex; gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; border-bottom: 0; }.book-shelf::-webkit-scrollbar { display: none; }.book-object { flex: 0 0 min(82vw, 340px); grid-template-columns: 28px 1fr; scroll-snap-align: start; scroll-snap-stop: always; }.book-cover, .book-spine { min-height: 430px; }
   .screening-item { gap: 30px; }.projection-frame { aspect-ratio: 4 / 3; }.screening-copy h3 { font-size: clamp(3rem, 13vw, 4.4rem); }
   .tape-object { width: 100%; padding: 22px; border-radius: 14px; transform: none; }.tape-label { padding: 12px; }.tape-label strong { font-size: clamp(2.2rem, 12vw, 4rem); }
   .essay-index > header { display: grid; }.essay-title-block { grid-template-columns: 1fr; }.essay-title-block h2 { font-size: clamp(5rem, 23vw, 8rem); }.essay-title-block > p:last-child { grid-column: 1; }.essay-actions { grid-template-columns: 1fr; }
@@ -161,6 +161,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .library-page *, .library-page *::before, .library-page *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
   .book-object, .book-object:nth-child(n), .tape-object { transform: none; }
 }
