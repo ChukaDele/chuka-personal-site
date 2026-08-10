@@ -55,6 +55,11 @@ export function Preloader() {
     };
   }, [requiresChoice]);
 
+  useEffect(() => {
+    if (visible || !preferenceReady) return;
+    document.querySelector<HTMLElement>(".wordmark")?.focus();
+  }, [preferenceReady, visible]);
+
   const enter = (withSound: boolean) => {
     chooseSound(withSound, withSound);
     sessionStorage.setItem("atelier-intro-seen", "true");
@@ -62,7 +67,6 @@ export function Preloader() {
     window.setTimeout(() => {
       setRequiresChoice(false);
       setVisible(false);
-      document.querySelector<HTMLElement>(".wordmark")?.focus();
     }, 180);
   };
 
