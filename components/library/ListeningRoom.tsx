@@ -15,7 +15,7 @@ export function ListeningRoom({ podcast }: { podcast: PodcastResource }) {
       </div>
       <div className="listening-copy">
         <p className="library-section-index">03 / LISTENING ROOM</p>
-        <h2 id="listening-title">A long-running study<br />of <em>people who built.</em></h2>
+        <h2 id="listening-title">A long-running study<br />{" "}of <em>people who built.</em></h2>
         <p className="listening-format">Podcast series</p>
         <h3>{podcast.title}</h3>
         <p>By {podcast.creator}</p>

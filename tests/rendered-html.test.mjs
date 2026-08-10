@@ -65,6 +65,16 @@ test("keeps the unconfigured build out of search indexes", async () => {
   assert.doesNotMatch(html, /rel="canonical"/);
 });
 
+test("publishes installable platform icons", async () => {
+  const response = await render("/manifest.webmanifest");
+  assert.equal(response.status, 200);
+  const manifest = await response.json();
+  assert.deepEqual(manifest.icons.slice(0, 2).map(({ src, sizes }) => ({ src, sizes })), [
+    { src: "/icon-192.png", sizes: "192x192" },
+    { src: "/icon-512.png", sizes: "512x512" },
+  ]);
+});
+
 test("renders a useful bespoke 404", async () => {
   const response = await render("/missing-folio-test");
   assert.equal(response.status, 404);

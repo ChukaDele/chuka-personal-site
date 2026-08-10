@@ -18,7 +18,7 @@ export default function LibraryPage() {
         <div className="library-hero-index" aria-hidden="true"><span>LIB.</span><i /></div>
         <div className="library-hero-copy">
           <p>THE COMMONPLACE / A WORKING LIBRARY</p>
-          <h1>Ideas kept<br />within <em>reach.</em></h1>
+          <h1>Ideas kept<br />{" "}within <em>reach.</em></h1>
           <div>
             <p>Books, films, podcasts and essays kept close enough to revisit, question and annotate.</p>
             <nav aria-label="Library sections">
