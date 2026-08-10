@@ -47,6 +47,7 @@ button, summary, a { -webkit-tap-highlight-color: transparent; }
 .preloader-actions button:first-child { background: var(--ink); color: var(--paper); }
 .sound-toggle { position: fixed; right: 18px; bottom: 18px; z-index: 90; min-height: 42px; display: inline-flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid rgba(238,233,223,.38); background: rgba(18,38,48,.9); color: #f2efe7; box-shadow: 0 8px 28px rgba(9,22,28,.16); backdrop-filter: blur(8px); cursor: pointer; font: 9px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .sound-toggle-mark { font-size: 14px; }
+body:has(.preloader-choice) .sound-toggle { opacity: 0; pointer-events: none; }
 @keyframes line-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes line-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @keyframes diamond-in { from { opacity: 0; transform: rotate(15deg) scale(.2); } to { opacity: 1; transform: rotate(45deg) scale(.68); } }
