@@ -50,13 +50,15 @@ export function HomeMotion() {
       gsap.registerPlugin(ScrollTrigger);
       const motionMedia = gsap.matchMedia();
       motionMedia.add("(min-width: 1100px) and (prefers-reduced-motion: no-preference)", () => {
+        const blueprint = document.querySelector<HTMLElement>("[data-blueprint]");
+        blueprint?.setAttribute("data-blueprint-active-state", "observe");
         const context = gsap.context(() => {
           const heroTimeline = gsap.timeline({
             scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.7 },
           });
           heroTimeline
             .to(".hero-art", { scale: 1.045, yPercent: -3, ease: "none" }, 0)
-            .to(".system-node", { x: 0, y: 0, opacity: 1, ease: "power2.inOut" }, 0)
+            .to(".system-node", { opacity: 1, ease: "power2.inOut" }, 0)
             .to(".hero-system svg", { opacity: 0.9, ease: "power2.inOut" }, 0.12)
             .to(".hero-handoff i", { scaleX: 1, transformOrigin: "left center", ease: "none" }, 0.18)
             .to(".hero-copy", { yPercent: -7, opacity: 0.42, ease: "power1.inOut" }, 0.58)
@@ -73,35 +75,18 @@ export function HomeMotion() {
               anticipatePin: 1,
               onUpdate: (self) => {
                 const stage = Math.min(5, Math.floor(self.progress * 5) + 1);
-                document.querySelector<HTMLElement>("[data-blueprint]")?.setAttribute("data-blueprint-active-state", ["observe", "define", "construct", "organise", "improve"][stage - 1]);
+                blueprint?.setAttribute("data-blueprint-active-state", ["observe", "define", "construct", "organise", "improve"][stage - 1]);
               },
             },
           });
-          const blueprintLayers = {
-            observe: "[data-blueprint-layer='observe']",
-            define: "[data-blueprint-layer='define']",
-            construct: "[data-blueprint-layer='construct']",
-            organise: "[data-blueprint-layer='organise']",
-            improve: "[data-blueprint-layer='improve']",
-          };
           const stageItems = gsap.utils.toArray<HTMLElement>(".stage-list li");
           const stageIndicators = gsap.utils.toArray<HTMLElement>(".stage-list li i");
 
           practiceTimeline
-            .set([blueprintLayers.define, blueprintLayers.construct, blueprintLayers.organise, blueprintLayers.improve], { opacity: 0 }, 0)
-            .set(blueprintLayers.observe, { opacity: 1 }, 0)
             .set(stageItems.slice(1), { opacity: 0.42, x: 14 }, 0)
             .set(stageIndicators.slice(1), { scaleX: 0.15 }, 0)
-            .to(blueprintLayers.observe, { opacity: 0.16, duration: 0.12, ease: "power2.inOut" }, 0.17)
-            .fromTo(blueprintLayers.define, { opacity: 0 }, { opacity: 1, duration: 0.13, ease: "power2.inOut", immediateRender: false }, 0.17)
-            .to(blueprintLayers.define, { opacity: 0.28, duration: 0.12, ease: "power2.inOut" }, 0.36)
-            .fromTo(blueprintLayers.construct, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.inOut", immediateRender: false }, 0.36)
-            .fromTo("[data-blueprint-part='module']", { y: 10 }, { y: 0, duration: 0.13, stagger: 0.025, ease: "power2.out", immediateRender: false }, 0.36)
-            .to(blueprintLayers.construct, { opacity: 0.62, duration: 0.11, ease: "power2.inOut" }, 0.56)
-            .fromTo(blueprintLayers.organise, { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power2.inOut", immediateRender: false }, 0.56)
-            .fromTo(blueprintLayers.improve, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.inOut", immediateRender: false }, 0.76)
-            .fromTo("[data-blueprint-loop]", { strokeDashoffset: 620 }, { strokeDashoffset: 0, duration: 0.18, ease: "power2.inOut", immediateRender: false }, 0.76)
-            .fromTo("[data-blueprint-part='reinforcement']", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "power2.out", immediateRender: false }, 0.88);
+            .fromTo("[data-blueprint-renderer='wide'] [data-blueprint-part='module']", { y: 10 }, { y: 0, duration: 0.13, stagger: 0.025, ease: "power2.out", immediateRender: false }, 0.36)
+            .fromTo("[data-blueprint-renderer='wide'] [data-blueprint-loop]", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.18, ease: "power2.inOut", immediateRender: false }, 0.76);
 
           practiceTimeline
             .call(() => playScrollCue("threshold"), [], 0.17)
@@ -122,7 +107,10 @@ export function HomeMotion() {
             .fromTo(".correspondence-copy", { y: 70, opacity: 0.35 }, { y: 0, opacity: 1, ease: "power1.out" }, 0);
         });
         ScrollTrigger.refresh();
-        return () => context.revert();
+        return () => {
+          blueprint?.setAttribute("data-blueprint-active-state", "improve");
+          context.revert();
+        };
       });
 
       cleanup = () => motionMedia.revert();

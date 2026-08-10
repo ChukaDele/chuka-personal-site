@@ -4,6 +4,7 @@ import { socialLinks } from "../../content/site";
 import { primarySpeakingFormats, secondarySpeakingFormats, speakingSessions } from "../../content/speaking";
 import styles from "./speaking.module.css";
 import { ResourceAction } from "../common/ResourceAction";
+import { MediaFrame } from "../layout/primitives";
 
 const portraitAlt = "Chuka Dele-Oyeleru smiling in a light grey suit against a dark studio backdrop.";
 
@@ -23,10 +24,9 @@ export function SpeakingPage() {
               <ResourceAction className={styles.secondaryAction} href="/press" indicator="forward">Open press kit</ResourceAction>
             </div>
           </div>
-          <figure className={styles.heroPortrait}>
-            <Image src="/images/portraits/chuka-speaking.webp" width="1400" height="1751" priority sizes="(max-width: 900px) 100vw, 38vw" alt={portraitAlt} />
-            <figcaption>Chuka Dele-Oyeleru · Strategy &amp; Operations</figcaption>
-          </figure>
+          <MediaFrame className={styles.heroPortrait} aspect="portrait" focalPoint={{ x: 50, y: 30 }} caption="Chuka Dele-Oyeleru · Strategy & Operations">
+            <Image src="/images/portraits/chuka-speaking.webp" width="1400" height="1751" priority sizes="(max-width: 1099px) 100vw, 38vw" alt={portraitAlt} />
+          </MediaFrame>
         </section>
       </div>
 

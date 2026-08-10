@@ -10,6 +10,16 @@ import { absoluteSiteUrl, createPageMetadata, siteUrl } from "../lib/seo";
 
 export const metadata: Metadata = createPageMetadata({ title: "Chuka Dele-Oyeleru | Strategy & Operations", description: "Chuka Dele-Oyeleru builds the systems that take ambitious ideas from first brief to repeatable execution.", path: "/", imageAlt: "Chuka Dele-Oyeleru, Strategy & Operations", absoluteTitle: true });
 
+const heroSystemNodes = [
+  { label: "Opportunity", x: "8%", y: "18%" },
+  { label: "People", x: "82%", y: "12%" },
+  { label: "Ownership", x: "34%", y: "32%" },
+  { label: "Workflow", x: "86%", y: "52%" },
+  { label: "Data", x: "13%", y: "76%" },
+  { label: "Tools", x: "74%", y: "84%" },
+  { label: "Feedback", x: "42%", y: "91%" },
+] as const;
+
 export default function Home() {
   return (
     <main id="main-content">
@@ -38,8 +48,8 @@ export default function Home() {
               <path d="M12 20 L40 38 L77 15 M40 38 L71 69 L91 45 M22 83 L71 69" />
               <circle cx="40" cy="38" r="1.4" /><circle cx="71" cy="69" r="1.4" />
             </svg>
-            {['Opportunity', 'People', 'Ownership', 'Workflow', 'Data', 'Tools', 'Feedback'].map((label, index) => (
-              <span className={`system-node system-node-${index + 1}`} key={label}>{label}</span>
+            {heroSystemNodes.map((node) => (
+              <span className="system-node" style={{ "--layout-x": node.x, "--layout-y": node.y } as React.CSSProperties} key={node.label}>{node.label}</span>
             ))}
           </div>
         </div>

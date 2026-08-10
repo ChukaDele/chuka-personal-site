@@ -62,7 +62,7 @@ const diagramLabels = {
 
 export function ProjectMediaPlate({ project, media = { kind: "diagram", label: diagramLabels[project] } }: ProjectMediaPlateProps) {
   return (
-    <figure className={`${styles.plate}${project === "etap" ? "" : ` ${styles[project]}`}`} data-media-kind={media.kind}>
+    <figure className={`${styles.plate}${project === "etap" ? "" : ` ${styles[project]}`}`} data-project-media data-media-kind={media.kind}>
       <div className={styles.registration} aria-hidden="true"><i /><i /><i /><i /></div>
       {media.kind === "loop" ? (
         <video className={styles.media} src={media.src} poster={media.poster} muted loop playsInline preload="metadata" aria-label={media.label} />

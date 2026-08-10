@@ -1,4 +1,5 @@
 .study {
+  container: practice-blueprint / inline-size;
   width: min(100%, 680px);
   margin: 0;
   justify-self: center;
@@ -28,6 +29,10 @@
   letter-spacing: .11em;
 }
 
+.renderer[data-blueprint-renderer="compact"] {
+  display: none;
+}
+
 .grid {
   opacity: .12;
 }
@@ -41,8 +46,28 @@
   stroke-dasharray: 2 7;
 }
 
-.observe {
-  opacity: .3;
+/* A resolved system is the useful no-JS default. Stage controllers take over
+   visibility without owning any geometry or responsive transforms. */
+.observe,
+.define {
+  opacity: 0;
+}
+
+.construct {
+  opacity: .62;
+}
+
+.organise,
+.improve {
+  opacity: 1;
+}
+
+.observe,
+.define,
+.construct,
+.organise,
+.improve {
+  transition: opacity 180ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .observe path {
@@ -64,10 +89,6 @@
 
 .stateLabel {
   fill: #d9a08f !important;
-}
-
-.define {
-  opacity: .5;
 }
 
 .define .focusRay {
@@ -102,10 +123,6 @@
   font-size: 9px;
 }
 
-.construct {
-  opacity: .78;
-}
-
 .module path {
   stroke: #edf2ef;
   stroke-width: 1.5;
@@ -135,12 +152,12 @@
 }
 
 .systemBoundary {
-  stroke-dasharray: 5 6;
   opacity: .7;
+  stroke-dasharray: 5 6;
 }
 
 .crossLink {
-  opacity: .34;
+  opacity: .24;
   stroke-dasharray: 3 6;
 }
 
@@ -170,7 +187,7 @@
 }
 
 .feedbackLoop {
-  stroke-dasharray: 620;
+  stroke-dasharray: 1;
   stroke-dashoffset: 0;
 }
 
@@ -179,8 +196,9 @@
 }
 
 .improve .reinforcement {
+  opacity: .62;
   stroke: #edf2ef;
-  stroke-width: 3;
+  stroke-width: 2.25;
 }
 
 .improve .feedbackNode {
@@ -197,7 +215,7 @@
 .caption {
   display: grid;
   grid-template-columns: auto minmax(30px, 1fr) auto;
-  gap: 14px;
+  gap: clamp(9px, 2.1cqi, 14px);
   align-items: center;
   margin-top: 12px;
   color: #a7bdc7;
@@ -211,62 +229,137 @@
   background: linear-gradient(90deg, #d48b76, #9fc0d0 58%, #edf2ef);
 }
 
-@media (max-width: 1100px) {
-  .study {
-    width: min(680px, 88vw);
+/* The compact renderer replaces the wide diagram where its labels would drop
+   below a useful reading size. Both presentations come from the same model. */
+@container practice-blueprint (max-width: 459px) {
+  .renderer[data-blueprint-renderer="wide"] {
+    display: none;
   }
 
+  .renderer[data-blueprint-renderer="compact"] {
+    display: inline;
+  }
+
+  .renderer[data-blueprint-renderer="compact"] .moduleLabel {
+    font-size: 18px;
+    letter-spacing: .08em;
+  }
+
+  .renderer[data-blueprint-renderer="compact"] .stateLabel,
+  .renderer[data-blueprint-renderer="compact"] .eyebrow,
+  .renderer[data-blueprint-renderer="compact"] .boundaryLabel,
+  .renderer[data-blueprint-renderer="compact"] .feedbackLabel {
+    font-size: 13px !important;
+    letter-spacing: .07em !important;
+  }
+
+  .renderer[data-blueprint-renderer="compact"] .constraintLabel {
+    font-size: 14px;
+  }
+
+  .renderer[data-blueprint-renderer="compact"] .hubLabel {
+    font-size: 11px !important;
+  }
+
+  .caption {
+    font-size: 7px;
+    letter-spacing: .07em;
+  }
+}
+
+/* Compact and medium modes use the mobile observer's discrete stage. Each
+   stage contains only the geometry needed to explain that state. */
+@media (max-width: 1099px) and (prefers-reduced-motion: no-preference) {
   .observe,
   .define,
   .construct,
   .organise,
-  .improve { opacity: .08; transition: opacity 220ms cubic-bezier(.22, 1, .36, 1); }
+  .improve {
+    opacity: 0;
+  }
 
-  :global(.practice[data-mobile-stage="01"]) .observe { opacity: 1; }
-  :global(.practice[data-mobile-stage="02"]) .observe { opacity: .16; }
-  :global(.practice[data-mobile-stage="02"]) .define { opacity: 1; }
-  :global(.practice[data-mobile-stage="03"]) .define { opacity: .26; }
-  :global(.practice[data-mobile-stage="03"]) .construct { opacity: 1; }
-  :global(.practice[data-mobile-stage="04"]) .construct { opacity: .62; }
-  :global(.practice[data-mobile-stage="04"]) .organise { opacity: 1; }
-  :global(.practice[data-mobile-stage="05"]) .construct { opacity: .54; }
-  :global(.practice[data-mobile-stage="05"]) .organise,
-  :global(.practice[data-mobile-stage="05"]) .improve { opacity: 1; }
+  :global(.practice[data-mobile-stage="01"]) .observe,
+  :global(.practice[data-mobile-stage="02"]) .define,
+  :global(.practice[data-mobile-stage="03"]) .construct,
+  :global(.practice[data-mobile-stage="04"]) .organise,
+  :global(.practice[data-mobile-stage="05"]) .improve {
+    opacity: 1;
+  }
+
+  :global(.practice[data-mobile-stage="04"]) .construct {
+    opacity: .62;
+  }
+
+  :global(.practice[data-mobile-stage="05"]) .construct {
+    opacity: .62;
+  }
+
+  :global(.practice[data-mobile-stage="05"]) .organise {
+    opacity: 1;
+  }
+}
+
+/* Desktop state is derived from the semantic state attribute. !important is
+   intentional here: GSAP owns progress, while CSS owns discrete visibility. */
+@media (min-width: 1100px) and (prefers-reduced-motion: no-preference) {
+  [data-blueprint-active-state] .observe,
+  [data-blueprint-active-state] .define,
+  [data-blueprint-active-state] .construct,
+  [data-blueprint-active-state] .organise,
+  [data-blueprint-active-state] .improve {
+    opacity: 0 !important;
+  }
+
+  [data-blueprint-active-state="observe"] .observe,
+  [data-blueprint-active-state="define"] .define,
+  [data-blueprint-active-state="construct"] .construct,
+  [data-blueprint-active-state="organise"] .organise,
+  [data-blueprint-active-state="improve"] .improve {
+    opacity: 1 !important;
+  }
+
+  [data-blueprint-active-state="organise"] .construct,
+  [data-blueprint-active-state="improve"] .construct {
+    opacity: .62 !important;
+  }
+
+  [data-blueprint-active-state="improve"] .organise {
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .study {
+    width: min(680px, 88vw);
+  }
 }
 
 @media (max-width: 680px) {
   .study {
     width: 100%;
   }
-
-  .blueprint text {
-    font-size: 11px;
-  }
-
-  .stateLabel,
-  .eyebrow,
-  .boundaryLabel,
-  .moduleStatus,
-  .feedbackLabel {
-    font-size: 9px !important;
-  }
-
-  .caption {
-    gap: 9px;
-    font-size: 7px;
-    letter-spacing: .07em;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :global(.practice) .observe,
-  :global(.practice) .define,
-  :global(.practice) .construct,
-  :global(.practice) .organise,
-  :global(.practice) .improve { transition: none !important; }
-  :global(.practice) .observe { opacity: .2 !important; }
-  :global(.practice) .define { opacity: .38 !important; }
-  :global(.practice) .construct { opacity: .82 !important; }
-  :global(.practice) .organise,
-  :global(.practice) .improve { opacity: 1 !important; }
+  .observe,
+  .define,
+  .construct,
+  .organise,
+  .improve {
+    transition: none !important;
+  }
+
+  .observe,
+  .define {
+    opacity: 0 !important;
+  }
+
+  .construct {
+    opacity: .62 !important;
+  }
+
+  .organise,
+  .improve {
+    opacity: 1 !important;
+  }
 }

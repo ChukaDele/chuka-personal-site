@@ -81,11 +81,3 @@
 
 .bredge svg { stroke: #39737c; }
 .bredge .accent { stroke: var(--oxide); }
-
-@media (max-width: 899px) {
-  .plate { grid-column: 2; width: min(300px, 55vw); }
-}
-
-@media (max-width: 680px) {
-  .plate { grid-column: 1; width: min(280px, 78vw); }
-}
