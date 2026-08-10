@@ -48,10 +48,8 @@ export function HomeMotion() {
           practiceTimeline
             .set([blueprintLayers.define, blueprintLayers.construct, blueprintLayers.organise, blueprintLayers.improve], { opacity: 0 }, 0)
             .set(blueprintLayers.observe, { opacity: 1 }, 0)
-            .set(stageItems, { opacity: 0.42, x: 14 }, 0)
-            .set(stageItems[0], { opacity: 1, x: 0 }, 0)
-            .set(stageIndicators, { scaleX: 0.15 }, 0)
-            .set(stageIndicators[0], { scaleX: 1 }, 0)
+            .set(stageItems.slice(1), { opacity: 0.42, x: 14 }, 0)
+            .set(stageIndicators.slice(1), { scaleX: 0.15 }, 0)
             .to(blueprintLayers.observe, { opacity: 0.24, duration: 0.16, ease: "power1.inOut" }, 0.16)
             .fromTo(blueprintLayers.define, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.inOut", immediateRender: false }, 0.16)
             .fromTo(blueprintLayers.construct, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.inOut", immediateRender: false }, 0.34)
