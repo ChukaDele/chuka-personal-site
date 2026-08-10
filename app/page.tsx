@@ -11,7 +11,7 @@ import { absoluteSiteUrl, createPageMetadata, siteUrl } from "../lib/seo";
 export const metadata: Metadata = createPageMetadata({ title: "Chuka Dele-Oyeleru | Strategy & Operations", description: "Chuka Dele-Oyeleru builds the systems that take ambitious ideas from first brief to repeatable execution.", path: "/", imageAlt: "Chuka Dele-Oyeleru, Strategy & Operations", absoluteTitle: true });
 
 const heroSystemNodes = [
-  { label: "Opportunity", x: "8%", y: "18%" },
+  { label: "Opportunity", x: "13%", y: "18%" },
   { label: "People", x: "82%", y: "12%" },
   { label: "Ownership", x: "34%", y: "32%" },
   { label: "Workflow", x: "86%", y: "52%" },
