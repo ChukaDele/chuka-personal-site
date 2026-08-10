@@ -146,8 +146,10 @@ h2 em { color: var(--blue); font-weight: 400; }
 .practice-study > p { display: flex; justify-content: space-between; margin: 12px 0 0; color: #a7bdc7; font: 8px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
 .stage-list { margin: 0; padding: 0; list-style: none; }
 .stage-list li { display: grid; grid-template-columns: 44px 135px minmax(0,1fr) 54px; gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid rgba(237,242,239,.28); opacity: .62; transform: translateX(14px); }
+.stage-list li:first-child { opacity: 1; transform: none; }
 .stage-list li:last-child { border-bottom: 1px solid rgba(237,242,239,.28); }
 .stage-list span { color: #9fc0d0; font: 9px var(--mono); }.stage-list strong { font: 400 27px var(--serif); }.stage-list p { margin: 0; color: #c6d2d6; font-size: 13px; line-height: 1.4; }.stage-list i { height: 1px; background: #9fc0d0; transform: scaleX(.15); transform-origin: left center; }
+.stage-list li:first-child i { transform: scaleX(1); }
 
 .studio-note, .about-teaser { padding: clamp(90px, 12vw, 180px) clamp(22px, 9vw, 145px); display: grid; grid-template-columns: 20% minmax(0, 1fr); gap: 40px; }
 .studio-note { background: #dbe6e5; }
