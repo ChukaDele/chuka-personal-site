@@ -14,7 +14,7 @@ test("renders the Strategy & Operations home page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /Chuka Dele-Oyeleru \| Strategy &amp; Operations/i);
+  assert.match(html, /<title>Chuka Dele-Oyeleru \| Strategy &amp; Operations<\/title>/i);
   assert.match(html, /I build the systems that take ambitious ideas/);
   assert.match(html, /CHUKA DELE-OYELERU/);
   assert.match(html, /Selected work/i);

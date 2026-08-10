@@ -19,11 +19,11 @@ export function absoluteSiteUrl(path = "/") {
   return siteUrl ? new URL(path, siteUrl).toString() : null;
 }
 
-export function createPageMetadata({ title, description, path, image = "/og-image.png", imageAlt }: { title: string; description: string; path: string; image?: string; imageAlt?: string }): Metadata {
+export function createPageMetadata({ title, description, path, image = "/og-image.png", imageAlt, absoluteTitle = false }: { title: string; description: string; path: string; image?: string; imageAlt?: string; absoluteTitle?: boolean }): Metadata {
   const canonical = absoluteSiteUrl(path);
   const socialImage = absoluteSiteUrl(image);
   return {
-    title,
+    title: absoluteTitle ? { absolute: title } : title,
     description,
     alternates: canonical ? { canonical } : undefined,
     robots: { index: siteIndexable, follow: true, googleBot: { index: siteIndexable, follow: true } },

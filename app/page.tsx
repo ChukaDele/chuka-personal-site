@@ -7,7 +7,7 @@ import { SiteNav } from "../components/layout/SiteNav";
 import { operatingStages, selectedWork, socialLinks } from "../content/site";
 import { absoluteSiteUrl, createPageMetadata, siteUrl } from "../lib/seo";
 
-export const metadata: Metadata = createPageMetadata({ title: "Chuka Dele-Oyeleru | Strategy & Operations", description: "Chuka Dele-Oyeleru builds the systems that take ambitious ideas from first brief to repeatable execution.", path: "/", imageAlt: "Chuka Dele-Oyeleru, Strategy & Operations" });
+export const metadata: Metadata = createPageMetadata({ title: "Chuka Dele-Oyeleru | Strategy & Operations", description: "Chuka Dele-Oyeleru builds the systems that take ambitious ideas from first brief to repeatable execution.", path: "/", imageAlt: "Chuka Dele-Oyeleru, Strategy & Operations", absoluteTitle: true });
 
 export default function Home() {
   return (
