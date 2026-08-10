@@ -2,45 +2,36 @@
 
 ## Deterministic gate
 
-Current local result on 10 August 2026:
+Phase 2 verification on 10 August 2026:
 
 - ESLint: pass.
 - Production vinext build: pass.
-- Rendered-route tests: 7 pass, including all Phase 2 shells and the bespoke 404.
-- Diff check: pass after the final documentation update.
+- Rendered-route tests: 9 pass, covering the homepage, all seven Phase 2 routes and the bespoke 404.
+- Diff check: pass.
 
 ## Remote evidence
 
-Revision `571e0b9465c53594a0e1caafa599fd3cd0d930ad` was pushed to `origin/atelier-v1` and deployed to the isolated Worker. The immutable version URL is `https://9d65b2d7-chuka-personal-site-atelier-v1.thebredge.workers.dev/`; it returned the same revision in `X-Deploy-SHA`. Major remote-web preflight passed for the Cloudflare preview and the GitHub repository.
+Phase 2 was pushed to `origin/atelier-v1` and published through immutable Cloudflare Worker versions. Each acceptance run first matched the full `X-Deploy-SHA` response header to the pushed Git revision and passed Major remote-web preflight.
 
-Browser checks completed against the remote preview:
+The remote matrix covered:
 
-- 1280px desktop: full identity and value hierarchy visible; no horizontal overflow; no console errors.
-- 1024px tablet: single-column Practice composition; no horizontal overflow.
-- 768px tablet: mobile navigation active and folio sticky positioning reset.
-- 390px mobile: no horizontal overflow; folios in normal flow; navigation opened with 46px route targets; hero and first Work folio inspected visually.
-- Reduced motion at 390px: media query active, preloader absent, system nodes and Practice stages fully visible, no overflow.
-- Invalid route: real HTTP 404, useful routes visible, fragment-control state changes correctly.
-- Phase 2 shells, `robots.txt`, `sitemap.xml` and the social image all return HTTP 200.
-- Desktop hero-to-Work handoff, Correspondence resolution and reverse-scroll restoration were verified on the immutable revision.
-- At 1024px, every non-animated hero and Practice state is fully resolved after load and after crossing down from the desktop animation breakpoint.
+- 1440, 1280, 1024, 768 and 390 pixel widths with no horizontal overflow;
+- first-view identity and value clarity while the optional sound offer remains visible;
+- desktop Practice progress states, pin release and reverse scroll;
+- fully resolved tablet, mobile and reduced-motion Practice states without GSAP requests;
+- literal Work-card media plates with no repeated decorative right-side index;
+- first-use and persisted sound preference, later navigation cues, visibility suspend/resume and a reversible 44 pixel mobile toggle;
+- Library player lazy instantiation, zero YouTube requests before activation, focus transfer to Close and restoration to the originating Play button;
+- keyboard order, mobile navigation, 44 pixel primary touch targets and focus visibility;
+- all Phase 2 routes, the social image, `robots.txt`, `sitemap.xml` and a real useful 404;
+- console, failed-request and response-header checks.
 
-The expected browser console resource error for the deliberately requested 404 is not an application failure.
+Preview responses include noindex, exact deployment provenance, HSTS, anti-framing protection, nosniff, referrer policy and permissions policy.
 
 ## Flow / Veo decision
 
-The public-domain Dürer source was accepted in Flow with the documented 9:16, two-output, Veo 3.1 Quality contract. Flow routed the request into prompt coaching and did not expose a valid paid Veo submission for that configured request. No credits were spent. Phase 1 retains the deterministic static artwork treatment; `docs/veo-generations.md` records the exact acceptance contract for a future retry.
+The public-domain Dürer source was accepted in Flow with the documented 9:16, two-output, Veo 3.1 Quality contract. Flow routed the request into prompt coaching and did not expose a valid paid Veo submission for that configured request. No credits were spent. The site retains the deterministic static artwork treatment; `docs/veo-generations.md` records the acceptance contract for a future retry.
 
-## Required browser matrix
+## Production blockers
 
-- 1440, 1280, 1024, 768 and 390 pixel widths.
-- Cold and repeat navigation behavior.
-- Keyboard navigation, focus visibility and 44px touch targets.
-- First paint, full scroll, pinned entry/release and reverse scroll.
-- Tablet and mobile sticky reset, horizontal overflow and orientation/resize behavior.
-- Reduced-motion static outcome.
-- Route shells, invalid route, console, failed requests and critical media weight.
-
-## Known evidence constraint
-
-Project outcomes, a résumé file and an email address have not been verified. The site therefore uses restrained claims and a LinkedIn route. It must not invent metrics or imply that a résumé download exists.
+The preview is not production approval. The canonical production Worker is not live. Project outcomes, a résumé file, an email address, personal Library annotations, Speaking evidence, press assets and final Chuka imagery have not been verified. The implementation uses explicit provisional and empty states and must not invent those inputs.

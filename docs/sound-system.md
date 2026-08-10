@@ -3,10 +3,10 @@
 ## Contract
 
 - Audible sound starts only after a user gesture.
-- The first meaningful visit integrates the choice into the atelier preloader: `Enter with sound` or `Enter quietly`.
+- The first meaningful visit presents a nonblocking offer: `Enable sound` or `Keep sound off`. The identity, proposition and primary routes remain visible and usable behind it.
 - The preference persists in `localStorage` and remains reversible through the global sound toggle.
 - Reduced-motion users bypass the entrance gate. Sound remains off until they explicitly enable it.
-- Audio suspends while the document is hidden and closes during provider teardown.
+- Audio suspends while the document is hidden, resumes when visible if enabled, and closes only during provider teardown.
 - No hover sounds, spoken audio, fake foley files or autoplaying ambience ship in Phase 2.
 
 ## Palette
