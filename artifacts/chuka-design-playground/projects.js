@@ -19,7 +19,7 @@ const PROJECTS = [
   {
     id: 'idara', name: 'Idara', sector: 'Registration & compliance', geography: 'Nigeria & Ghana', period: '2024 to 2026', role: 'Product and operations leadership',
     headline: 'Reworked an early MVP into a registration and compliance platform.',
-    capability: 'Rebuild a first version that is struggling, and organise the team around the new service.',
+    capability: 'Rebuild an early product, and organise the team around the service.',
     diagnosis: 'Chose to rebuild the early MVP rather than continue patching it.',
     design: 'Led the product and service team. Brought fulfilment in house and established a written procedure for each service.',
     build: 'Led the site and platform rebuild with the team on NestJS, Next.js and PostgreSQL, including the Corporate Affairs Commission integration.',

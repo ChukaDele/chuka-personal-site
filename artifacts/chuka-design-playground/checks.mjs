@@ -56,7 +56,13 @@ for(const reference of ['references/commissions/index.html','references/directio
   assert.ok(html.includes('Supplied Claude draft'),'Reference views must identify their source.');
 }
 assert.match(read('styles.css'),/prefers-reduced-motion/,'Device reduced motion must be respected.');
+const css=read('styles.css');
+assert.match(css,/html\.keyboard-mode\s*\{[^}]*scroll-behavior:\s*auto/,'Keyboard anchor navigation must not smooth scroll.');
+assert.match(css,/@media\s*\(max-width:\s*760px\)\s*\{\s*\.markers\s*\{[^}]*position:\s*static[^}]*display:\s*grid/,'Mobile painting routes must occupy a normal-flow grid rather than overlapping hotspots.');
+assert.match(css,/\.marker-label\s*\{display:block/,'Mobile painting routes must show project names.');
+assert.match(read('playground.js'),/class="marker-label">\$\{esc\(project\.name\)\}/,'All project markers must carry a visible name for mobile.');
+assert.equal(cases.find(project=>project.id==='idara').capability,'Rebuild an early product, and organise the team around the service.','Idara capability must avoid unsupported criticism of the early product.');
 assert.match(read('playground.js'),/focusReturn/,'Dialogs must restore focus.');
 assert.match(read('index.html'),/data-save="hero"[\s\S]*data-save="work"[\s\S]*data-save="method"/,'All three section saves must remain available.');
 assert.match(read('worker.mjs'),/X-Deploy-SHA/,'The preview must expose its deployed revision.');
-console.log(JSON.stringify({passed:true,cases:6,assetChecks,staticReferenceChecks:referenceChecks,scriptSyntaxChecks:syntaxChecks,scope:'Isolated draft only. Browser behavior and visual QA remain a separate check.'},null,2));
+console.log(JSON.stringify({passed:true,cases:6,assetChecks,staticReferenceChecks:referenceChecks,scriptSyntaxChecks:syntaxChecks,reviewRepairs:3,scope:'Isolated draft only. Browser behavior and visual QA remain a separate check.'},null,2));

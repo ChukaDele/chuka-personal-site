@@ -19,3 +19,14 @@ dialog{--paper:#f6f4ef;--ink:#252320;--muted:#625d54;--line:#c9c3b8;--accent:#8f
 @media(max-width:430px){.hero--workshop h1{font-size:2.7rem}.workshop-side{display:block}.workshop-side .fill-button{margin-top:18px}.brief-stages{grid-template-columns:1fr}.brief-stages dd{font-size:12px}.brief-stages dt{font-size:10px}.hero--study h1,.hero--evening h1{font-size:2.6rem}.draft-controls summary{padding:13px 16px}.control-row{gap:7px}.control-row select{font-size:10px}.controls-inner{padding:16px}.marker-tools p{max-width:28ch}}
 @media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.entry{display:none!important}}
 html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[data-motion=reduced] *::before,html[data-motion=reduced] *::after,html.keyboard-mode *,html.keyboard-mode *::before,html.keyboard-mode *::after{transition:none!important;animation:none!important}html[data-motion=reduced] .reveal{opacity:1;transform:none}html[data-motion=reduced] .entry{display:none!important}
+html.keyboard-mode{scroll-behavior:auto}
+.marker-label{display:none}
+@media(max-width:760px){
+  .markers{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+  .marker{position:static;left:auto;top:auto;width:auto;height:auto;min-height:44px;transform:none;display:flex;justify-content:flex-start;gap:10px;padding:10px 12px;border-radius:0;box-shadow:none;background:var(--paper);border-color:var(--line);color:var(--ink);text-align:left}
+  .marker-number{font-size:10px;color:var(--accent)}
+  .marker-label{display:block;font-size:11px;line-height:1.3}
+  .marker:hover{background:var(--accent);color:var(--paper);box-shadow:none}
+  .marker:hover .marker-number{color:inherit}
+  .marker:active{transform:scale(.97)}
+}
