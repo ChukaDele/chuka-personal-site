@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Three interactive draft directions for Chuka Dele-Oyeleru's website.">
+  <meta name="theme-color" content="#f6f4ef">
+  <title>Chuka Dele-Oyeleru · Design playground</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="projects.js"></script>
+  <script defer src="draft-state.js"></script>
+  <script defer src="playground.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the draft</a>
+  <header class="site-header">
+    <a class="brand" href="#top">Chuka Dele-Oyeleru<span>Strategy &amp; Operations</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#work">Work</a><a href="#method">Method</a><a href="#about">About</a>
+      <a href="https://chukadele.com/notes" target="_blank" rel="noopener">Notes <span class="sr-only">(opens another tab)</span></a><a href="#contact">Contact</a>
+    </nav>
+  </header>
+  <main id="main" tabindex="-1">
+    <noscript><p class="no-script">This draft uses JavaScript to switch layouts and open stories. The <a href="references/directions-ii/">supplied Directions II draft</a> and <a href="references/commissions/">Commissions draft</a> are also included.</p></noscript>
+  </main>
+  <footer class="site-footer"><span>Chuka Dele-Oyeleru · Strategy &amp; Operations</span><div><a href="references/directions-ii/">Supplied Directions II</a><a href="references/commissions/">Supplied Commissions</a><button type="button" data-open-credits>Artwork credits</button></div><small>Interactive design draft · October 2026</small></footer>
+
+  <details class="draft-controls" id="draft-controls">
+    <summary>Draft controls <span id="direction-name">Study</span><span class="control-chevron" aria-hidden="true">⌃</span></summary>
+    <div class="controls-inner">
+      <div class="controls-heading"><h2>Try a direction</h2><button class="icon-button" id="close-controls" type="button" aria-label="Close draft controls">×</button></div>
+      <div class="direction-buttons" role="group" aria-label="Draft direction"><button type="button" data-direction="study" aria-pressed="true">01 · Study</button><button type="button" data-direction="workshop" aria-pressed="false">02 · Workshop</button><button type="button" data-direction="evening" aria-pressed="false">03 · Evening</button></div>
+      <p class="controls-description" id="direction-description"></p>
+      <div class="control-row"><label for="motion-setting">Motion</label><select id="motion-setting"><option value="auto">Follow device</option><option value="reduced">Reduced</option></select><button type="button" id="replay-entry">Replay entrance</button></div>
+      <div class="save-heading"><h3>Keep the sections you like</h3><span id="saved-count">0 / 3</span></div>
+      <div class="save-buttons" role="group" aria-label="Save sections"><button type="button" data-save="hero">Save hero</button><button type="button" data-save="work">Save work</button><button type="button" data-save="method">Save method</button></div>
+      <dl class="saved-sections" id="saved-sections"></dl>
+      <label class="note-label" for="draft-note">What should we keep or change?</label><textarea id="draft-note" rows="2" maxlength="2000" placeholder="For example: Workshop index, Evening artwork, quieter hero."></textarea>
+      <div class="control-actions"><button type="button" id="try-mix">Try saved mix</button><button type="button" id="export-choices">Export choices</button><button type="button" id="reset-choices">Reset</button></div>
+      <p class="control-hint">Selections and notes stay in this browser. Export a JSON file to share them.</p>
+      <div class="reference-links"><a href="references/directions-ii/">Open supplied Directions II ↗</a><a href="references/commissions/">Open supplied Commissions ↗</a></div>
+    </div>
+  </details>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog class="case-dialog" id="case-dialog" aria-labelledby="case-title">
+    <div class="dialog-top"><span>Project story</span><button class="icon-button" type="button" data-close-dialog="case-dialog" aria-label="Close project story">×</button></div>
+    <div class="case-content" id="case-content"></div>
+  </dialog>
+  <dialog class="lightbox" id="lightbox" aria-label="Full image view">
+    <div class="lightbox-top"><span id="lightbox-position"></span><button class="icon-button" type="button" data-close-dialog="lightbox" aria-label="Close full image">×</button></div>
+    <figure><img id="lightbox-image" alt=""><figcaption id="lightbox-caption"></figcaption></figure>
+    <div class="lightbox-navigation"><button type="button" id="previous-image" aria-label="Previous image">← Previous</button><button type="button" id="next-image" aria-label="Next image">Next →</button></div>
+  </dialog>
+  <dialog class="credits-dialog" id="credits-dialog" aria-labelledby="credits-title">
+    <div class="dialog-top"><h2 id="credits-title">Artwork credits</h2><button class="icon-button" type="button" data-close-dialog="credits-dialog" aria-label="Close artwork credits">×</button></div>
+    <div id="credits-content"></div>
+  </dialog>
+  <div class="entry" id="entry" hidden aria-hidden="true"><svg id="entry-solid" viewBox="-1 -1 2 2" fill="none" stroke="currentColor" stroke-width=".014" aria-hidden="true"></svg><span>Chuka Dele-Oyeleru</span></div>
+</body>
+</html>

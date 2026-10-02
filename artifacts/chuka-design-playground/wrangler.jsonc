@@ -1,0 +1,7 @@
+{
+  "name": "chuka-design-playground",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-02",
+  "workers_dev": true,
+  "assets": {"directory": ".", "binding": "ASSETS", "run_worker_first": true}
+}

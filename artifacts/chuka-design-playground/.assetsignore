@@ -1,0 +1,6 @@
+worker.mjs
+wrangler.jsonc
+checks.mjs
+README.md
+*.zip
+.wrangler/**

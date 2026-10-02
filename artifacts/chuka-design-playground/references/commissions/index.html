@@ -1,0 +1,348 @@
+<!doctype html><html><head><meta charset=utf8><meta name="robots" content="noindex,nofollow"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body><div class="reference-banner"><a href="../../">← Draft playground</a><span>Supplied Claude draft · Chuka Commissions</span><small>Original composition and copy. Some claims and contact placeholders remain unverified.</small></div><style>.reference-banner{position:relative;z-index:60;display:flex;gap:1rem;flex-wrap:wrap;align-items:center;padding:12px 24px;background:#161512;color:#faf9f5;font:13px/1.5 system-ui}.reference-banner a{color:inherit}.reference-banner small{opacity:.8}.reference-banner a:focus-visible{outline:2px solid #e4ac7c;outline-offset:4px}</style>
+<title>Chuka Commissions</title>
+
+
+
+<style>
+/* Layout: a museum catalogue. Wide margins, one column of thought at a time, every painting shown whole beside the commission it explains. */
+:root{
+  --paper:#FBFAF6; --paper-2:#F3F0E8; --ink:#171512; --ink-2:#5E5950; --ink-3:#8F887C; --rule:#E4DFD4; --accent:#8A2B1E; --frame:#1F1B16;
+  --display:"Cormorant Garamond",Garamond,Georgia,serif; --text:"EB Garamond",Garamond,Georgia,serif; --dw:500; --dls:-.01em; --tsize:1.1875rem;
+  --eo:cubic-bezier(.23,1,.32,1);
+  --gut:clamp(20px,6vw,96px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#11100E;--paper-2:#1A1815;--ink:#EEE9DF;--ink-2:#B2AB9E;--ink-3:#837D72;--rule:#2B2823;--accent:#DB8D74;--frame:#000;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#11100E;--paper-2:#1A1815;--ink:#EEE9DF;--ink-2:#B2AB9E;--ink-3:#837D72;--rule:#2B2823;--accent:#DB8D74;--frame:#000;color-scheme:dark}
+
+/* Typeface sets, switched from the bar at the bottom */
+:root[data-font="cardo"]{--display:"Cardo",Georgia,serif;--text:"Cardo",Georgia,serif;--dw:400;--dls:-.015em;--tsize:1.0625rem}
+:root[data-font="fell"]{--display:"IM Fell English",Georgia,serif;--text:"IM Fell English",Georgia,serif;--dw:400;--dls:-.005em;--tsize:1.125rem}
+:root[data-font="caslon"]{--display:"Libre Caslon Display",Georgia,serif;--text:"Libre Caslon Text",Georgia,serif;--dw:400;--dls:-.01em;--tsize:1rem}
+:root[data-font="goudy"]{--display:"Sorts Mill Goudy",Georgia,serif;--text:"Sorts Mill Goudy",Georgia,serif;--dw:400;--dls:-.01em;--tsize:1.125rem}
+:root[data-font="brygada"]{--display:"Brygada 1918",Georgia,serif;--text:"Brygada 1918",Georgia,serif;--dw:400;--dls:-.02em;--tsize:1.0625rem}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--text);font-size:var(--tsize);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:"liga","onum"}
+h1,h2,h3,p,figure,dl,dd,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+a{color:inherit}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit;color:inherit}
+:focus-visible{outline:1.5px solid var(--accent);outline-offset:4px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:var(--gut)}
+h1,h2,h3{font-family:var(--display);font-weight:var(--dw);letter-spacing:var(--dls);text-wrap:balance}
+.sc{font-family:var(--text);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.it{font-style:italic}
+
+/* Header */
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding-block:2rem;border-bottom:1px solid var(--rule)}
+.brand{font-family:var(--display);font-weight:var(--dw);font-size:1.375rem;text-decoration:none;letter-spacing:var(--dls)}
+.nav{display:flex;gap:clamp(1rem,3vw,2.5rem);font-size:1rem}
+.nav a{position:relative;text-decoration:none;color:var(--ink-2);padding-block:.25rem;transition:color .2s}
+.nav a:hover,.nav a[aria-current]{color:var(--ink)}
+.nav a svg{position:absolute;left:-3px;right:-3px;bottom:-5px;width:calc(100% + 6px);height:8px;overflow:visible}
+.nav a svg path{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .55s var(--eo)}
+.nav a:hover svg path,.nav a[aria-current] svg path{stroke-dashoffset:0}
+@media (max-width:640px){.nav .hs{display:none}}
+
+/* Button: colour blooms from where the pointer enters, then the arrow hands over to the next */
+.go{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;gap:.9rem;padding:.95rem 1.15rem .95rem 1.4rem;border:1px solid var(--ink);color:var(--ink);text-decoration:none;font-family:var(--text);font-size:1.0625rem;line-height:1;cursor:pointer;background:none;transition:color .35s var(--eo),transform .16s var(--eo)}
+.go .bloom{position:absolute;z-index:-1;left:var(--x,50%);top:var(--y,50%);width:var(--d,300px);height:var(--d,300px);margin:calc(var(--d,300px) / -2) 0 0 calc(var(--d,300px) / -2);border-radius:50%;background:var(--ink);transform:scale(0);transition:transform .6s var(--eo)}
+.go.on{color:var(--paper)}
+.go.on .bloom{transform:scale(1)}
+.go .ar{position:relative;width:16px;height:16px;overflow:hidden}
+.go .ar svg{position:absolute;inset:0;width:16px;height:16px;transition:transform .5s var(--eo)}
+.go .ar svg+svg{transform:translateX(-150%)}
+.go.on .ar svg:first-child{transform:translateX(150%)}
+.go.on .ar svg+svg{transform:translateX(0);transition-delay:.08s}
+.go:active{transform:scale(.97)}
+.ln{text-decoration:none;color:var(--ink-2);padding-bottom:3px;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .45s var(--eo),color .2s}
+.ln:hover{background-size:100% 1px;color:var(--ink)}
+
+/* Paintings: always whole, never cropped; hung in a thin frame with a mat */
+.painting{display:flex;flex-direction:column;gap:1.25rem}
+.hang{display:block;width:100%;padding:0;border:0;background:var(--frame);cursor:zoom-in;box-shadow:0 1px 1px rgba(0,0,0,.05),0 24px 44px -26px rgba(20,15,8,.45);transition:transform .6s var(--eo),box-shadow .6s var(--eo)}
+.hang span{display:block;background:var(--paper);padding:clamp(10px,1.6vw,22px);margin:clamp(5px,.6vw,8px)}
+.hang img{width:100%;height:auto}
+.hang:hover{transform:translateY(-4px);box-shadow:0 1px 1px rgba(0,0,0,.05),0 34px 54px -26px rgba(20,15,8,.5)}
+.label{font-size:.9375rem;line-height:1.55;color:var(--ink-2);max-width:40ch}
+.label b{display:block;font-weight:400;color:var(--ink)}
+.label .why{display:block;margin-top:.6rem;color:var(--ink-2)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(3rem,7vw,7rem);align-items:center;padding-block:clamp(6rem,12vw,11rem)}
+.hero-copy{display:flex;flex-direction:column;gap:2rem}
+.hero h1{font-size:clamp(2.1rem,3.4vw,2.9rem);line-height:1.12}
+.hero p{color:var(--ink-2);max-width:36ch}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+
+/* Sections */
+.part{padding-block:clamp(7rem,14vw,12rem);border-top:1px solid var(--rule)}
+.part-h{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:2rem clamp(3rem,7vw,7rem);align-items:baseline;margin-bottom:clamp(5rem,10vw,9rem)}
+.part-h h2{font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.1}
+.part-h p{color:var(--ink-2);max-width:44ch}
+@media (max-width:860px){.part-h{grid-template-columns:1fr}}
+
+/* A commission */
+.case{padding-block:clamp(4rem,9vw,8rem);border-top:1px solid var(--rule)}
+.case:first-of-type{border-top:0;padding-top:0}
+.case-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:.75rem 2rem;margin-bottom:clamp(3rem,6vw,5rem)}
+.case-h .num{font-family:var(--display);font-size:1.25rem;color:var(--accent);min-width:2.5rem}
+.case-h h3{font-size:clamp(2rem,3.4vw,2.8rem);line-height:1}
+.case-h .sc{margin-left:auto}
+.case-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(3rem,7vw,7rem);align-items:start}
+.case:nth-of-type(even) .case-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}
+.case:nth-of-type(even) .painting{order:2}
+.copy{display:flex;flex-direction:column;gap:2rem;max-width:34rem}
+.copy .lead{font-family:var(--display);font-weight:var(--dw);font-size:clamp(1.5rem,2.2vw,1.85rem);line-height:1.25;letter-spacing:var(--dls)}
+.stages{display:grid;gap:0}
+.stages div{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1.25rem;padding-block:1rem;border-top:1px solid var(--rule)}
+.stages div:last-child{border-bottom:1px solid var(--rule)}
+.stages dt{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);padding-top:.3rem}
+.stages dd{color:var(--ink-2);line-height:1.5}
+.proof{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.proof b{font-family:var(--display);font-weight:var(--dw);font-size:3rem;line-height:1;color:var(--accent);font-variant-numeric:lining-nums tabular-nums}
+.proof span{color:var(--ink-2);max-width:22ch;line-height:1.35}
+.copy .acts{display:flex;flex-wrap:wrap;gap:1rem 1.75rem;align-items:center}
+@media (max-width:860px){.case-grid,.case:nth-of-type(even) .case-grid{grid-template-columns:1fr}.case:nth-of-type(even) .painting{order:0}.case-h .sc{margin-left:0;width:100%}}
+
+/* Project evidence: the work itself, shown whole */
+.evidence{margin-top:clamp(4rem,8vw,7rem);display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:clamp(1rem,2.4vw,2rem)}
+.evidence figure{display:flex;flex-direction:column;gap:.75rem}
+.shot{display:block;padding:0;border:1px solid var(--rule);background:var(--paper-2);cursor:zoom-in;overflow:hidden;transition:transform .6s var(--eo),box-shadow .6s var(--eo)}
+.shot img{width:100%;height:auto;transition:transform 1.2s var(--eo)}
+.shot:hover{transform:translateY(-3px);box-shadow:0 22px 40px -28px rgba(20,15,8,.45)}
+.shot:hover img{transform:scale(1.015)}
+.evidence figcaption{font-size:.875rem;color:var(--ink-3)}
+.diagram{padding:clamp(1.5rem,4vw,3rem);border:1px solid var(--rule);background:var(--paper-2);color:var(--ink)}
+.diagram svg{width:100%;height:auto;display:block}
+@media (max-width:720px){.evidence{grid-template-columns:1fr}}
+
+/* Method */
+.method-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(3rem,7vw,7rem);align-items:start}
+.steps{counter-reset:s;display:flex;flex-direction:column}
+.steps li{counter-increment:s;display:grid;grid-template-columns:3rem minmax(0,1fr);gap:1rem;padding-block:1.6rem;border-top:1px solid var(--rule)}
+.steps li:last-child{border-bottom:1px solid var(--rule)}
+.steps li::before{content:counter(s,upper-roman);font-family:var(--display);color:var(--accent);font-size:1.125rem;padding-top:.15rem}
+.steps h3{font-size:1.5rem;line-height:1.2;margin-bottom:.35rem}
+.steps p{color:var(--ink-2);line-height:1.5}
+@media (max-width:860px){.method-grid{grid-template-columns:1fr}}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(3rem,8vw,8rem);align-items:center}
+.contact h2{font-size:clamp(2.1rem,3.6vw,3rem);line-height:1.1;max-width:16ch}
+.contact .row{display:flex;flex-wrap:wrap;gap:1rem 1.5rem;align-items:center;margin-top:2.5rem}
+.addr{font-size:1rem;padding:.9rem 1rem;border:1px dashed var(--rule);user-select:all;color:var(--ink-2)}
+@media (max-width:860px){.contact-grid{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--rule);padding-block:3rem 8rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+
+/* Lightbox */
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(92vw,1400px);max-height:92vh}
+dialog.lb::backdrop{background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:blur(6px)}
+dialog.lb[open]{animation:lbIn .45s var(--eo)}
+@keyframes lbIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+dialog.lb img{max-width:min(92vw,1400px);max-height:80vh;width:auto;height:auto;margin:0 auto;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
+dialog.lb p{margin-top:1rem;text-align:center;font-size:.9375rem;color:var(--ink-2)}
+dialog.lb button{position:fixed;top:1.25rem;right:1.25rem;border:1px solid var(--rule);background:var(--paper);width:44px;height:44px;cursor:pointer;font-size:1.25rem;line-height:1}
+
+/* Preloader: Dürer's solid drawn in ink */
+.pre{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:var(--paper);transition:opacity .55s ease,visibility .55s}
+.pre.out{opacity:0;visibility:hidden}
+.pre svg{width:min(40vw,200px);height:auto;color:var(--ink);overflow:visible}
+.pre p{position:absolute;bottom:16%;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+
+<div class="pre" id="pre" aria-hidden="true"><svg id="pre-svg" viewBox="-1.15 -1.15 2.3 2.3"></svg><p>After Dürer, Melencolia I, 1514</p></div>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top">Chuka Dele-Oyeleru</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#work" aria-current="page">Work<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5 C 22 2, 42 7, 62 4 S 90 3, 99 5"/></svg></a>
+      <a href="#method" class="hs">Method<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 4 C 25 7, 45 2, 65 5 S 88 6, 99 3"/></svg></a>
+      <a href="https://chukadele.com/notes" class="hs">Notes<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5 C 22 2, 42 7, 62 4 S 90 3, 99 5"/></svg></a>
+      <a href="#contact">Contact<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 4 C 25 7, 45 2, 65 5 S 88 6, 99 3"/></svg></a>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-copy">
+      <span class="sc">Strategy · Operations · Build</span>
+      <h1>I diagnose the problem, design how the work should run, and build what it needs.</h1>
+      <p>Six commissions across insurance, regtech, recruitment, payments, studio operations and data, in Nigeria, Ghana, the UK and the US.</p>
+      <div><a class="go" href="#work"><span class="bloom"></span>See the commissions<span class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a></div>
+    </div>
+    <figure class="painting">
+      <button class="hang" type="button" data-zoom="../../assets/art/athens.jpg" data-cap="Raphael, The School of Athens, 1509–11. Fresco, Apostolic Palace, Vatican."><span><img src="../../assets/art/athens.jpg" width="1800" height="1396" alt="Raphael's fresco The School of Athens: philosophers gathered under a vaulted hall, Plato and Aristotle walking at the centre"></span></button>
+      <figcaption class="label"><b>Raphael, <i>The School of Athens</i>, 1509–11</b>Fresco, Apostolic Palace, Vatican<span class="why">At the centre, Plato points up to the world of ideas and Aristotle holds his hand level over the world as it is. My work sits between those two gestures.</span></figcaption>
+    </figure>
+  </section>
+</div>
+
+<section class="part" id="work">
+  <div class="wrap">
+    <div class="part-h">
+      <h2>Commissions</h2>
+      <p>Renaissance painters worked on commission: a patron, a problem, a deadline. Each project below is paired with a painting whose history runs close to the work, then shown as it shipped.</p>
+    </div>
+    <div id="cases"></div>
+  </div>
+</section>
+
+<section class="part" id="method">
+  <div class="wrap">
+    <div class="part-h">
+      <h2>How the work runs</h2>
+      <p>A Renaissance workshop kept every stage of a painting under one roof, from grinding pigment to the final varnish. I work the same way: one person carrying a project from the first question to the finished result.</p>
+    </div>
+    <div class="method-grid">
+      <figure class="painting">
+        <button class="hang" type="button" data-zoom="../../assets/art/workshop.jpg" data-cap="Theodoor Galle after Jan van der Straet, The Invention of Oil Painting, from Nova Reperta, c. 1591. Art Institute of Chicago."><span><img src="../../assets/art/workshop.jpg" width="1500" height="1128" loading="lazy" alt="Engraving of Jan van Eyck's studio: apprentices grinding pigment, a painter at an easel, finished panels on the walls"></span></button>
+        <figcaption class="label"><b>Theodoor Galle after Jan van der Straet, <i>The Invention of Oil Painting</i>, c. 1591</b>Engraving, from Nova Reperta, Art Institute of Chicago<span class="why">Jan van Eyck's studio as imagined a century and a half later. Pigment is ground, panels are drawn, paintings are finished, all in one room.</span></figcaption>
+      </figure>
+      <ol class="steps">
+        <li><div><h3>Diagnose</h3><p>Read the market, the data and the incentives. Name the one constraint that matters.</p></div></li>
+        <li><div><h3>Design</h3><p>Decide who owns what, how the work flows, and which numbers to watch each week.</p></div></li>
+        <li><div><h3>Build</h3><p>Ship the product, the process or the system, and put it in front of real customers.</p></div></li>
+        <li><div><h3>Result</h3><p>Measure it, learn from it, and make it repeatable.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="part contact" id="contact">
+  <div class="wrap contact-grid">
+    <figure class="painting">
+      <button class="hang" type="button" data-zoom="../../assets/art/jerome.jpg" data-cap="Albrecht Dürer, Saint Jerome in His Study, 1514. Engraving. Art Institute of Chicago."><span><img src="../../assets/art/jerome.jpg" width="900" height="1166" loading="lazy" alt="Albrecht Dürer's engraving of Saint Jerome writing at his desk in a sunlit study"></span></button>
+      <figcaption class="label"><b>Albrecht Dürer, <i>Saint Jerome in His Study</i>, 1514</b>Engraving, Art Institute of Chicago<span class="why">A scholar at his desk in a room built for thinking. Every letter gets an answer.</span></figcaption>
+    </figure>
+    <div>
+      <span class="sc">Correspondence</span>
+      <h2 style="margin-top:1.25rem">Have something that needs building? Write to me.</h2>
+      <div class="row">
+        <a class="go" href="https://www.linkedin.com/in/chuka1"><span class="bloom"></span>Start a conversation<span class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
+        <span class="addr">[your email]</span>
+      </div>
+      <p style="margin-top:2rem;color:var(--ink-2)"><a class="ln" href="https://chukadele.com/resume">Read the résumé</a></p>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span class="sc">Chuka Dele-Oyeleru · Manchester · MMXXVI</span><span class="sc">All artworks public domain</span></div></footer>
+
+<dialog class="lb" id="lb" aria-label="Artwork, full view"><button type="button" id="lb-x" aria-label="Close">×</button><img id="lb-img" alt=""><p id="lb-cap"></p></dialog>
+
+
+
+<script>
+(function(){
+var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var ARR = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg>';
+function go(label, href){ return '<a class="go" href="' + href + '"><span class="bloom"></span>' + label + '<span class="ar">' + ARR + ARR + '</span></a>'; }
+
+var DIAGRAM = '<svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="System shape: intake, record, writer and grader kept apart, shortlist, then a person signs off"><g font-family="inherit" font-size="13" letter-spacing="1.5" fill="currentColor" stroke="none" text-anchor="middle"><text x="83" y="154">INTAKE</text><text x="193" y="154">RECORD</text><text x="320" y="114">WRITER</text><text x="320" y="204">GRADER</text><text x="460" y="154">SHORTLIST</text><text x="572" y="204">SIGN-OFF</text></g><rect x="40" y="130" width="86" height="40" rx="2"/><rect x="150" y="130" width="86" height="40" rx="2"/><rect x="272" y="90" width="96" height="40" rx="2"/><rect x="272" y="180" width="96" height="40" rx="2"/><rect x="410" y="130" width="100" height="40" rx="2"/><circle cx="572" cy="150" r="24"/><path d="M126 150h24M236 150c18 0 18-40 36-40M236 150c18 0 18 50 36 50M368 110c22 0 22 40 42 40M368 200c22 0 22-50 42-50M510 150h38"/><path d="M320 130v50" stroke-dasharray="3 5"/><path d="M564 150l6 6 10-12"/></svg>';
+
+var CASES = [
+ {n:'I', name:'ETAP', meta:'Insurtech · Nigeria and Ghana · 2022–24',
+  art:{src:'../../assets/art/ambassadors.jpg', w:1300, h:1303, who:'Hans Holbein the Younger, <i>The Ambassadors</i>, 1533', where:'Oil on oak, National Gallery, London', why:'A French ambassador in London and his visiting friend, with instruments of astronomy, time and arithmetic between them. Two men whose work was crossing borders and reading the world accurately.', alt:'Holbein\'s The Ambassadors: two men in rich dress beside a shelf of globes, instruments and books'},
+  lead:'Found a business market in the data, launched the product, then helped take the company into Ghana.',
+  d:'Analytics and customer calls showed businesses needed a product of their own.', s:'Built the proposition, pricing, demo and onboarding, and redesigned claims handoffs.', b:'Launched ETAP for Business, fronted the launch videos and onboarded the first customers.', r:'Claims turnaround fell 57%. Ghana launched in October 2024.',
+  proof:['57%','faster claims turnaround'], link:['etapinsure.com','https://etapinsure.com'],
+  shots:[['etap-1','ETAP for Business: fleet insurance'],['etap-2','Driver behaviour scoring'],['etap-3','Managing drivers and rewards']]},
+ {n:'II', name:'Idara', meta:'Regtech · Nigeria and Ghana · 2024–26',
+  art:{src:'../../assets/art/tax.jpg', w:1000, h:1232, who:'Marinus van Reymerswaele, <i>The Tax Collectors</i>, 1540s', where:'Oil on oak panel, Musée du Louvre, Paris', why:'An official records dues in a ledger while coins wait on the table. Registration and compliance have been somebody\'s job for five hundred years.', alt:'Two tax collectors in elaborate hats, one writing in a ledger, coins on the table'},
+  lead:'Reworked an early MVP into a registration and compliance platform with positive unit economics.',
+  d:'Chose to rebuild the 2023 MVP rather than patch it.', s:'Led a 10-person team, with in-house fulfilment and a written procedure for each service.', b:'Rebuilt the site and platform on NestJS, Next.js and PostgreSQL, connected to the Corporate Affairs Commission.', r:'On average, a first order covers its acquisition cost. Now live in Ghana.',
+  proof:['3.2×','return on ad spend on first orders'], link:['goidara.com','https://goidara.com'],
+  shots:[['idara-1','goidara.com'],['idara-2','Registration in Nigeria and Ghana'],['idara-3','The compliance dashboard']]},
+ {n:'III', name:'Surface Talent', meta:'Recruitment · United Kingdom · 2026',
+  art:{src:'../../assets/art/engraving.jpg', w:1500, h:1110, who:'Theodoor Galle after Jan van der Straet, <i>The Invention of Copper Engraving</i>, c. 1591', where:'Engraving from Nova Reperta, Art Institute of Chicago', why:'Engraving let one drawing become hundreds of identical prints. A single master\'s work, multiplied by the press.', alt:'Engraving of a print workshop: engravers cutting copper plates and a press turning out sheets'},
+  lead:'Built a system so one recruiter can run the workload of a ten-person desk.',
+  d:'A desk grows by hiring consultants. The goal was one recruiter with the output of ten.', s:'One system of record, a grader kept apart from the writer, and a person signs every shortlist.', b:'Built the whole pipeline alone, with a GDPR impact assessment in the first week.', r:'Nine more consultants would cost about £306,000 a year in UK salary, National Insurance and pension.',
+  proof:['~£306k','a year: the cost of the alternative'], link:null, shots:null},
+ {n:'IV', name:'HoneyCoin', meta:'Payments · Kenya · 2024–26 · with Rvysion',
+  art:{src:'../../assets/art/moneylender.jpg', w:1300, h:1223, who:'Quentin Matsys, <i>The Moneylender and His Wife</i>, 1514', where:'Oil on panel, Musée du Louvre, Paris', why:'In Antwerp, then Europe\'s rising trading hub, a money changer weighs coins and gold. Moving value between people who do not know each other has always depended on someone checking the weight.', alt:'A money changer weighing coins on a small balance while his wife turns the pages of a book'},
+  lead:'Ran the fractional team that rebuilt a payments company\'s apps as it scaled.',
+  d:'Audited where enterprise users lost time in transaction and account flows.', s:'Managed illustrators, brand and product designers and engineers across every workstream.', b:'Redesigned the peer app and created the B2B app on a shared design system.', r:'35% faster transaction completion and 20% higher B2B retention, as published by Rvysion.',
+  proof:['35%','faster transactions, with Rvysion'], link:['Rvysion case study','https://www.rvysion.co/case-studies/honeycoin-product'],
+  shots:[['honey-1','The B2B platform'],['honey-2','Wallets and transfers'],['honey-3','Brand refresh']]},
+ {n:'V', name:'Rvysion', meta:'Design and venture studio · 2024–26',
+  art:{src:'../../assets/art/baptism.jpg', w:1100, h:1310, who:'Andrea del Verrocchio and Leonardo da Vinci, <i>The Baptism of Christ</i>, c. 1470–75', where:'Oil and tempera on panel, Uffizi, Florence', why:'Made in Verrocchio\'s Florentine workshop. The young Leonardo, then a member of the studio, painted the angel on the left. A studio grows its people on real commissions.', alt:'The Baptism of Christ: John baptises Christ in a river while two angels kneel on the left'},
+  lead:'Designed how a 32-person studio serves clients and builds its own products at the same time.',
+  d:'Client work and the studio\'s own products draw on the same 32 people.', s:'Set the management rhythms and resource allocation across both.', b:'Shipped client products and our own: Rayna UI reached 10,000+ downloads.', r:'35% more clients, 22% more revenue opportunities, 12% lower operating costs.',
+  proof:['+35%','clients, with 12% lower operating costs'], link:['rvysion.co','https://rvysion.co'],
+  shots:[['rayna-1','Rayna UI identity'],['rayna-2','Rayna UI in product']]},
+ {n:'VI', name:'The Bredge', meta:'Data services · US clients · Co-founder',
+  art:{src:'../../assets/art/proportion.jpg', w:1500, h:1063, who:'Luca Pacioli, <i>De Divina Proportione</i>, Venice, 1509', where:'Woodcut solids after drawings by Leonardo da Vinci, Art Institute of Chicago', why:'Pacioli also published the first printed account of double-entry bookkeeping, in 1494: every number checked against another. That is still the job.', alt:'An open book showing two geometric solids drawn in perspective'},
+  lead:'Built a data team US companies plug into instead of hiring one.',
+  d:'Growing companies need senior data people before they can justify a full team.', s:'Three ways to buy: an embedded team, a scoped project, or a diagnostic and roadmap.', b:'Engineers work inside client teams under the client\'s name, so the work stays theirs.', r:'Filling those 12 roles in-house would have cost about $1.9M.',
+  proof:['12','embedded data roles across four US companies'], link:['thebredge.com','https://thebredge.com'],
+  shots:[['bredge-1','thebredge.com'],['bredge-2','Reconciling five systems'],['bredge-3','Reporting built for clients']]}
+];
+
+document.getElementById('cases').innerHTML = CASES.map(function(c){
+  var cap = c.art.who.replace(/<[^>]+>/g,'') + '. ' + c.art.where + '.';
+  var ev = c.shots ? '<div class="evidence" style="--n:' + c.shots.length + '">' + c.shots.map(function(s){ return '<figure><button class="shot" type="button" data-zoom="../../assets/shots/' + s[0] + '.jpg" data-cap="' + c.name + ': ' + s[1] + '"><img src="../../assets/shots/' + s[0] + '.jpg" width="1280" height="800" loading="lazy" alt="' + c.name + ': ' + s[1] + '"></button><figcaption>' + s[1] + '</figcaption></figure>'; }).join('') + '</div>'
+    : '<div class="evidence" style="--n:1"><figure><div class="diagram">' + DIAGRAM + '</div><figcaption>The shape of the system. Prompts, rubrics and data stay private.</figcaption></figure></div>';
+  return '<article class="case" id="' + c.name.toLowerCase().replace(/\s+/g,'-') + '">' +
+    '<header class="case-h"><span class="num">' + c.n + '</span><h3>' + c.name + '</h3><span class="sc">' + c.meta + '</span></header>' +
+    '<div class="case-grid"><figure class="painting"><button class="hang" type="button" data-zoom="' + c.art.src + '" data-cap="' + cap.replace(/"/g,'&quot;') + '"><span><img src="' + c.art.src + '" width="' + c.art.w + '" height="' + c.art.h + '" loading="lazy" alt="' + c.art.alt.replace(/"/g,'&quot;') + '"></span></button>' +
+    '<figcaption class="label"><b>' + c.art.who + '</b>' + c.art.where + '<span class="why">' + c.art.why + '</span></figcaption></figure>' +
+    '<div class="copy"><p class="lead">' + c.lead + '</p>' +
+    '<dl class="stages"><div><dt>Diagnose</dt><dd>' + c.d + '</dd></div><div><dt>Design</dt><dd>' + c.s + '</dd></div><div><dt>Build</dt><dd>' + c.b + '</dd></div><div><dt>Result</dt><dd>' + c.r + '</dd></div></dl>' +
+    '<div class="proof"><b>' + c.proof[0] + '</b><span>' + c.proof[1] + '</span></div>' +
+    '<div class="acts">' + go('Read the case', '#' + c.name.toLowerCase().replace(/\s+/g,'-')) + (c.link ? '<a class="ln" href="' + c.link[1] + '">' + c.link[0] + ' ↗</a>' : '') + '</div></div></div>' + ev + '</article>';
+}).join('');
+
+/* Buttons: bloom from the entry point, retreat toward the exit point */
+function bindGo(el){
+  function pos(e){ var r = el.getBoundingClientRect(); var x = e ? e.clientX - r.left : r.width/2, y = e ? e.clientY - r.top : r.height/2;
+    var d = 2 * Math.max(Math.hypot(x, y), Math.hypot(r.width - x, y), Math.hypot(x, r.height - y), Math.hypot(r.width - x, r.height - y));
+    el.style.setProperty('--x', x + 'px'); el.style.setProperty('--y', y + 'px'); el.style.setProperty('--d', d + 'px'); }
+  el.addEventListener('pointerenter', function(e){ pos(e); el.classList.add('on'); });
+  el.addEventListener('pointerleave', function(e){ pos(e); el.classList.remove('on'); });
+  el.addEventListener('focus', function(){ pos(null); el.classList.add('on'); });
+  el.addEventListener('blur', function(){ el.classList.remove('on'); });
+}
+document.querySelectorAll('.go').forEach(bindGo);
+
+/* Lightbox: every painting and screen opens whole */
+var lb = document.getElementById('lb'), lbImg = document.getElementById('lb-img'), lbCap = document.getElementById('lb-cap');
+document.addEventListener('click', function(e){
+  var t = e.target.closest('[data-zoom]'); if (!t) return;
+  lbImg.src = t.dataset.zoom; lbImg.alt = t.dataset.cap || ''; lbCap.textContent = t.dataset.cap || '';
+  if (lb.showModal) lb.showModal(); else lb.setAttribute('open','');
+});
+lb.addEventListener('click', function(e){ if (e.target === lb || e.target.id === 'lb-x') lb.close(); });
+
+/* Preloader: Dürer's solid draws its edges, turns once, then the page shows */
+(function(){
+  var pre = document.getElementById('pre'), svg = document.getElementById('pre-svg');
+  var seen = false; try { seen = sessionStorage.getItem('cd-v3-seen') === '1'; sessionStorage.setItem('cd-v3-seen','1'); } catch(e){}
+  if (seen || reduce){ pre.remove(); return; }
+  function n3(v){ var l = Math.hypot(v[0],v[1],v[2]); return [v[0]/l,v[1]/l,v[2]/l]; }
+  var d = n3([1,1,1]), k = 1.55, t = .38, P = [];
+  for (var i=0;i<8;i++){ var v=[(i&1)-.5,((i>>1)&1)-.5,((i>>2)&1)-.5], s=(k-1)*(v[0]*d[0]+v[1]*d[1]+v[2]*d[2]); P.push([v[0]+d[0]*s,v[1]+d[1]*s,v[2]+d[2]*s]); }
+  function cut(a,b){ return [0,1,2].map(function(j){ return P[a][j]+(P[b][j]-P[a][j])*t; }); }
+  var E = [];
+  for (var a=0;a<8;a++) for (var bit=0;bit<3;bit++){ var b = a ^ (1<<bit); if (b < a) continue; E.push([(a===0||a===7)?cut(a,b):P[a], (b===0||b===7)?cut(b,a):P[b]]); }
+  [[cut(0,1),cut(0,2)],[cut(0,2),cut(0,4)],[cut(0,4),cut(0,1)],[cut(7,6),cut(7,5)],[cut(7,5),cut(7,3)],[cut(7,3),cut(7,6)]].forEach(function(e){ E.push(e); });
+  var NS = 'http://www.w3.org/2000/svg', paths = E.map(function(){ var p = document.createElementNS(NS,'path'); p.setAttribute('fill','none'); p.setAttribute('stroke','currentColor'); p.setAttribute('stroke-width','.018'); p.setAttribute('stroke-linecap','round'); p.setAttribute('pathLength','1'); p.setAttribute('stroke-dasharray','1'); svg.appendChild(p); return p; });
+  function rot(p, yaw, pitch){ var cy=Math.cos(yaw), sy=Math.sin(yaw), cp=Math.cos(pitch), sp=Math.sin(pitch); var x=cy*p[0]+sy*p[2], z=-sy*p[0]+cy*p[2], y=p[1]; return [x, cp*y-sp*z]; }
+  var t0 = performance.now();
+  function frame(now){
+    var el = now - t0, pr = Math.min(el/1000, 1), yaw = .6 + el*.0012;
+    E.forEach(function(e,i){ var A = rot(e[0], yaw, -.45), B = rot(e[1], yaw, -.45); paths[i].setAttribute('d','M'+A[0].toFixed(3)+' '+(-A[1]).toFixed(3)+'L'+B[0].toFixed(3)+' '+(-B[1]).toFixed(3));
+      var loc = Math.min(Math.max(pr*E.length*1.25 - i, 0), 1); paths[i].setAttribute('stroke-dashoffset', (1-loc).toFixed(3)); });
+    if (el < 1600) requestAnimationFrame(frame); else { pre.classList.add('out'); setTimeout(function(){ pre.remove(); }, 600); }
+  }
+  requestAnimationFrame(frame);
+})();
+})();
+</script>
+
+</body></html>

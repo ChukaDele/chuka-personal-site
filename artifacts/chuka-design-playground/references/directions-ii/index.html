@@ -1,0 +1,405 @@
+<!doctype html><html><head><meta charset=utf8><meta name="robots" content="noindex,nofollow"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body><div class="reference-banner"><a href="../../">← Draft playground</a><span>Supplied Claude draft · Chuka Directions II</span><small>Original composition and copy. Some claims and contact placeholders remain unverified.</small></div><style>.reference-banner{position:relative;z-index:60;display:flex;gap:1rem;flex-wrap:wrap;align-items:center;padding:12px 24px;background:#161512;color:#faf9f5;font:13px/1.5 system-ui}.reference-banner a{color:inherit}.reference-banner small{opacity:.8}.reference-banner a:focus-visible{outline:2px solid #e4ac7c;outline-offset:4px}</style>
+<title>Chuka Directions II</title>
+
+
+
+<style>
+/* Three structures, one typeface family (Garamond), one palette: paper, ink, red chalk. */
+:root{
+  --paper:#FBFAF6; --paper-2:#F2EEE5; --ink:#171512; --ink-2:#5C574E; --ink-3:#8E877B; --rule:#E3DED3; --chalk:#9B3A26; --frame:#1F1B16;
+  --display:"Cormorant Garamond",Garamond,Georgia,serif; --text:"EB Garamond",Garamond,Georgia,serif;
+  --eo:cubic-bezier(.23,1,.32,1); --gut:clamp(20px,6vw,96px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#11100E;--paper-2:#1A1815;--ink:#EEE9DF;--ink-2:#B1AA9D;--ink-3:#827C71;--rule:#2B2823;--chalk:#DD8E72;--frame:#000;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#11100E;--paper-2:#1A1815;--ink:#EEE9DF;--ink-2:#B1AA9D;--ink-3:#827C71;--rule:#2B2823;--chalk:#DD8E72;--frame:#000;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--text);font-size:1.1875rem;line-height:1.62;-webkit-font-smoothing:antialiased;font-feature-settings:"liga","onum"}
+h1,h2,h3,p,figure,dl,dd,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+a{color:inherit}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit;color:inherit}
+:focus-visible{outline:1.5px solid var(--chalk);outline-offset:4px}
+h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.01em;text-wrap:balance}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:var(--gut)}
+.sc{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.dir{padding-bottom:9rem}
+
+/* shared header */
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding-block:2rem;border-bottom:1px solid var(--rule)}
+.brand{font-family:var(--display);font-weight:500;font-size:1.375rem;text-decoration:none}
+.nav{display:flex;gap:clamp(1rem,3vw,2.5rem);font-size:1rem}
+.nav a{position:relative;text-decoration:none;color:var(--ink-2);padding-block:.25rem;transition:color .2s}
+.nav a:hover{color:var(--ink)}
+.nav a svg{position:absolute;left:-3px;bottom:-5px;width:calc(100% + 6px);height:8px;overflow:visible}
+.nav a svg path{fill:none;stroke:var(--chalk);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .55s var(--eo)}
+.nav a:hover svg path{stroke-dashoffset:0}
+@media (max-width:640px){.nav .hs{display:none}}
+
+/* shared button: bloom from entry point + arrow relay */
+.go{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;gap:.9rem;padding:.95rem 1.15rem .95rem 1.4rem;border:1px solid var(--ink);color:var(--ink);text-decoration:none;font-family:var(--text);font-size:1.0625rem;line-height:1;cursor:pointer;background:none;transition:color .35s var(--eo),transform .16s var(--eo)}
+.go .bloom{position:absolute;z-index:-1;left:var(--x,50%);top:var(--y,50%);width:var(--d,300px);height:var(--d,300px);margin:calc(var(--d,300px) / -2) 0 0 calc(var(--d,300px) / -2);border-radius:50%;background:var(--ink);transform:scale(0);transition:transform .6s var(--eo)}
+.go.on{color:var(--paper)}
+.go.on .bloom{transform:scale(1)}
+.go .ar{position:relative;width:16px;height:16px;overflow:hidden}
+.go .ar svg{position:absolute;inset:0;width:16px;height:16px;transition:transform .5s var(--eo)}
+.go .ar svg+svg{transform:translateX(-150%)}
+.go.on .ar svg:first-child{transform:translateX(150%)}
+.go.on .ar svg+svg{transform:translateX(0);transition-delay:.08s}
+.go:active{transform:scale(.97)}
+.ln{text-decoration:none;color:var(--ink-2);padding-bottom:3px;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .45s var(--eo),color .2s}
+.ln:hover{background-size:100% 1px;color:var(--ink)}
+.hang{display:block;width:100%;padding:0;border:0;background:var(--frame);cursor:zoom-in;box-shadow:0 1px 1px rgba(0,0,0,.05),0 24px 44px -26px rgba(20,15,8,.45)}
+.hang>span{display:block;background:var(--paper);padding:clamp(10px,1.6vw,22px);margin:clamp(5px,.6vw,8px)}
+.shot{display:block;width:100%;padding:0;border:1px solid var(--rule);background:var(--paper-2);cursor:zoom-in;overflow:hidden;transition:transform .6s var(--eo),box-shadow .6s var(--eo)}
+.shot img{width:100%;height:auto}
+.shot:hover{transform:translateY(-3px);box-shadow:0 22px 40px -28px rgba(20,15,8,.45)}
+.cap{font-size:.875rem;color:var(--ink-3);margin-top:.6rem}
+.label{font-size:.9375rem;line-height:1.55;color:var(--ink-2)}
+.label b{display:block;font-weight:400;color:var(--ink)}
+.diagram{padding:clamp(1.5rem,4vw,3rem);border:1px solid var(--rule);background:var(--paper-2);color:var(--ink)}
+.diagram svg{width:100%;height:auto;display:block}
+.stages{display:grid}
+.stages div{display:grid;grid-template-columns:6.5rem minmax(0,1fr);gap:1.25rem;padding-block:.9rem;border-top:1px solid var(--rule)}
+.stages div:last-child{border-bottom:1px solid var(--rule)}
+.stages dt{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);padding-top:.3rem}
+.stages dd{color:var(--ink-2);line-height:1.5}
+.proof{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.proof b{font-family:var(--display);font-weight:500;font-size:2.75rem;line-height:1;color:var(--chalk);font-variant-numeric:lining-nums}
+.proof span{color:var(--ink-2);max-width:24ch;line-height:1.35}
+
+/* ================== B · THE SCHOOL ================== */
+.d-b .hero{padding-block:clamp(5rem,10vw,8rem) clamp(3rem,6vw,4.5rem);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem clamp(3rem,7vw,7rem);align-items:end}
+.d-b .hero h1{font-size:clamp(2.1rem,3.4vw,2.9rem);line-height:1.12}
+.d-b .hero p{color:var(--ink-2);max-width:40ch}
+.d-b .fresco{position:relative}
+.d-b .fresco .hang{cursor:default}
+.d-b .stage-wrap{position:relative}
+.d-b .stage-wrap img{width:100%;height:auto}
+.d-b .stage-wrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.d-b .hot{cursor:pointer}
+.d-b .hot ellipse.ring{fill:none;stroke:var(--chalk);stroke-width:3.2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s var(--eo);vector-effect:non-scaling-stroke}
+.d-b .hot ellipse.hit{fill:transparent}
+.d-b .hot.on ellipse.ring,.d-b .hot:hover ellipse.ring{stroke-dashoffset:0}
+.d-b .hot circle{fill:var(--paper);stroke:var(--chalk);stroke-width:2;vector-effect:non-scaling-stroke;transition:fill .3s}
+.d-b .hot text{font:600 30px var(--display);fill:var(--chalk);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.d-b .hot.on circle{fill:var(--chalk)}
+.d-b .hot.on text{fill:var(--paper)}
+.d-b .fig-cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 2rem;margin-top:1.4rem}
+.d-b .index{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:clamp(3rem,7vw,7rem);padding-block:clamp(5rem,10vw,9rem);align-items:start}
+.d-b .who{display:flex;flex-direction:column;border-top:1px solid var(--ink)}
+.d-b .who button{display:grid;grid-template-columns:2.25rem minmax(0,1fr);gap:.75rem;align-items:baseline;text-align:left;padding:1.05rem 0;border:0;border-bottom:1px solid var(--rule);background:none;cursor:pointer;transition:color .2s}
+.d-b .who button .n{font-family:var(--display);color:var(--chalk)}
+.d-b .who button .t{display:flex;flex-direction:column}
+.d-b .who button .t b{font-family:var(--display);font-weight:500;font-size:1.5rem;line-height:1.15;transition:transform .45s var(--eo)}
+.d-b .who button .t i{font-size:.9375rem;color:var(--ink-3)}
+.d-b .who button:hover .t b{transform:translateX(6px)}
+.d-b .who button[aria-pressed="true"] .t b{color:var(--chalk)}
+.d-b .panel{display:flex;flex-direction:column;gap:2rem;min-height:40rem;transition:opacity .35s ease}
+.d-b .panel.fade{opacity:0}
+.d-b .panel .why{font-family:var(--display);font-style:italic;font-size:1.375rem;line-height:1.4;color:var(--ink-2);padding-left:1.25rem;border-left:1px solid var(--chalk)}
+.d-b .panel .lead{font-family:var(--display);font-weight:500;font-size:clamp(1.6rem,2.4vw,2rem);line-height:1.22}
+.d-b .panel .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.d-b .panel .shots figure:first-child{grid-column:1/-1}
+.d-b .panel .acts{display:flex;flex-wrap:wrap;gap:1rem 1.75rem;align-items:center}
+@media (max-width:860px){.d-b .hero,.d-b .index{grid-template-columns:1fr}.d-b .panel{min-height:0}}
+
+/* ================== C · THE LETTER ================== */
+.d-c .letter{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(3rem,8vw,8rem);padding-block:clamp(5rem,10vw,9rem);align-items:start}
+.d-c .plate{position:sticky;top:2.5rem;display:flex;flex-direction:column;gap:1.25rem}
+.d-c .plate .hang img{mix-blend-mode:multiply}
+:root[data-theme="dark"] .d-c .plate .hang img{mix-blend-mode:normal}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .d-c .plate .hang img{mix-blend-mode:normal}}
+.d-c .page{max-width:38rem}
+.d-c .dateline{display:flex;justify-content:space-between;gap:1rem;margin-bottom:3.5rem;font-style:italic;color:var(--ink-2)}
+.d-c .salut{font-family:var(--display);font-size:clamp(1.9rem,3vw,2.5rem);line-height:1.15;font-weight:500;margin-bottom:2rem}
+.d-c .intro{color:var(--ink-2);margin-bottom:3.5rem}
+.d-c .intro::first-letter{float:left;font-family:var(--display);font-size:4.4rem;line-height:.82;padding:.35rem .6rem 0 0;color:var(--chalk)}
+.d-c ol.caps{counter-reset:c;border-top:1px solid var(--ink)}
+.d-c .cap-i{counter-increment:c;border-bottom:1px solid var(--rule)}
+.d-c .cap-i>button{width:100%;display:grid;grid-template-columns:2.75rem minmax(0,1fr) 1.5rem;gap:1rem;align-items:baseline;text-align:left;padding:1.6rem 0;border:0;background:none;cursor:pointer}
+.d-c .cap-i>button::before{content:counter(c) ".";font-family:var(--display);font-size:1.5rem;color:var(--chalk)}
+.d-c .cap-i .say{font-family:var(--display);font-weight:500;font-size:clamp(1.35rem,2vw,1.6rem);line-height:1.3;transition:color .25s}
+.d-c .cap-i .say small{display:block;margin-top:.45rem;font-family:var(--text);font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.d-c .cap-i .pm{position:relative;width:14px;height:14px;align-self:center}
+.d-c .cap-i .pm::before,.d-c .cap-i .pm::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transition:transform .45s var(--eo)}
+.d-c .cap-i .pm::after{transform:rotate(90deg)}
+.d-c .cap-i>button[aria-expanded="true"] .pm::after{transform:rotate(0)}
+.d-c .cap-i>button:hover .say{color:var(--chalk)}
+.d-c .body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--eo)}
+.d-c .cap-i.open .body{grid-template-rows:1fr}
+.d-c .body>div{overflow:hidden;min-height:0}
+.d-c .body .in{display:flex;flex-direction:column;gap:1.75rem;padding:0 0 2.5rem 3.75rem}
+.d-c .body .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}
+.d-c .body .shots figure:first-child{grid-column:1/-1}
+.d-c .sign{margin-top:4rem;display:flex;flex-direction:column;gap:.35rem}
+.d-c .sign i{color:var(--ink-2)}
+.d-c .sign b{font-family:var(--display);font-weight:500;font-size:2rem;line-height:1}
+.d-c .sign .row{display:flex;flex-wrap:wrap;gap:1rem 1.5rem;align-items:center;margin-top:2rem}
+.addr{font-size:1rem;padding:.9rem 1rem;border:1px dashed var(--rule);user-select:all;color:var(--ink-2)}
+@media (max-width:860px){.d-c .letter{grid-template-columns:1fr}.d-c .plate{position:static}.d-c .body .in{padding-left:0}}
+
+/* ================== D · THE BOOK ================== */
+.d-d{--measure:34rem}
+.d-d .run{display:flex;justify-content:space-between;gap:1rem;padding-block:1.4rem;font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+.d-d .title-page{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(3rem,8vw,8rem);align-items:center;padding-block:clamp(5rem,11vw,10rem)}
+.d-d .tp{text-align:center;display:flex;flex-direction:column;gap:1.5rem;align-items:center}
+.d-d .tp .caps{font-family:var(--display);font-weight:500;font-size:clamp(1.4rem,2.4vw,1.9rem);letter-spacing:.2em;text-transform:uppercase;line-height:1.4}
+.d-d .tp .orn{width:60px;height:14px;color:var(--chalk)}
+.d-d .tp p{font-style:italic;color:var(--ink-2);max-width:28ch}
+.d-d .tp .imp{font-size:.8125rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+.d-d .contents{max-width:var(--measure);margin:0 auto;padding-block:clamp(4rem,8vw,7rem);border-top:1px solid var(--rule)}
+.d-d .contents h2{text-align:center;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;font-weight:500;margin-bottom:2.5rem}
+.d-d .contents a{display:flex;align-items:baseline;gap:.75rem;text-decoration:none;padding:.55rem 0}
+.d-d .contents a .dots{flex:1;border-bottom:1px dotted var(--ink-3);transform:translateY(-.3rem)}
+.d-d .contents a .nm{transition:color .2s}
+.d-d .contents a:hover .nm{color:var(--chalk)}
+.d-d .contents a .fo{font-variant-numeric:oldstyle-nums;color:var(--ink-3)}
+.d-d .chapter{max-width:calc(var(--measure) + 16rem);margin:0 auto;padding-block:clamp(6rem,12vw,10rem);border-top:1px solid var(--rule);display:grid;grid-template-columns:minmax(0,var(--measure)) 12rem;gap:4rem;justify-content:center}
+.d-d .chapter .main{min-width:0}
+.d-d .ch-h{text-align:center;margin-bottom:3rem}
+.d-d .ch-h .no{font-size:.8125rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-3)}
+.d-d .ch-h h3{font-size:clamp(1.8rem,2.8vw,2.3rem);letter-spacing:.14em;text-transform:uppercase;margin-top:.6rem;font-weight:500}
+.d-d .ch-h p{font-style:italic;color:var(--ink-2);margin-top:.6rem}
+.d-d .text p{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.d-d .text p+p{text-indent:1.5em}
+.d-d .text p:first-child::first-letter{float:left;font-family:var(--display);font-size:5rem;line-height:.78;padding:.4rem .6rem 0 0;color:var(--chalk)}
+.d-d .fig{margin:0 0 2.25rem}
+.d-d .fig figcaption{font-size:.8125rem;font-style:italic;color:var(--ink-3);margin-top:.5rem;text-align:center}
+.d-d .taper{margin-top:1.4rem;text-align:center}
+.d-d .taper span{display:block;margin:0 auto}
+.d-d .gloss{font-size:.875rem;line-height:1.5;color:var(--ink-2);display:flex;flex-direction:column;gap:2rem;padding-top:7.5rem}
+.d-d .gloss b{display:block;font-family:var(--display);font-weight:500;font-size:2.4rem;line-height:1;color:var(--chalk);margin-bottom:.35rem;font-variant-numeric:lining-nums}
+.d-d .gloss .mani{color:var(--ink);text-decoration:none;display:inline-flex;gap:.4rem;align-items:center}
+.d-d .gloss .mani svg{width:22px;height:12px;color:var(--chalk);transition:transform .4s var(--eo)}
+.d-d .gloss .mani:hover svg{transform:translateX(4px)}
+.d-d .plates{clear:both;padding-top:2.5rem;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.d-d .colophon{max-width:var(--measure);margin:0 auto;padding-block:clamp(6rem,12vw,10rem);border-top:1px solid var(--rule);text-align:center;display:flex;flex-direction:column;gap:1.5rem;align-items:center}
+.d-d .colophon h2{font-size:1rem;letter-spacing:.3em;text-transform:uppercase;font-weight:500}
+.d-d .colophon p{color:var(--ink-2)}
+.d-d .colophon .row{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+@media (max-width:900px){.d-d .title-page{grid-template-columns:1fr}.d-d .chapter{grid-template-columns:1fr;gap:2rem}.d-d .gloss{padding-top:0;flex-direction:row;flex-wrap:wrap}.d-d .fig,.d-d .chapter:nth-of-type(even) .fig{float:none;width:100%;margin:0 0 1.5rem}}
+
+/* switcher */
+.switch{position:fixed;z-index:30;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:center;gap:2px;padding:6px;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--rule);box-shadow:0 12px 34px -16px rgba(20,15,8,.35);max-width:calc(100vw - 24px);overflow-x:auto}
+.switch a,.switch button{border:0;background:none;padding:.6rem .85rem;font-size:1rem;line-height:1;white-space:nowrap;cursor:pointer;color:var(--ink-2);text-decoration:none;position:relative;transition:color .2s,transform .16s var(--eo)}
+.switch button:active{transform:scale(.96)}
+.switch button[aria-pressed="true"]{color:var(--ink)}
+.switch button[aria-pressed="true"]::after{content:"";position:absolute;left:.85rem;right:.85rem;bottom:.3rem;height:1px;background:var(--chalk)}
+.switch .sep{width:1px;height:18px;background:var(--rule);margin:0 4px}
+@media (max-width:520px){.switch .lg{display:none}}
+
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(92vw,1400px);max-height:92vh}
+dialog.lb::backdrop{background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:blur(6px)}
+dialog.lb[open]{animation:lbIn .45s var(--eo)}
+@keyframes lbIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+dialog.lb img{max-width:min(92vw,1400px);max-height:80vh;width:auto;height:auto;margin:0 auto}
+dialog.lb p{margin-top:1rem;text-align:center;font-size:.9375rem;color:var(--ink-2)}
+dialog.lb button{position:fixed;top:1.25rem;right:1.25rem;border:1px solid var(--rule);background:var(--paper);width:44px;height:44px;cursor:pointer;font-size:1.25rem}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+
+<!-- ================== B · THE SCHOOL ================== -->
+<div class="dir d-b" id="d-b">
+  <div class="wrap">
+    <header class="top"><a class="brand" href="#b">Chuka Dele-Oyeleru</a>
+      <nav class="nav" aria-label="Main"><a href="#b-index">Work<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5 C 22 2, 42 7, 62 4 S 90 3, 99 5"/></svg></a><a class="hs" href="https://chukadele.com/notes">Notes<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 4 C 25 7, 45 2, 65 5 S 88 6, 99 3"/></svg></a><a href="#b-index">Contact<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5 C 22 2, 42 7, 62 4 S 90 3, 99 5"/></svg></a></nav></header>
+    <section class="hero">
+      <h1>I diagnose the problem, design how the work should run, and build what it needs.</h1>
+      <p>One painting holds the whole practice. Raphael put dozens of thinkers in one room, each doing a different kind of work. Choose a figure to see the commission that matches it.</p>
+    </section>
+    <figure class="fresco">
+      <div class="hang"><span><div class="stage-wrap"><img src="../../assets/art/athens.jpg" width="1800" height="1396" alt="Raphael's School of Athens, with six figures marked"><svg id="b-svg" viewBox="0 0 1800 1396" preserveAspectRatio="none" aria-label="Figures in the fresco, each linked to a project"></svg></div></span></div>
+      <figcaption class="fig-cap"><span class="label"><b>Raphael, <i>The School of Athens</i>, 1509–11</b>Fresco, Stanza della Segnatura, Apostolic Palace, Vatican</span><span class="label" style="max-width:40ch">At the centre, Plato points up to ideas and Aristotle holds his hand level over the world as it is. My work sits between the two.</span></figcaption>
+    </figure>
+    <section class="index" id="b-index">
+      <div><span class="sc">Six figures, six commissions</span><div class="who" id="b-who" style="margin-top:1.5rem" role="group" aria-label="Projects"></div></div>
+      <div class="panel" id="b-panel" aria-live="polite"></div>
+    </section>
+  </div>
+</div>
+
+<!-- ================== C · THE LETTER ================== -->
+<div class="dir d-c" id="d-c" hidden>
+  <div class="wrap">
+    <header class="top"><a class="brand" href="#c">Chuka Dele-Oyeleru</a>
+      <nav class="nav" aria-label="Main"><a href="#c-letter">Letter<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5 C 22 2, 42 7, 62 4 S 90 3, 99 5"/></svg></a><a class="hs" href="https://chukadele.com/notes">Notes<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 4 C 25 7, 45 2, 65 5 S 88 6, 99 3"/></svg></a><a href="#c-sign">Reply<svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 5 C 22 2, 42 7, 62 4 S 90 3, 99 5"/></svg></a></nav></header>
+    <section class="letter" id="c-letter">
+      <aside class="plate">
+        <button class="hang" type="button" data-zoom="../../assets/art/leonardo.jpg" data-cap="Leonardo da Vinci, drawing of Brunelleschi's hoist, c. 1478–80. Codex Atlanticus, Biblioteca Ambrosiana, Milan."><span><img src="../../assets/art/leonardo.jpg" width="1068" height="756" alt="Leonardo's pen drawing of a hoist with gears, shafts and a crank"></span></button>
+        <p class="label"><b>Leonardo da Vinci, Brunelleschi's hoist, c. 1478–80</b>Codex Atlanticus, Biblioteca Ambrosiana, Milan</p>
+        <p class="label">Around 1482 Leonardo wrote to Ludovico Sforza, Duke of Milan, setting out in numbered points what he could build. Bridges, machines and works for peace came first. Painting came near the end. This page borrows his form.</p>
+      </aside>
+      <div class="page">
+        <div class="dateline"><span>Manchester</span><span>2 October 2026</span></div>
+        <h1 class="salut">To whoever is building something difficult,</h1>
+        <p class="intro">I have spent the last few years inside companies at the point where an idea has to become a system: a product, a team, a process that holds. Below I set out, in order, what I can do for you, each with the work that proves it. Open any point to see it.</p>
+        <ol class="caps" id="c-caps"></ol>
+        <div class="sign" id="c-sign">
+          <i>With every good wish,</i>
+          <b>Chuka Dele-Oyeleru</b>
+          <span class="sc" style="margin-top:.5rem">Strategy · Operations · Build</span>
+          <div class="row"><a class="go" href="https://www.linkedin.com/in/chuka1"><span class="bloom"></span>Write back<span class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a><span class="addr">[your email]</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ================== D · THE BOOK ================== -->
+<div class="dir d-d" id="d-d" lang="en" hidden>
+  <div class="wrap">
+    <div class="run"><span>Chuka Dele-Oyeleru</span><span>Commissions</span></div>
+    <section class="title-page">
+      <figure>
+        <button class="hang" type="button" data-zoom="../../assets/art/poli-matron.jpg" data-cap="Hypnerotomachia Poliphili, printed by Aldus Manutius, Venice, 1499. Woodcut and text, Art Institute of Chicago."><span><img src="../../assets/art/poli-matron.jpg" width="1200" height="1833" alt="A leaf of the Hypnerotomachia Poliphili: a woodcut of figures at a doorway above a block of type ending in a tapered line"></span></button>
+        <figcaption class="label" style="margin-top:1.25rem"><b><i>Hypnerotomachia Poliphili</i>, Venice, 1499</b>Printed by Aldus Manutius, Art Institute of Chicago. Often called the most beautiful book of the Renaissance: woodcut and type designed as one page.</figcaption>
+      </figure>
+      <div class="tp">
+        <span class="sc">The Works of</span>
+        <h1 class="caps">Chuka<br>Dele-Oyeleru</h1>
+        <svg class="orn" viewBox="0 0 60 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M2 7h18M40 7h18M30 2l5 5-5 5-5-5z"/></svg>
+        <p>In which ideas are diagnosed, operations are designed, and the things they need are built. In six chapters.</p>
+        <span class="imp">Manchester · MMXXVI</span>
+        <a class="go" href="#d-contents"><span class="bloom"></span>Open the book<span class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a>
+      </div>
+    </section>
+    <nav class="contents" id="d-contents" aria-label="Contents"><h2>Contents</h2><div id="d-toc"></div></nav>
+    <div id="d-chapters"></div>
+    <section class="colophon">
+      <h2>Colophon</h2>
+      <p>Set in Garamond, after the types Claude Garamond cut in Paris in the 1530s and 1540s. Written, designed and built by the author, who will answer every letter.</p>
+      <div class="row"><a class="go" href="https://www.linkedin.com/in/chuka1"><span class="bloom"></span>Write to the author<span class="ar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></a><span class="addr">[your email]</span></div>
+    </section>
+  </div>
+</div>
+
+<dialog class="lb" id="lb" aria-label="Full view"><button type="button" id="lb-x" aria-label="Close">×</button><img id="lb-img" alt=""><p id="lb-cap"></p></dialog>
+
+<nav class="switch" aria-label="Direction">
+  <a href="https://claude.ai/artifact/5kzRVuuC46svoU5xt8GrZH" class="lg">A · Catalogue ↗</a>
+  <span class="sep lg" aria-hidden="true"></span>
+  <button type="button" data-d="b" aria-pressed="true">B · The School</button>
+  <button type="button" data-d="c" aria-pressed="false">C · The Letter</button>
+  <button type="button" data-d="d" aria-pressed="false">D · The Book</button>
+</nav>
+
+<script>
+(function(){
+var ARR = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 8h11M9 4l4 4-4 4"/></svg>';
+function go(label, href){ return '<a class="go" href="' + href + '"><span class="bloom"></span>' + label + '<span class="ar">' + ARR + ARR + '</span></a>'; }
+var DIAGRAM = '<div class="diagram"><svg viewBox="0 0 640 300" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="System shape: intake, record, writer and grader kept apart, shortlist, then a person signs off"><g font-family="inherit" font-size="13" letter-spacing="1.5" fill="currentColor" stroke="none" text-anchor="middle"><text x="83" y="154">INTAKE</text><text x="193" y="154">RECORD</text><text x="320" y="114">WRITER</text><text x="320" y="204">GRADER</text><text x="460" y="154">SHORTLIST</text><text x="572" y="204">SIGN-OFF</text></g><rect x="40" y="130" width="86" height="40" rx="2"/><rect x="150" y="130" width="86" height="40" rx="2"/><rect x="272" y="90" width="96" height="40" rx="2"/><rect x="272" y="180" width="96" height="40" rx="2"/><rect x="410" y="130" width="100" height="40" rx="2"/><circle cx="572" cy="150" r="24"/><path d="M126 150h24M236 150c18 0 18-40 36-40M236 150c18 0 18 50 36 50M368 110c22 0 22 40 42 40M368 200c22 0 22-50 42-50M510 150h38"/><path d="M320 130v50" stroke-dasharray="3 5"/><path d="M564 150l6 6 10-12"/></svg></div>';
+
+var C = [
+ {id:'etap', name:'ETAP', meta:'Insurtech · Nigeria and Ghana · 2022–24',
+  fig:{n:'I', who:'Ptolemy and Zoroaster', e:[1590,860,80,190], why:'Ptolemy holds the earth and Zoroaster the heavens. You map the ground before you enter a new market.'},
+  can:'I can find the market hidden in your data, launch the product for it, and take it across a border.',
+  lead:'Found a business market in the data, launched the product, then helped take the company into Ghana.',
+  d:'Analytics and customer calls showed businesses needed a product of their own.', s:'Built the proposition, pricing, demo and onboarding, and redesigned claims handoffs.', b:'Launched ETAP for Business, fronted the launch videos and onboarded the first customers.', r:'Claims turnaround fell 57%. Ghana launched in October 2024.',
+  proof:['57%','faster claims turnaround'], link:['etapinsure.com','https://etapinsure.com'], shots:[['etap-1','ETAP for Business: fleet insurance'],['etap-2','Driver behaviour scoring'],['etap-3','Managing drivers and rewards']]},
+ {id:'idara', name:'Idara', meta:'Regtech · Nigeria and Ghana · 2024–26',
+  fig:{n:'II', who:'Euclid', e:[1430,960,95,120], why:'Euclid bends over a slate with his compasses, rebuilding a proof from first principles while his students watch.'},
+  can:'I can take a first version that is not working, rebuild it, and lead the team that runs it.',
+  lead:'Reworked an early MVP into a registration and compliance platform with positive unit economics.',
+  d:'Chose to rebuild the 2023 MVP rather than patch it.', s:'Led a 10-person team, with in-house fulfilment and a written procedure for each service.', b:'Rebuilt the site and platform on NestJS, Next.js and PostgreSQL, connected to the Corporate Affairs Commission.', r:'On average, a first order covers its acquisition cost. Now live in Ghana.',
+  proof:['3.2×','return on ad spend on first orders'], link:['goidara.com','https://goidara.com'], shots:[['idara-1','goidara.com'],['idara-2','Registration in Nigeria and Ghana'],['idara-3','The compliance dashboard']]},
+ {id:'surface', name:'Surface Talent', meta:'Recruitment · United Kingdom · 2026',
+  fig:{n:'III', who:'Heraclitus', e:[810,975,100,145], why:'Heraclitus writes alone at a block of marble. Raphael added him after the rest was finished, traditionally with Michelangelo\'s features.'},
+  can:'I can build, alone, a system that lets one person do the work of a team.',
+  lead:'Built a system so one recruiter can run the workload of a ten-person desk.',
+  d:'A desk grows by hiring consultants. The goal was one recruiter with the output of ten.', s:'One system of record, a grader kept apart from the writer, and a person signs every shortlist.', b:'Built the whole pipeline alone, with a GDPR impact assessment in the first week.', r:'Nine more consultants would cost about £306,000 a year in UK salary, National Insurance and pension.',
+  proof:['~£306k','a year: the cost of the alternative'], link:null, shots:null},
+ {id:'honeycoin', name:'HoneyCoin', meta:'Payments · Kenya · 2024–26 · with Rvysion',
+  fig:{n:'IV', who:'Socrates', e:[652,705,65,125], why:'Socrates counts off his arguments on his fingers to the group around him. A mixed team follows reasoning it can see.'},
+  can:'I can run a mixed team of designers, illustrators and engineers across a product\'s whole life.',
+  lead:'Ran the fractional team that rebuilt a payments company\'s apps as it scaled.',
+  d:'Audited where enterprise users lost time in transaction and account flows.', s:'Managed illustrators, brand and product designers and engineers across every workstream.', b:'Redesigned the peer app and created the B2B app on a shared design system.', r:'35% faster transaction completion and 20% higher B2B retention, as published by Rvysion.',
+  proof:['35%','faster transactions, with Rvysion'], link:['Rvysion case study','https://www.rvysion.co/case-studies/honeycoin-product'], shots:[['honey-1','The B2B platform'],['honey-2','Wallets and transfers'],['honey-3','Brand refresh']]},
+ {id:'rvysion', name:'Rvysion', meta:'Design and venture studio · 2024–26',
+  fig:{n:'V', who:'Raphael', e:[1642,760,42,60], why:'Raphael painted himself at the edge of the crowd, looking out. He ran one of the largest workshops in Rome.'},
+  can:'I can design how a studio runs, so client work and its own products both ship.',
+  lead:'Designed how a 32-person studio serves clients and builds its own products at the same time.',
+  d:'Client work and the studio\'s own products draw on the same 32 people.', s:'Set the management rhythms and resource allocation across both.', b:'Shipped client products and our own: Rayna UI reached 10,000+ downloads.', r:'35% more clients, 22% more revenue opportunities, 12% lower operating costs.',
+  proof:['+35%','clients, with 12% lower operating costs'], link:['rvysion.co','https://rvysion.co'], shots:[['rayna-1','Rayna UI identity'],['rayna-2','Rayna UI in product']]},
+ {id:'bredge', name:'The Bredge', meta:'Data services · US clients · Co-founder',
+  fig:{n:'VI', who:'Pythagoras', e:[470,950,100,115], why:'Pythagoras writes out ratios in a book while a boy holds up a tablet. Every number checked against another.'},
+  can:'I can give a growing company a senior data team without the cost of hiring one.',
+  lead:'Built a data team US companies plug into instead of hiring one.',
+  d:'Growing companies need senior data people before they can justify a full team.', s:'Three ways to buy: an embedded team, a scoped project, or a diagnostic and roadmap.', b:'Engineers work inside client teams under the client\'s name, so the work stays theirs.', r:'Filling those 12 roles in-house would have cost about $1.9M.',
+  proof:['12','embedded data roles across four US companies'], link:['thebredge.com','https://thebredge.com'], shots:[['bredge-1','thebredge.com'],['bredge-2','Reconciling five systems'],['bredge-3','Reporting built for clients']]}
+];
+function stages(c){ return '<dl class="stages"><div><dt>Diagnose</dt><dd>' + c.d + '</dd></div><div><dt>Design</dt><dd>' + c.s + '</dd></div><div><dt>Build</dt><dd>' + c.b + '</dd></div><div><dt>Result</dt><dd>' + c.r + '</dd></div></dl>'; }
+function shots(c, cls){ if (!c.shots) return DIAGRAM + '<p class="cap">The shape of the system. Prompts, rubrics and data stay private.</p>';
+  return '<div class="' + cls + '">' + c.shots.map(function(s){ return '<figure><button class="shot" type="button" data-zoom="../../assets/shots/' + s[0] + '.jpg" data-cap="' + c.name + ': ' + s[1] + '"><img src="../../assets/shots/' + s[0] + '.jpg" width="1280" height="800" loading="lazy" alt="' + c.name + ': ' + s[1] + '"></button><figcaption class="cap">' + s[1] + '</figcaption></figure>'; }).join('') + '</div>'; }
+function lnk(c){ return c.link ? '<a class="ln" href="' + c.link[1] + '">' + c.link[0] + ' ↗</a>' : ''; }
+
+/* ---------- B: the fresco as the index ---------- */
+var svg = document.getElementById('b-svg'), who = document.getElementById('b-who'), panel = document.getElementById('b-panel');
+svg.innerHTML = '<g class="hot" data-i="-1" aria-hidden="true"><ellipse class="ring" pathLength="1" cx="930" cy="735" rx="105" ry="150" style="stroke:var(--ink);opacity:.35;stroke-dasharray:.012 .02;stroke-dashoffset:0"/></g>' + C.map(function(c,i){ var e = c.fig.e;
+  return '<g class="hot" data-i="' + i + '" tabindex="0" role="button" aria-label="' + c.fig.who + ': ' + c.name + '"><ellipse class="hit" cx="' + e[0] + '" cy="' + e[1] + '" rx="' + e[2] + '" ry="' + e[3] + '"/><ellipse class="ring" pathLength="1" cx="' + e[0] + '" cy="' + e[1] + '" rx="' + e[2] + '" ry="' + e[3] + '" transform="rotate(-4 ' + e[0] + ' ' + e[1] + ')"/><circle cx="' + e[0] + '" cy="' + (e[1] - e[3] - 26) + '" r="24"/><text x="' + e[0] + '" y="' + (e[1] - e[3] - 25) + '">' + c.fig.n + '</text></g>'; }).join('');
+who.innerHTML = C.map(function(c,i){ return '<button type="button" data-i="' + i + '" aria-pressed="false"><span class="n">' + c.fig.n + '</span><span class="t"><b>' + c.name + '</b><i>' + c.fig.who + '</i></span></button>'; }).join('');
+var cur = -1;
+function pick(i, scroll){
+  if (i === cur || i < 0) return; cur = i; var c = C[i];
+  svg.querySelectorAll('.hot[data-i]').forEach(function(g){ g.classList.toggle('on', +g.dataset.i === i); });
+  who.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed', +b.dataset.i === i ? 'true' : 'false'); });
+  panel.classList.add('fade');
+  setTimeout(function(){
+    panel.innerHTML = '<span class="sc">' + c.fig.n + ' · ' + c.meta + '</span><p class="why">' + c.fig.why + '</p><p class="lead">' + c.lead + '</p>' + stages(c) +
+      '<div class="proof"><b>' + c.proof[0] + '</b><span>' + c.proof[1] + '</span></div><div class="acts">' + go('Read the ' + c.name + ' case', '#b-index') + lnk(c) + '</div>' + shots(c, 'shots');
+    bindAll(panel); panel.classList.remove('fade');
+  }, panel.innerHTML ? 260 : 0);
+  if (scroll) document.getElementById('b-index').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'});
+}
+svg.addEventListener('click', function(e){ var g = e.target.closest('.hot'); if (g && +g.dataset.i >= 0) pick(+g.dataset.i, true); });
+svg.addEventListener('keydown', function(e){ if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.hot')){ e.preventDefault(); pick(+e.target.closest('.hot').dataset.i, true); } });
+who.addEventListener('click', function(e){ var b = e.target.closest('button'); if (b) pick(+b.dataset.i, false); });
+who.addEventListener('pointerover', function(e){ var b = e.target.closest('button'); svg.querySelectorAll('.hot[data-i]').forEach(function(g){ g.classList.toggle('on', b ? +g.dataset.i === +b.dataset.i || +g.dataset.i === cur : +g.dataset.i === cur); }); });
+pick(0, false);
+
+/* ---------- C: the letter ---------- */
+var caps = document.getElementById('c-caps');
+caps.innerHTML = C.map(function(c,i){ return '<li class="cap-i"><button type="button" id="c-b' + i + '" aria-expanded="false" aria-controls="c-p' + i + '"><span class="say">' + c.can + '<small>' + c.name + ' · ' + c.meta + '</small></span><span class="pm" aria-hidden="true"></span></button>' +
+  '<div class="body" id="c-p' + i + '" role="region" aria-labelledby="c-b' + i + '"><div><div class="in"><p style="font-family:var(--display);font-size:1.4rem;line-height:1.3">' + c.lead + '</p>' + stages(c) + '<div class="proof"><b>' + c.proof[0] + '</b><span>' + c.proof[1] + '</span></div>' + shots(c, 'shots') + '<div>' + lnk(c) + '</div></div></div></div></li>'; }).join('') +
+  '<li class="cap-i"><button type="button" id="c-b6" aria-expanded="false" aria-controls="c-p6"><span class="say">And in time of peace, I can also design and build the website you are reading.<small>This site · Garamond, SVG, motion</small></span><span class="pm" aria-hidden="true"></span></button><div class="body" id="c-p6" role="region" aria-labelledby="c-b6"><div><div class="in"><p style="color:var(--ink-2)">Leonardo ended his list by saying he could also paint. Mine ends here: written, designed and coded by me, with every interaction built by hand.</p></div></div></div></li>';
+caps.addEventListener('click', function(e){ var b = e.target.closest('.cap-i>button'); if (!b) return; var li = b.parentNode, open = !li.classList.contains('open'); li.classList.toggle('open', open); b.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+caps.querySelector('.cap-i').classList.add('open'); caps.querySelector('.cap-i>button').setAttribute('aria-expanded','true');
+
+/* ---------- D: the book ---------- */
+var ROM = ['I','II','III','IV','V','VI'];
+document.getElementById('d-toc').innerHTML = C.map(function(c,i){ return '<a href="#d-' + c.id + '"><span class="nm">' + ROM[i] + '. ' + c.name + '</span><span class="dots"></span><span class="fo">' + (i*4 + 3) + '</span></a>'; }).join('');
+function taper(text){ var w = text.split(' '), lines = [], widths = [100, 82, 62, 42, 24]; var per = Math.ceil(w.length / widths.length);
+  for (var k=0;k<widths.length;k++){ var seg = w.slice(k*per, (k+1)*per).join(' '); if (seg) lines.push('<span style="max-width:' + widths[k] + '%">' + seg + '</span>'); } return '<p class="taper">' + lines.join('') + '</p>'; }
+document.getElementById('d-chapters').innerHTML = C.map(function(c,i){
+  var first = c.shots ? '<figure class="fig"><button class="shot" type="button" data-zoom="../../assets/shots/' + c.shots[0][0] + '.jpg" data-cap="' + c.name + ': ' + c.shots[0][1] + '"><img src="../../assets/shots/' + c.shots[0][0] + '.jpg" width="1280" height="800" loading="lazy" alt="' + c.name + ': ' + c.shots[0][1] + '"></button><figcaption>Fig. ' + (i+1) + '. ' + c.shots[0][1] + '</figcaption></figure>' : '<figure class="fig">' + DIAGRAM + '<figcaption>Fig. ' + (i+1) + '. The shape of the system</figcaption></figure>';
+  var rest = c.shots && c.shots.length > 1 ? '<div class="plates">' + c.shots.slice(1).map(function(s){ return '<figure><button class="shot" type="button" data-zoom="../../assets/shots/' + s[0] + '.jpg" data-cap="' + c.name + ': ' + s[1] + '"><img src="../../assets/shots/' + s[0] + '.jpg" width="1280" height="800" loading="lazy" alt="' + c.name + ': ' + s[1] + '"></button><figcaption class="cap" style="text-align:center;font-style:italic">' + s[1] + '</figcaption></figure>'; }).join('') + '</div>' : '';
+  return '<article class="chapter" id="d-' + c.id + '"><div class="main"><header class="ch-h"><span class="no">Chapter ' + ROM[i] + '</span><h3>' + c.name + '</h3><p>' + c.lead + '</p></header>' +
+    '<div class="text">' + first + '<p>' + c.d + ' ' + c.s + '</p><p>' + c.b + ' ' + c.r + '</p></div>' + taper(c.meta.replace(/ · /g, ', ') + '. ' + (c.link ? 'The work can be seen at ' + c.link[0] + '.' : 'The details of the system stay with the client.')) + rest + '</div>' +
+    '<aside class="gloss"><div><b>' + c.proof[0] + '</b>' + c.proof[1] + '</div>' + (c.link ? '<a class="mani" href="' + c.link[1] + '"><svg viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 6h13M10 2.5c2 0 3 1 4 3.5M14 6c1 2.5 3 3 6 0-3-3-5-2.5-6 0"/></svg>' + c.link[0] + '</a>' : '') + '</aside></article>';
+}).join('');
+
+/* ---------- shared: buttons, lightbox, switching ---------- */
+function bindGo(el){
+  if (el.dataset.b) return; el.dataset.b = 1;
+  function pos(e){ var r = el.getBoundingClientRect(); var x = e ? e.clientX - r.left : r.width/2, y = e ? e.clientY - r.top : r.height/2;
+    var d = 2 * Math.max(Math.hypot(x,y), Math.hypot(r.width-x,y), Math.hypot(x,r.height-y), Math.hypot(r.width-x,r.height-y));
+    el.style.setProperty('--x', x+'px'); el.style.setProperty('--y', y+'px'); el.style.setProperty('--d', d+'px'); }
+  el.addEventListener('pointerenter', function(e){ pos(e); el.classList.add('on'); });
+  el.addEventListener('pointerleave', function(e){ pos(e); el.classList.remove('on'); });
+  el.addEventListener('focus', function(){ pos(null); el.classList.add('on'); });
+  el.addEventListener('blur', function(){ el.classList.remove('on'); });
+}
+function bindAll(root){ root.querySelectorAll('.go').forEach(bindGo); }
+bindAll(document);
+var lb = document.getElementById('lb'), li = document.getElementById('lb-img'), lc = document.getElementById('lb-cap');
+document.addEventListener('click', function(e){ var t = e.target.closest('[data-zoom]'); if (!t) return; li.src = t.dataset.zoom; li.alt = t.dataset.cap || ''; lc.textContent = t.dataset.cap || ''; if (lb.showModal) lb.showModal(); else lb.setAttribute('open',''); });
+lb.addEventListener('click', function(e){ if (e.target === lb || e.target.id === 'lb-x') lb.close(); });
+var sw = Array.prototype.slice.call(document.querySelectorAll('.switch button'));
+function show(d, push){ ['b','c','d'].forEach(function(k){ document.getElementById('d-' + k).hidden = k !== d; }); sw.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.d === d ? 'true' : 'false'); }); if (push){ try { history.replaceState(null,'','#' + d); } catch(e){} scrollTo(0,0); } }
+sw.forEach(function(b){ b.addEventListener('click', function(){ show(b.dataset.d, true); }); });
+var h = (location.hash || '').replace('#',''); show(['b','c','d'].indexOf(h) > -1 ? h : 'b', false);
+})();
+</script>
+
+</body></html>
