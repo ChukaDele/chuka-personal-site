@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Plate from '../components/Plate.astro';
+import Part from '../components/Part.astro';
+import Note from '../components/Note.astro';
+import End from '../components/End.astro';
+import { site } from '../data/site.js';
+const glance = [['57%', 'faster claims turnaround at ETAP, after redesigning the handoffs.'], ['7 figures', 'of gross premiums through ETAP’s first enterprise channel, within months of launch.'], ['2023', 'Employee of the Year at ETAP.']];
+const roles = [
+  { name: 'Rvysion', role: 'Co-founder, strategy and operations', when: 'March 2024 to present', href: 'work-rvysion.html',
+    line: 'Designing commercial, operating and venture systems for a 32-person venture studio.',
+    also: ['Client work through the studio includes', [['Idara', 'work-idara.html'], ['HoneyCoin', 'work-honeycoin.html']]],
+    did: ['Grew the client base by 35% through acquisition and partnership work.', 'Reduced operating expenses by 12% through resource, cash-flow and operating management.', 'Created 22% more revenue opportunities within six months by launching a lower-priced offer.'] },
+  { name: 'The Bredge', role: 'Strategy and operations', when: 'Current', href: 'work-the-bredge.html',
+    line: 'Building the operating model for a senior embedded data partner.',
+    did: ['Shaping the positioning, the offer and the service architecture.', 'Connecting technology, workflow and delivery into one operating model.', 'Building go-to-market and feedback loops so the service can be repeated.'] },
+  { name: 'Surface Talent', role: 'MBA internship: research, design, implementation and verification', when: '15 June to 4 September 2026', href: 'work-surface-talent.html',
+    line: 'Built the operating foundation for a specialist recruitment venture in UK surface engineering and metal finishing.',
+    did: ['Kept the existing CRM and built the role and candidate evidence layer around it.', 'Found that candidate profiles had dropped evidence present in the original CVs, reworked the evidence flow, and rescored active candidates.', 'The assessment and interview analysis supported a hiring process; the successful candidate started in August 2026.', 'Took the new website’s public intake live, and documented its handover.'] },
+  { name: 'ETAP', role: 'Executive support, then Senior Operations Manager', when: '2022 to 2024', href: 'work-etap.html',
+    line: 'Progressed from executive support into broader operations leadership at a growing insurtech.',
+    did: ['Built the first enterprise channel, from market mapping through launch to seven-figure gross premiums within months.', 'Reduced claims turnaround by 57% by redesigning operational handoffs.', 'Supported fundraising readiness, investor materials and market expansion.', 'Named 2023 Employee of the Year.'] },
+];
+---
+<Base title="CV · Chuka Dele-Oyeleru" current="CV">
+  <Plate word="CV" len={2.6} still="ledger" frame alt="A detail of Marinus van Reymerswaele’s painting of two tax collectors: a hand writing entries into a ledger with a quill, coins stacked beside it." credit="Marinus van Reymerswaele, <i>The Tax Collectors</i> (detail), c. 1540.">
+    <p class="label">Curriculum vitae</p>
+    <h1>The record, entered line by line.</h1>
+    <p class="sub">Strategy and operations across a growing insurtech, a 32-person venture studio and an embedded data business.</p>
+    <div class="btns acts"><a class="btn fill solid" href="press/chuka-dele-oyeleru-cv.pdf" download>Download the PDF <span class="arr"></span></a><a class="btn fill" href={site.linkedin} target="_blank" rel="noopener">LinkedIn <span class="arr"></span></a></div>
+    <dl class="creds"><dt>Based</dt><dd>Manchester, UK</dd><dt>Degree</dt><dd>BSc Quantity Surveying, University of Lagos</dd><dt>MBA</dt><dd>Alliance Manchester Business School, 2025 to 2027</dd>{site.openTo && <Fragment><dt>Open to</dt><dd>{site.openTo}</dd></Fragment>}</dl>
+  </Plate>
+
+  <Part word="Glance">
+    <div class="glance">
+      {glance.map(([fig, line]) => <p><b>{fig}</b><span>{line}</span></p>)}
+    </div>
+    <p>Rvysion and The Bredge run alongside the full-time MBA.</p>
+  </Part>
+
+  <Part word="Roles">
+    {roles.map((r) => (
+      <article class="role">
+        <h2>{r.name}</h2>
+        <p class="label">{r.role} · {r.when}</p>
+        <p class="lead">{r.line}</p>
+        <ul class="ticks">{r.did.map((d) => <li>{d}</li>)}</ul>
+        {r.also && <p class="also">{r.also[0]} {r.also[1].map(([n, h], i) => <Fragment>{i > 0 && ' and '}<a class="dl" href={h} data-name={n}>{n}</a></Fragment>)}.</p>}
+        <a class="cue" href={r.href} data-name={r.name}>Open the work <span class="arr"></span></a>
+      </article>
+    ))}
+  </Part>
+
+  <Part word="Training">
+    <ul class="plain">
+      <li><b>MBA, full time</b><span>Alliance Manchester Business School<small>2025 to 2027</small></span></li>
+      <li><b>BSc Quantity Surveying</b><span>University of Lagos<small>2016 to 2021</small></span></li>
+      <li><b>SHRM-SCP</b><span>Society for Human Resource Management</span></li>
+      <li><b>Project Management</b><span>Google</span></li>
+      <li><b>Analytics</b><span>Google</span></li>
+    </ul>
+  </Part>
+
+  <End label="Hiring?" path="hiring" next={['Work', 'work.html']} kicker="Back to" />
+</Base>

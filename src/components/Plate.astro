@@ -1,0 +1,23 @@
+---
+import { pictures } from '../data/site.js';
+import meta from '../data/img.json';
+import Pic from './Pic.astro';
+// picture: a canvas that takes colour (home only). still: a plain image, full bleed. With frame, the image is shown whole, like a print on the wall.
+const { word, picture, still, frame = false, pos = '50% 50%', alt = '', credit = '', len, cls = '', id, lazy = false } = Astro.props;
+let cfg = picture ? { ...pictures[picture] } : null;
+if (cfg) for (const k of ['base', 'top']) { const n = cfg[k]; cfg[k] = `img/${n}.webp`; if (meta[n] && meta[n].sm) cfg[k + 'Sm'] = `img/${n}-900.webp`; }
+const length = len || Math.max(1.7, word.length * 0.405);
+---
+<section class={`plate ${frame ? 'framed' : ''} ${!cfg && !still ? 'bare' : ''} ${cls}`} id={id} style={`--len:${length}`}>
+  {(cfg || still) && (
+    <div class={`art ${frame ? 'hung' : 'bleed'}`}>
+      {cfg && <canvas data-reveal={JSON.stringify(cfg)} data-lazy={lazy ? '' : undefined} role="img" aria-label={alt} style={lazy ? undefined : `--bg:url(${cfg.base});--bg-sm:url(${cfg.baseSm || cfg.base});background-position:${Math.round((cfg.fx ?? 0.5) * 100)}% ${Math.round((cfg.fy ?? 0.5) * 100)}%`}></canvas>}
+      {still && !frame && <Pic cls="still" name={still} alt={alt} eager art style={`object-position:${pos}`} />}
+      {still && frame && <figure class="frame"><Pic name={still} alt={alt} eager art /></figure>}
+      <slot name="note" />
+    </div>
+  )}
+  <div class="vword" aria-hidden="true">{word}</div>
+  <div class="cap"><slot /></div>
+  {credit && <p class="credit" set:html={credit} />}
+</section>

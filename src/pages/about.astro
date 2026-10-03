@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import Plate from '../components/Plate.astro';
+import Part from '../components/Part.astro';
+import Note from '../components/Note.astro';
+import End from '../components/End.astro';
+import Pic from '../components/Pic.astro';
+import meta from '../data/img.json';
+// prints: [image, place and country, month, crop focus, description]
+const prints = [
+  ['ph-4', 'Chefchaouen, Morocco', 'April 2026', '50% 40%', 'Chuka and a friend sitting on blue-painted steps in Chefchaouen.'],
+  ['ph-1', 'Tangier, Morocco', 'April 2026', '50% 30%', 'Two framed portraits on a gallery wall, seen again on the screen of a camera held up to them.'],
+  ['ph-5', 'Chefchaouen, Morocco', 'April 2026', '50% 55%', 'Chuka in a wide straw hat and a painted tunic, a peacock on either side.'],
+  ['ph-2', 'Tangier, Morocco', 'April 2026', '50% 60%', 'Chuka leaning down to stroke a black and white cat in front of a wall of small bottles.'],
+  ['ph-3', 'Cap Spartel, Morocco', 'April 2026', '50% 50%', 'A sticker-covered lighthouse lamp above the sea at Cap Spartel.'],
+];
+const path = [
+  ['Quantity surveying', '2016 to 2021', 'Studied how cost, materials, decisions and delivery connect inside complex projects.'],
+  ['ETAP', '2022 to 2024', 'Moved from executive support into operations leadership inside a growing insurtech.'],
+  ['Venture building', '2024 onward', 'Commercial, operating, product and service systems across Rvysion and The Bredge.'],
+  ['MBA', '2025 to 2027', 'Alliance Manchester Business School, alongside the building and operating.'],
+];
+const method = [
+  ['Start with the real constraint', 'The first brief is rarely the whole problem. I read the environment, the incentives and the information before prescribing a system.'],
+  ['Make ownership visible', 'A plan becomes runnable when decisions, responsibilities and handoffs are clear.'],
+  ['Use the discipline the problem needs', 'Strategy, operations, product, people, data and growth are inputs. They are not identity labels.'],
+  ['Build for use', 'The work has to survive contact with the team that will run it.'],
+  ['Improve from evidence', 'Feedback belongs inside the system, not in a retrospective added after delivery.'],
+];
+---
+<Base title="About · Chuka Dele-Oyeleru" current="About">
+  <Plate word="About" still="portrait-mono" pos="50% 20%" cls="me" alt="Chuka Dele-Oyeleru, seated, in a black T-shirt, against a dark painted studio backdrop.">
+    <p class="label">About</p>
+    <h1>The breadth comes from the work.</h1>
+    <p class="sub">Each job needed the next skill, so I learned it properly. That is how a quantity surveyor came to run operations, build products and design services.</p>
+  </Plate>
+
+  <Part word="Craft">
+    <p class="lead">A generalist’s range is only worth something when each piece is finished to a specialist’s standard.</p>
+    <p>The workshops behind the pictures on this site trained people that way. An apprentice ground pigment, prepared panels and drew for years before painting a face. The breadth was the training. The finish was the test.</p>
+    <div class="with-note wide">
+      <figure class="print"><Pic name="baptism" alt="The Baptism of Christ, painted in Verrocchio’s workshop around 1475. The kneeling angel on the far left was painted by his apprentice, Leonardo da Vinci." sizes="(max-width:820px) 92vw, 520px" /><figcaption>Andrea del Verrocchio and workshop, <i>The Baptism of Christ</i>, c. 1475.</figcaption></figure>
+      <Note dir="up">the angel on the left is by the apprentice. he was Leonardo</Note>
+    </div>
+    {meta.idia && (
+      <div class="with-note wide">
+        <figure class="print"><Pic name="idia" alt="An ivory pendant mask of Queen Idia, carved for the court of Benin in the sixteenth century." sizes="(max-width:820px) 92vw, 520px" /><figcaption>Pendant mask of Ìyọ́bà Idià, Edo peoples, Court of Benin, 16th century. The Metropolitan Museum of Art, 1978.412.323.</figcaption></figure>
+        <Note dir="up">carved in Benin City by the royal ivory guild, the same decades as Dürer</Note>
+      </div>
+    )}
+    <p>I hold my own work to the same test. Whichever discipline the problem calls for, the result should stand up to someone who does only that.</p>
+  </Part>
+
+  <Part word="Path">
+    <ul class="plain">
+      {path.map(([n, when, line]) => <li><b>{n}</b><span>{line}<small>{when}</small></span></li>)}
+    </ul>
+  </Part>
+
+  <Part word="Method">
+    <ul class="plain">
+      {method.map(([n, line]) => <li><b>{n}</b><span>{line}</span></li>)}
+    </ul>
+    <a class="btn fill" href="resume.html" data-name="CV">The CV, with a PDF to take away <span class="arr"></span></a>
+  </Part>
+
+  <Part word="Away">
+    <p class="lead">Away from the desk: running, tennis, hiking, kayaking, a book. And, when I can, somewhere I have not been.</p>
+    <div class="prints" tabindex="0" role="group" aria-label="Five prints from Morocco. Swipe or use the arrow keys to see them all.">
+      {prints.map(([n, place, when, pos, alt], i) => (
+        <figure class="print-p" style={`--r:${[-4, 3, -2, 5, -3][i]}deg`}>
+          <span class="tape" aria-hidden="true"></span>
+          <Pic name={n} alt={alt} sizes="(max-width:820px) 70vw, 260px" style={`object-position:${pos}`} />
+          <figcaption><b>{place}</b><span>{when}</span></figcaption>
+        </figure>
+      ))}
+    </div>
+    <Note dir="up" cls="inline">Morocco, April 2026. the Alchemist sent me</Note>
+  </Part>
+
+  <End next={['Library', 'library.html']} />
+</Base>

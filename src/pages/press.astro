@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Plate from '../components/Plate.astro';
+import Part from '../components/Part.astro';
+import Note from '../components/Note.astro';
+import End from '../components/End.astro';
+import Pic from '../components/Pic.astro';
+const portraits = [['p-headshot', 'Formal headshot', 'chuka-dele-oyeleru-headshot.jpg', '1480 × 2221'], ['p-speaking', 'Speaking portrait', 'chuka-dele-oyeleru-speaking.jpg', '1776 × 2221'], ['p-editorial', 'Editorial portrait', 'chuka-dele-oyeleru-editorial.jpg', '1776 × 2221']];
+// appearances and features. add to this list as they happen: [what, where and when, optional link]
+const record = [
+  ['ETAP for Business launch videos', 'Presenter, for ETAP', 'work-etap.html'],
+  ['Insurance Meets Tech 2.0', 'With the ETAP team', 'work-etap.html'],
+];
+const bios = [
+  ['Short', 'Chuka Dele-Oyeleru works in strategy and operations, turning ambiguous, cross-functional problems into systems teams can run and improve. Across ETAP, Rvysion and The Bredge, he has built commercial channels, redesigned operations, shaped venture models and connected people, workflows, data and tools around repeatable execution.'],
+  ['Standard', 'Chuka Dele-Oyeleru works in strategy and operations, with a focus on turning ambitious but incomplete ideas into practical execution. At ETAP, he helped build the insurtech’s first enterprise channel and redesigned operating handoffs that reduced claims turnaround by 57%. At Rvysion, he works across commercial development, resource allocation and venture building. He is developing The Bredge’s embedded-data operating model and completing a full-time MBA at Alliance Manchester Business School.'],
+  ['Long', 'Chuka Dele-Oyeleru works in strategy and operations, focusing on problems that cross functional boundaries and arrive without a complete route to execution. At ETAP, he progressed from executive support and operating work into broader operations leadership. He helped build the insurtech’s first enterprise channel from market mapping and pricing through launch to seven-figure gross premiums, redesigned operational handoffs that reduced claims turnaround by 57%, and supported fundraising readiness and market expansion. At Rvysion, a 32-person venture studio, his work connects commercial development, resource allocation and venture building; this has included 35% client-base growth and a 12% reduction in operating expenses. He is also building the operating model for The Bredge, a senior embedded data partner for growing businesses. Chuka trained in Quantity Surveying at the University of Lagos and is completing a full-time MBA at Alliance Manchester Business School. His speaking explores how teams move from ambition to operating reality, work across disciplines without losing ownership, and use AI as leverage while keeping consequential judgement with people.'],
+];
+---
+<Base title="Press · Chuka Dele-Oyeleru" current="Press">
+  <Plate word="Press" still="portrait-press-mono" pos="50% 18%" cls="me" alt="Chuka Dele-Oyeleru laughing, in a light grey suit, against a dark painted studio backdrop.">
+    <p class="label">Press and speaking</p>
+    <h1>For introductions, programmes and bylines.</h1>
+    <p class="sub">What I speak about, what is on record so far, a bio at three lengths and portraits to download.</p>
+  </Plate>
+
+  <Part word="On record">
+    <ul class="plain">
+      {record.map(([what, where, href]) => <li><b>{what}</b><span>{where}{href && <small><a class="dl" href={href} data-name="ETAP">See it in the ETAP work</a></small>}</span></li>)}
+    </ul>
+  </Part>
+
+  <Part word="Speaks">
+    <p class="lead wide">I speak about turning ambiguity into execution: how an ambitious idea becomes something a team can run, how to work across functions without losing ownership, and how to use AI as leverage while a person stays accountable.</p>
+    <p>Keynote, fireside, workshop, panel or podcast. The subject is shaped to the room.</p>
+    <button type="button" class="btn fill" data-letter="press">Ask about a date <span class="arr"></span></button>
+  </Part>
+
+  <Part word="Bios">
+    {bios.map(([len, text]) => (
+      <article class="role"><p class="k">{len} · {text.split(/\s+/).length} words</p><p class={len === 'Short' ? 'lead wide' : ''} data-bio>{text}</p><button type="button" class="cue" data-copy-bio>Copy this bio <span class="arr"></span></button></article>
+    ))}
+    <a class="btn fill" href="press/chuka-dele-oyeleru-bios.txt" download>Download all three <span class="arr"></span></a>
+  </Part>
+
+  <Part word="Portraits">
+    <div class="shots n3 faces">
+      {portraits.map(([n, label, file, size]) => (
+        <figure><a class="f" href={`press/${file}`} download><Pic name={n} alt={`${label} of Chuka Dele-Oyeleru`} sizes="(max-width:820px) 92vw, 30vw" /></a><figcaption>{label} · <a class="dl" href={`press/${file}`} download>Download</a></figcaption></figure>
+      ))}
+    </div>
+    <p>Identify the subject as Chuka Dele-Oyeleru. Do not use generative editing to change his likeness.</p>
+  </Part>
+
+  <End label="Press enquiries" path="press" next={['CV', 'resume.html']} />
+</Base>

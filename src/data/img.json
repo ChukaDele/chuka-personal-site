@@ -1,0 +1,177 @@
+{
+ "athens-color": {
+  "w": 1800,
+  "h": 1021,
+  "sm": true
+ },
+ "athens-mono": {
+  "w": 1800,
+  "h": 1021,
+  "sm": true
+ },
+ "baptism": {
+  "w": 1100,
+  "h": 1310,
+  "sm": true
+ },
+ "bredge-1": {
+  "w": 1280,
+  "h": 682,
+  "sm": true
+ },
+ "bredge-3": {
+  "w": 1210,
+  "h": 663,
+  "sm": true
+ },
+ "etap-1": {
+  "w": 1280,
+  "h": 800,
+  "sm": true
+ },
+ "etap-2": {
+  "w": 1097,
+  "h": 405,
+  "sm": true
+ },
+ "etap-event": {
+  "w": 1200,
+  "h": 900,
+  "sm": true
+ },
+ "etap-video": {
+  "w": 1400,
+  "h": 777,
+  "sm": true
+ },
+ "hoist": {
+  "w": 1068,
+  "h": 756,
+  "sm": true
+ },
+ "honey-1": {
+  "w": 1280,
+  "h": 556,
+  "sm": true
+ },
+ "honey-2": {
+  "w": 1280,
+  "h": 708,
+  "sm": true
+ },
+ "honey-3": {
+  "w": 1280,
+  "h": 684,
+  "sm": true
+ },
+ "idara-1": {
+  "w": 1280,
+  "h": 703,
+  "sm": true
+ },
+ "idara-2": {
+  "w": 1100,
+  "h": 590,
+  "sm": true
+ },
+ "idara-3": {
+  "w": 1154,
+  "h": 670,
+  "sm": true
+ },
+ "jerome-mono": {
+  "w": 900,
+  "h": 1166,
+  "sm": true
+ },
+ "jerome-tint": {
+  "w": 1350,
+  "h": 1749,
+  "sm": true
+ },
+ "lion-open": {
+  "w": 648,
+  "h": 297
+ },
+ "p-editorial": {
+  "w": 900,
+  "h": 1126
+ },
+ "p-headshot": {
+  "w": 800,
+  "h": 1200
+ },
+ "p-speaking": {
+  "w": 900,
+  "h": 1126
+ },
+ "pacioli": {
+  "w": 1500,
+  "h": 1063,
+  "sm": true
+ },
+ "portrait-mono": {
+  "w": 1400,
+  "h": 1751,
+  "sm": true
+ },
+ "portrait-press-mono": {
+  "w": 1500,
+  "h": 1876,
+  "sm": true
+ },
+ "rayna-1": {
+  "w": 1280,
+  "h": 800,
+  "sm": true
+ },
+ "rayna-2": {
+  "w": 986,
+  "h": 515
+ },
+ "weighing-mono": {
+  "w": 1300,
+  "h": 1223,
+  "sm": true
+ },
+ "ledger": {
+  "w": 1000,
+  "h": 582,
+  "sm": true
+ },
+ "surface-1": {
+  "w": 1059,
+  "h": 1044,
+  "sm": true
+ },
+ "surface-2": {
+  "w": 1059,
+  "h": 1044,
+  "sm": true
+ },
+ "surface-3": {
+  "w": 1280,
+  "h": 720,
+  "sm": true
+ },
+ "ph-1": {
+  "w": 900,
+  "h": 1200
+ },
+ "ph-2": {
+  "w": 900,
+  "h": 1200
+ },
+ "ph-3": {
+  "w": 900,
+  "h": 1200
+ },
+ "ph-4": {
+  "w": 900,
+  "h": 1200
+ },
+ "ph-5": {
+  "w": 900,
+  "h": 1200
+ }
+}

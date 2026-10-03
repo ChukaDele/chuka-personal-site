@@ -1,0 +1,17 @@
+---
+import meta from '../data/img.json';
+// one image, served as WebP, with a smaller file for phones and its real size declared so the page does not jump
+// art: on phones always use the smaller file (for full-bleed pictures, where a sharper file buys nothing behind the text)
+const { name, alt = '', sizes = '100vw', eager = false, art = false, cls = '', style = '' } = Astro.props;
+const m = meta[name] || {};
+const srcset = m.sm && !art ? `img/${name}-900.webp 900w, img/${name}.webp ${m.w}w` : undefined;
+---
+{art && m.sm ? (
+  <picture>
+    <source media="(max-width:820px)" srcset={`img/${name}-900.webp`} />
+    <img class={cls} src={`img/${name}.webp`} width={m.w} height={m.h} alt={alt} style={style} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined} />
+  </picture>
+) : (
+  <img class={cls} src={`img/${name}.webp`} srcset={srcset} sizes={srcset ? sizes : undefined} width={m.w} height={m.h} alt={alt} style={style}
+    loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : undefined} />
+)}

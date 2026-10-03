@@ -1,0 +1,17 @@
+---
+import { site } from '../data/site.js';
+import Plate from './Plate.astro';
+---
+<Plate word="Write" picture="writers" lazy cls="write" id="contact" len={2.2} alt="Raphael’s School of Athens, out of focus, except for one man writing at a block of marble, who comes into focus and colour as the page reaches him. His hand keeps writing." credit="Raphael, <i>The School of Athens</i> (detail), 1509–11. All artworks are in the public domain.">
+  <p class="label">Contact</p>
+  <h2>Tell me what brings you here and I will answer that.</h2>
+  <div class="paths">
+    <button type="button" class="btn fill" data-letter="hiring">I am hiring <span class="arr"></span></button>
+    <button type="button" class="btn fill" data-letter="project">I have something that needs building <span class="arr"></span></button>
+    <button type="button" class="btn fill" data-letter="press">Speaking or press <span class="arr"></span></button>
+    <button type="button" class="btn fill" data-letter="hello">Just saying hello <span class="arr"></span></button>
+  </div>
+  <p class="reply">{site.reply}</p>
+  <a class="mail" href={`mailto:${site.email}`}>{site.email}<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6 C 14 2, 30 9, 48 5 S 80 3, 99 6" /></svg></a>
+  <p class="note"><span>he has been writing<br />since 1511. your turn</span><svg viewBox="0 0 74 46" aria-hidden="true"><path d="M4 38 C 26 42, 52 34, 66 9 M66 9 L 51 15 M66 9 L 68 25" /></svg></p>
+</Plate>

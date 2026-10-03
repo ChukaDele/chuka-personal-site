@@ -1,0 +1,7 @@
+---
+const { word } = Astro.props;
+---
+<section class="part">
+  <div class="vword" aria-hidden="true">{word}</div>
+  <div class="body"><slot /></div>
+</section>

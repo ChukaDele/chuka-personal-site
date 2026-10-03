@@ -37,6 +37,10 @@ yarn-error.log*
 /dist/
 /.wrangler/
 /outputs/
+/.launch-input/
+/.review-local/
+/output/
+/.astro/
 /work/
 .gstack/
 .playwright-cli/

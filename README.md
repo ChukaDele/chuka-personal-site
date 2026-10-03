@@ -1,15 +1,41 @@
-# Chuka Personal Site
+# Chuka personal site
 
-Phase 1 is a contemporary digital atelier for Chuka Dele-Oyeleru, positioned first as a Strategy & Operations practitioner.
+The owner-supplied Astro application is canonical. Strategy & Operations remains
+the primary professional classification. GSAP and Three.js retain the supplied
+visual interactions; the contact letter uses mailto/copy and has no backend.
 
-## Scope
+## Local commands
 
-The landing page contains the visual system, selected-work folios, method, studies, library teaser, about teaser and correspondence footer. Work, Notes, Library, About and Résumé have deliberate noindex route shells until their real content is ready.
+Use Node 22.13+ (or a newer version supported by the supplied Astro release).
+The archive lockfile needs synchronization with the pinned Wrangler development
+dependency in the root controller environment before the first `npm ci`:
 
-## Validation
+```sh
+npm install --package-lock-only --ignore-scripts
+npm ci
+npm test
+npm run lint
+npm run diff-check
+```
 
-Run `npm run build` for the Cloudflare-compatible production output and `npm test` for the focused server-rendered smoke checks. Browser work uses the remote Cloudflare preview only.
+`npm test` builds the default noindex candidate and checks metadata plus Worker
+routing. Also run `ALLOW_INDEXING=true npm test` to check indexable build output,
+then `npm run build` to restore the default noindex candidate.
 
-## Deployment
+```sh
+npm run build
+npm run preview
+# Worker-aware preview, including provenance (use the full current Git SHA):
+npm run preview:worker -- --var "DEPLOY_SHA:$(git rev-parse HEAD)"
+```
 
-The project is configured around Cloudflare Workers through the existing Vite and Wrangler toolchain. See `docs/deployment.md` for the release checklist.
+Astro preview serves files only; Worker headers, redirects, robots and sitemap
+require the Worker-aware preview or remote deployment. No server or browser was
+started during implementation. See [deployment](docs/deployment.md) for remote
+commands and [provider decisions](docs/prior-art-decisions.md) for the bridge.
+
+`src/data/works.js` and `src/data/site.js` hold supplied content. `src/data/routes.js`
+holds canonical paths, metadata and legacy redirects. `content/artworks.ts`
+records historical-image provenance and the limits of the supplied archive.
+Older design/QA documents describe the replaced direction and are historical,
+not acceptance evidence for this launch candidate.

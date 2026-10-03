@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Plate from '../components/Plate.astro';
+import Part from '../components/Part.astro';
+import Note from '../components/Note.astro';
+import End from '../components/End.astro';
+import Pic from '../components/Pic.astro';
+const themes = [
+  ['Operating systems', 'Ownership, workflows and repeatable execution.'],
+  ['AI and judgement', 'Leverage, tools and human responsibility.'],
+  ['Building in public', 'Experiments and lessons from making work operable.'],
+];
+---
+<Base title="Notes · Chuka Dele-Oyeleru" current="Notes">
+  <Plate word="Notes" still="hoist" frame alt="A page of Leonardo da Vinci’s pen drawings of a hoist, with gears, a crank and a screw." credit="Leonardo da Vinci, studies of a hoist after Brunelleschi, c. 1480.">
+    <p class="label">Notes</p>
+    <h1>The working notebook.</h1>
+    <p class="sub">Questions and observations from the space between an ambitious idea and the system that makes it real.</p>
+    <Note slot="note" dir="right">Leonardo worked it out<br />on paper first. so do I</Note>
+  </Plate>
+
+  <Part word="First">
+    <article class="essay">
+      <div class="drawn" role="img" aria-label="A hatched drawing of Chuka Dele-Oyeleru, turning his head slightly."><span><i></i></span></div>
+      <p class="label">Written by Chuka Dele-Oyeleru</p>
+      <p class="label">Field note · Surface Talent, summer 2026</p>
+      <h2>A full profile is not full evidence</h2>
+      <p class="lead wide">Every candidate had a profile, and every profile looked complete. That was the problem.</p>
+      <p>I was building the assessment for a specialist recruiter. The profiles it read were parsed from CVs, and on screen they had everything a profile should have: a name, a history, a set of skills. Then I put a few beside the original CVs. The responsibilities and achievements, the lines that say what a person actually did, had not made it across.</p>
+      <p>Nothing was broken. No field was empty, no error was raised. The system had data. It did not have evidence, and an assessment built on it would have scored people on what the parser kept.</p>
+      <p>So I reworked how evidence travels from the CV to the profile, reprocessed the candidates, and rescored the ones who were live. It cost time I had planned to spend elsewhere.</p>
+      <p>What I took from it: check what you depend on before you build on it, and when something looks complete, compare it with the source.</p>
+      <a class="cue" href="work-surface-talent.html" data-name="Surface Talent">The work this came from <span class="arr"></span></a>
+    </article>
+  </Part>
+
+  <Part word="Themes">
+    <ul class="plain">{themes.map(([t, line]) => <li><b>{t}</b><span>{line}</span></li>)}</ul>
+  </Part>
+
+  <End label="Ask me something" next={['Press', 'press.html']} />
+</Base>

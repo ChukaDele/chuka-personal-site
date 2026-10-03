@@ -1,0 +1,10 @@
+---
+const { dir = 'down', cls = '' } = Astro.props;
+const paths = {
+  down: ['0 0 40 56', 'M18 4 C 24 18, 14 30, 20 50 M20 50 L 9 39 M20 50 L 30 40'],
+  right: ['0 0 74 46', 'M4 6 C 26 4, 52 14, 66 40 M66 40 L 52 36 M66 40 L 67 25'],
+  up: ['0 0 74 46', 'M70 40 C 50 42, 22 34, 10 8 M10 8 L 8 23 M10 8 L 24 14'],
+};
+const [vb, d] = paths[dir];
+---
+<p class={`note ${cls}`}>{dir === 'up' && <svg viewBox={vb} aria-hidden="true"><path d={d} /></svg>}<span><slot /></span>{dir !== 'up' && <svg viewBox={vb} aria-hidden="true"><path d={d} /></svg>}</p>

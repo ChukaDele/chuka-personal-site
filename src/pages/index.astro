@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Plate from '../components/Plate.astro';
+import Part from '../components/Part.astro';
+import Note from '../components/Note.astro';
+import Write from '../components/Write.astro';
+import { works, ring } from '../data/works.js';
+import { site } from '../data/site.js';
+const rooms = [
+  ['About', 'about.html', 'How a quantity surveyor came to run operations, build products and design services.'],
+  ['Library', 'library.html', 'The books, talks and essays I keep within reach.'],
+  ['Notes', 'notes.html', 'A field note on evidence, and the themes I keep returning to.'],
+  ['Press', 'press.html', 'Bios, portraits and what I speak about.'],
+  ['CV', 'resume.html', 'Roles, training and a PDF to take away.'],
+];
+---
+<Base title="Chuka Dele-Oyeleru · Strategy and operations" preload="img/jerome-mono.webp">
+  <Plate word="Dele-Oyeleru" picture="study" id="top" alt="Albrecht Dürer's engraving of Saint Jerome writing at his desk, a lion and a dog asleep on the floor. Moving across it paints it in colour, and then the scholar writes and the lion looks up." credit="Albrecht Dürer, <i>Saint Jerome in His Study</i>, 1514. Colour added.">
+    <p class="label">Strategy and operations</p>
+    <h1>Trained across the whole craft. Held to a specialist’s finish.</h1>
+    <p class="sub">I diagnose the problem, design how the work should run, and build what it needs.</p>
+    <div class="btns acts"><a class="btn fill solid" href="press/chuka-dele-oyeleru-cv.pdf" download>Download the CV <span class="arr"></span></a><button type="button" class="btn fill" data-letter="hello">Write to me <span class="arr"></span></button></div>
+    <dl class="creds"><dt>Based</dt><dd>Manchester, UK</dd><dt>MBA</dt><dd>Alliance Manchester Business School, 2025 to 2027</dd><dt>Trained</dt><dd>Quantity surveyor, University of Lagos</dd><dt>Worked in</dt><dd>Nigeria, Ghana, Kenya, the UK and the US</dd>{site.openTo && <Fragment><dt>Open to</dt><dd>{site.openTo}</dd></Fragment>}</dl>
+    <Note slot="note" dir="right">move across,<br />it takes colour</Note>
+  </Plate>
+
+  <Note cls="aside">in the old workshops you learned the whole trade before you signed anything. the best of that work still holds up, 500 years on. that is the bar I work to. six of mine below</Note>
+
+  <Part word="Works">
+    <p class="label" id="work">Selected works, 2022 to 2026</p>
+    <div class="rows">
+      {works.map((w) => (
+        <a class="row fill" href={`work-${w.id}.html`} data-name={w.name}>
+          <span class="nm">{w.name}</span>
+          <span class="ln">{w.line}<small>{w.roleFull || w.role} · {w.when}</small></span>
+          <span class="fg"><b>{w.fig}<Fragment set:html={ring} /></b><i>{w.lab}</i><span class="cue">Open the work <span class="arr"></span></span></span>
+        </a>
+      ))}
+    </div>
+  </Part>
+
+  <Part word="Inside">
+    <p class="label">The rest of the workshop</p>
+    <div class="rows">
+      {rooms.map(([name, href, line]) => (
+        <a class="row two fill" href={href} data-name={name}>
+          <span class="nm">{name}</span>
+          <span class="ln">{line}</span>
+          <span class="cue"><span class="arr"></span></span>
+        </a>
+      ))}
+    </div>
+  </Part>
+
+  <Write />
+</Base>
