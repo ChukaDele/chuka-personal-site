@@ -1,3 +1,7 @@
+---
+import {PROJECTS, SKETCHES} from "../data/projects.js";
+import {projectMarkup} from "../lib/project-markup.js";
+---
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,11 +11,8 @@
   <meta name="theme-color" content="#eee2d0">
   <meta name="description" content="An interactive Underdrawing website draft for Chukwuka Dele-Oyeleru. Three ways to explore the same work.">
   <title>Chuka · Underdrawing experiments</title>
-  <link rel="stylesheet" href="fonts.css">
-  <link rel="stylesheet" href="styles.css">
-  <script src="projects.js" defer></script>
-  <script src="board-math.js" defer></script>
-  <script src="lab.js" defer></script>
+  <link rel="stylesheet" href="/fonts.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body data-ending="poster-wall">
   <a class="skip" href="#work">Skip to the work</a>
@@ -43,7 +44,7 @@
 
     <figure class="fresco-figure" aria-labelledby="fresco-caption">
       <div class="fresco-frame" id="fresco-frame">
-        <img class="fresco-fallback" src="img/athens-sinopia.jpg" alt="A modern red chalk tracing of Raphael’s School of Athens" width="1800" height="1021" fetchpriority="high">
+        <img class="fresco-fallback" src="/img/athens-sinopia.jpg" alt="A modern red chalk tracing of Raphael’s School of Athens" width="1800" height="1021" fetchpriority="high">
         <canvas id="fresco" aria-label="Interactive painting of the School of Athens. Use the Complete painting button to see the whole fresco."></canvas>
         <span class="hand fresco-note note-left" aria-hidden="true">the drawing first ↘</span>
         <span class="hand fresco-note note-right" aria-hidden="true">a patch of colour<br>at a time ↙</span>
@@ -64,19 +65,14 @@
         <p class="hand work-note">Open a case.<br>Look a little closer. ↙</p>
       </div>
       <p class="section-intro">Six projects across products, services and operating systems. The drawings below are modern studies of the supplied screenshots.</p>
-      <div id="project-list" class="project-list"></div>
-      <noscript><p>This interactive draft uses JavaScript to open its six case studies. The résumé and contact links above remain available.</p></noscript>
+      <div id="project-list" class="project-list" set:html={projectMarkup(PROJECTS, SKETCHES)}></div>
+      <noscript><p>The cases remain available as pages. JavaScript adds the optional painting and studio interactions.</p></noscript>
       <a class="breadcrumb hand" href="#studio" id="work-teaser">There are a few things to move around further down ↓</a>
     </section>
 
     <section class="method-section wrap" id="method" aria-labelledby="method-title">
       <div class="section-heading"><div><p class="eyebrow">How I work</p><h2 id="method-title">The structure<br>behind the work.</h2></div><span class="hand method-note">a drawing is a way<br>to think out loud</span></div>
-      <div class="method-grid">
-        <article><span class="method-number">01</span><h3>Read the situation.</h3><p>Start with the data, customer conversations and the way work moves between people. Find the point that needs attention.</p></article>
-        <article><span class="method-number">02</span><h3>Draw the operating shape.</h3><p>Connect the proposition, the team and the service. Make responsibilities and handoffs clear enough to use.</p></article>
-        <article><span class="method-number">03</span><h3>Build with the team.</h3><p>Carry the choices into a product, a workflow or a delivery model. The cases show my contribution alongside the teams involved.</p></article>
-        <article><span class="method-number">04</span><h3>Look at what changed.</h3><p>Use the result to decide what needs attention next. Retain a person’s judgement where the decision needs it.</p></article>
-      </div>
+      <p class="method-interlude">A product choice reaches people through the work around it. At ETAP, that meant claims handoffs. At Idara, it meant fulfilment procedures alongside the platform rebuild.</p>
       <div class="context-line"><p>My work spans insurance, compliance, recruitment, payments, design ventures and data services.</p><a class="quiet-link" href="https://chukadele.com/resume" target="_blank" rel="noopener">More context in the résumé ↗</a></div>
     </section>
 
@@ -110,5 +106,6 @@
   <dialog id="case-dialog" class="case-dialog" aria-labelledby="case-title"><button class="dialog-close" type="button" data-close-dialog="case-dialog" aria-label="Close case study">Close <span aria-hidden="true">×</span></button><div id="case-content"></div></dialog>
   <dialog id="object-dialog" class="object-dialog" aria-labelledby="object-title"><button class="dialog-close" type="button" data-close-dialog="object-dialog" aria-label="Close studio object">Close <span aria-hidden="true">×</span></button><div id="object-content"></div></dialog>
   <dialog id="image-dialog" class="image-dialog" aria-labelledby="image-caption"><button class="dialog-close" type="button" data-close-dialog="image-dialog" aria-label="Close image">Close <span aria-hidden="true">×</span></button><figure><img id="lightbox-image" alt=""><figcaption id="image-caption"></figcaption></figure><div class="lightbox-nav"><button class="small-button" id="image-prev" type="button" aria-label="Previous image">← Previous</button><span id="image-count"></span><button class="small-button" id="image-next" type="button" aria-label="Next image">Next →</button></div></dialog>
+  <script src="../scripts/lab.js"></script>
 </body>
 </html>

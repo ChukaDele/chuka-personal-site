@@ -1,5 +1,5 @@
 /* Case copy follows the supplied design references and existing portfolio. */
-const PROJECTS = [
+export const PROJECTS = [
   {
     "id": "etap",
     "name": "ETAP",
@@ -191,10 +191,10 @@ const PROJECTS = [
     "featuredShot": "bredge-1"
   }
 ];
-const SKETCHES = {etap:'etap-1', idara:'idara-3', honeycoin:'honey-1', rvysion:'rayna-2', bredge:'bredge-1'};
-const ART = [
+export const SKETCHES = {etap:'etap-1', idara:'idara-3', honeycoin:'honey-1', rvysion:'rayna-2', bredge:'bredge-1'};
+export const ART = [
 {file:'athens-color.jpg', title:'The School of Athens', artist:'Raphael', date:'1509 to 1511', credit:'Stanza della Segnatura, Vatican', note:'The red drawing is a modern tracing supplied with this draft, not Raphael’s original preparatory work.'},
-{file:'hoist-neg.jpg', title:'Study of Brunelleschi’s hoist', artist:'Leonardo da Vinci', date:'circa 1478 to 1480', credit:'Codex Atlanticus, Biblioteca Ambrosiana, Milan', note:'The supplied negative treatment is a modern interpretation of the historical drawing.'},
-{file:'jerome-neg.jpg', title:'Saint Jerome in His Study', artist:'Albrecht Dürer', date:'1514', credit:'Historical engraving; supplied negative treatment', note:'A modern treatment of Dürer’s engraving, supplied in the design reference.'},
+{file:'leonardo.jpg', title:'Study of Brunelleschi’s hoist', artist:'Leonardo da Vinci', date:'circa 1478 to 1480', credit:'Codex Atlanticus, Biblioteca Ambrosiana, Milan', note:'The naturally monochrome historical drawing is reused from the earlier supplied art references.'},
+{file:'jerome.jpg', title:'Saint Jerome in His Study', artist:'Albrecht Dürer', date:'1514', credit:'Historical engraving; earlier supplied art reference', note:'The naturally monochrome engraving is reused from the earlier supplied art references.'},
 {file:'pacioli.jpg', title:'De Divina Proportione', artist:'Luca Pacioli, with solids after Leonardo da Vinci', date:'1509', credit:'Historical illustrated book; supplied reference image', note:'An editorial connection between geometry and the structure of work.'}
 ];

@@ -1,3 +1,6 @@
+import {PROJECTS, SKETCHES, ART} from '../data/projects.js';
+import {boundPaper} from './board-math.js';
+import {setupMotion, revealColour} from './motion.js';
 /* One Underdrawing page, three optional endings. No framework or network dependency. */
 (() => {
   'use strict';
@@ -14,7 +17,8 @@
     motion: stored.motion === 'reduced' ? 'reduced' : 'system',
     positions: stored.positions && typeof stored.positions === 'object' ? stored.positions : {},
     note: typeof stored.note === 'string' ? stored.note.slice(0, 180) : '',
-    marks: Array.isArray(stored.marks) ? stored.marks.slice(0,80).filter(line=>Array.isArray(line)) : []
+    marks: Array.isArray(stored.marks) ? stored.marks.slice(0,80).filter(line=>Array.isArray(line)) : [],
+    order: stored.order && typeof stored.order === 'object' ? stored.order : {}
   };
   function save() { try { localStorage.setItem(key, JSON.stringify(state)); } catch { /* The draft remains usable without persistence. */ } }
   const deviceMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -25,19 +29,7 @@
   $('#motion-mode').addEventListener('change', event => { state.motion = event.target.value; setMotion(); save(); });
   setMotion();
 
-  const ring = '<svg class="metric-ring" viewBox="0 0 200 75" preserveAspectRatio="none" aria-hidden="true"><path d="M 188 29 C 202 60, 171 74, 90 69 C 13 65, -3 48, 8 25 C 19 3, 131 -4, 178 17 C 193 22, 196 43, 179 56"/></svg>';
   const workflow = '<div class="workflow-study"><span>the decision stays human</span><div class="workflow-line"><span>Source &amp; intake</span><i>↓</i></div><div class="workflow-line"><span>Writer + independent grader</span><i>↓</i></div><div class="workflow-line"><span>Recruiter sign-off</span><i>✓</i></div><small>Editorial workflow drawing</small></div>';
-  function renderProjects() {
-    $('#project-list').innerHTML = PROJECTS.map((p, index) => {
-      const sketch = SKETCHES[p.id];
-      return `<article class="project-row" id="project-${p.id}" aria-labelledby="title-${p.id}">
-        <div class="project-identity"><span class="project-number">${String(index + 1).padStart(2,'0')} / ${escapeHTML(p.sector)}</span><h3 class="project-name" id="title-${p.id}">${escapeHTML(p.name)}</h3><p class="project-meta">${escapeHTML(p.geography)}<br>${escapeHTML(p.period)}</p><p class="project-role">${escapeHTML(p.role)}</p><button type="button" class="case-open" data-case="${p.id}"><span>Read case</span><span class="arrow-relay" aria-hidden="true"><i>↗</i><i>↗</i></span></button></div>
-        <div class="project-summary"><p class="project-headline">${escapeHTML(p.headline)}</p><div class="metric ${p.id==='surface'||p.id==='bredge'?'word-metric':''}">${escapeHTML(p.id==='surface'?'Sign-off':p.id==='bredge'?'3 ways':p.metric)}${ring}</div><p class="metric-label">${escapeHTML(p.metricLabel)}</p></div>
-        <div class="project-visual">${sketch ? `<div class="sketch-pair"><img src="img/${sketch}-sketch.jpg" alt="Modern drawn interpretation of ${escapeHTML(p.name)}’s supplied product screenshot" loading="lazy"><img class="shot-colour" src="img/${sketch}.jpg" alt="${escapeHTML(p.shots.find(s=>s[0]===sketch)?.[1]||p.shots[0][1])}" loading="lazy"></div><div class="visual-controls"><button type="button" class="colour-toggle" aria-pressed="false">Show colour ↗</button><button type="button" class="zoom-thumb" data-zoom="${p.id}" aria-label="View ${escapeHTML(p.name)} images larger">View larger +</button></div><span class="visual-caption">Modern screenshot study → supplied product image</span>` : workflow}</div>
-      </article>`;
-    }).join('');
-  }
-  renderProjects();
 
   const dialogOpeners = new Map();
   function openDialog(id, opener) {
@@ -60,7 +52,7 @@
   });
   function openCase(id, opener) {
     const p = PROJECTS.find(project => project.id === id); if (!p) return;
-    $('#case-content').innerHTML = `<p class="eyebrow">${escapeHTML(p.sector)} · ${escapeHTML(p.geography)}</p><h2 id="case-title">${escapeHTML(p.name)}</h2><p class="case-subtitle">${escapeHTML(p.headline)}</p><p class="case-role">My contribution: ${escapeHTML(p.role)}<br><span>${escapeHTML(p.period)}</span></p><div class="case-stages">${[['Diagnosis',p.diagnosis],['Design',p.design],['Build',p.build],['Result',p.result]].map(([title,copy])=>`<section><h3>${title}</h3><p>${escapeHTML(copy)}</p></section>`).join('')}</div><p class="source-note">${escapeHTML(p.sourceNote)}</p>${p.shots.length ? `<div class="case-gallery" aria-label="${escapeHTML(p.name)} gallery">${p.shots.map(([file,caption],i)=>`<button type="button" class="gallery-image" data-gallery="${p.id}" data-image-index="${i}"><img src="img/${file}.jpg" alt="${escapeHTML(caption)}" loading="lazy"><span>${escapeHTML(caption)} <b aria-hidden="true">+</b></span></button>`).join('')}</div>` : `<div class="case-gallery">${workflow}</div>`}${p.link ? `<a class="fill-button case-visit" href="${p.link[1]}" target="_blank" rel="noopener"><span>${escapeHTML(p.link[0])}</span><span aria-hidden="true">↗</span></a>` : ''}`;
+    $('#case-content').innerHTML = `<p class="eyebrow">${escapeHTML(p.sector)} · ${escapeHTML(p.geography)}</p><h2 id="case-title">${escapeHTML(p.name)}</h2><p class="case-subtitle">${escapeHTML(p.headline)}</p><p class="case-role">My contribution: ${escapeHTML(p.role)}<br><span>${escapeHTML(p.period)}</span></p><div class="case-stages">${[['Diagnosis',p.diagnosis],['Design',p.design],['Build',p.build],['Result',p.result]].map(([title,copy])=>`<section><h3>${title}</h3><p>${escapeHTML(copy)}</p></section>`).join('')}</div><p class="source-note">${escapeHTML(p.sourceNote)}</p>${p.shots.length ? `<div class="case-gallery" aria-label="${escapeHTML(p.name)} gallery">${p.shots.map(([file,caption],i)=>`<button type="button" class="gallery-image" data-gallery="${p.id}" data-image-index="${i}"><img src="/img/${file}.jpg" alt="${escapeHTML(caption)}" loading="lazy"><span>${escapeHTML(caption)} <b aria-hidden="true">+</b></span></button>`).join('')}</div>` : `<div class="case-gallery">${workflow}</div>`}${p.link ? `<a class="fill-button case-visit" href="${p.link[1]}" target="_blank" rel="noopener"><span>${escapeHTML(p.link[0])}</span><span aria-hidden="true">↗</span></a>` : ''}`;
     document.body.style.overflow = 'hidden';
     openDialog('case-dialog', opener);
   }
@@ -81,7 +73,7 @@
 
   function openArt(index, opener) {
     const art = ART[index] || ART[0];
-    $('#object-content').innerHTML = `<p class="eyebrow">From the supplied art references</p><h2 id="object-title">${escapeHTML(art.title)}</h2><p class="object-copy">${escapeHTML(art.artist)}, ${escapeHTML(art.date)}. ${escapeHTML(art.credit)}.</p><button class="gallery-image" type="button" data-art-zoom="${index}"><img class="object-art" src="img/${art.file}" alt="${escapeHTML(art.title)}"><span>Look closer <b aria-hidden="true">+</b></span></button><p class="source-note">${escapeHTML(art.note)}</p>${index===0 ? `<div class="art-register">${ART.slice(1).map(a=>`<p><strong>${escapeHTML(a.title)}</strong>${escapeHTML(a.artist)} · ${escapeHTML(a.date)}<br>${escapeHTML(a.note)}</p>`).join('')}<p>Product screenshots and their modern drawn treatments are supplied design assets. Case descriptions are adapted from the supplied drafts and existing portfolio. Open each case for its contribution and outcome attribution.</p></div>` : ''}`;
+    $('#object-content').innerHTML = `<p class="eyebrow">From the supplied art references</p><h2 id="object-title">${escapeHTML(art.title)}</h2><p class="object-copy">${escapeHTML(art.artist)}, ${escapeHTML(art.date)}. ${escapeHTML(art.credit)}.</p><button class="gallery-image" type="button" data-art-zoom="${index}"><img class="object-art" src="/img/${art.file}" alt="${escapeHTML(art.title)}"><span>Look closer <b aria-hidden="true">+</b></span></button><p class="source-note">${escapeHTML(art.note)}</p>${index===3 ? '<div class="solid-study"><p class="hand">from a line to a form</p><p class="solid-description">A modern geometric study. Turn it to see how the edges connect.</p><button type="button" class="small-button" data-solid-start>Turn the shape ↗</button><div id="solid-stage"></div></div>' : ''}${index===0 ? `<div class="art-register">${ART.slice(1).map(a=>`<p><strong>${escapeHTML(a.title)}</strong>${escapeHTML(a.artist)} · ${escapeHTML(a.date)}<br>${escapeHTML(a.note)}</p>`).join('')}<p>Product screenshots and their modern drawn treatments are supplied design assets. Case descriptions are adapted from the supplied drafts and existing portfolio. Open each case for its contribution and outcome attribution.</p></div>` : ''}`;
     document.body.style.overflow = 'hidden'; openDialog('object-dialog',opener);
   }
   function openMethod(opener) {
@@ -95,16 +87,16 @@
 
   const papers = {
     'poster-wall': [
-      {id:'jerome',label:'Study print',angle:-5,width:295,mobile:165,kind:'art-tall',body:'<img src="img/jerome-neg.jpg" alt="A supplied negative treatment of Dürer’s Saint Jerome engraving" loading="lazy"><span class="paper-title">A room for concentrated work.</span><small class="paper-source">Albrecht Dürer · 1514 · modern treatment</small>',action:'data-open-art="2"',open:'Open the print',desktop:[.05,.12],phone:[.06,.035]},
+      {id:'jerome',label:'Study print',angle:-5,width:295,mobile:165,kind:'art-tall',body:'<img src="/img/jerome.jpg" alt="Dürer’s naturally monochrome Saint Jerome engraving" loading="lazy"><span class="paper-title">A room for concentrated work.</span><small class="paper-source">Albrecht Dürer · 1514</small>',action:'data-open-art="2"',open:'Open the print',desktop:[.05,.12],phone:[.06,.035]},
       {id:'type',label:'Type specimen',angle:4,width:245,mobile:150,kind:'type-paper',body:'<div class="type-composition">Draw the<br>operating<br><em>shape.</em><small>Strategy &amp; Operations<br>Chukwuka Dele-Oyeleru</small></div>',action:'data-method',open:'A note on the work',desktop:[.47,.055],phone:[.94,.09]},
-      {id:'etap',label:'Product evidence',angle:-3,width:320,mobile:165,kind:'paper-wide',body:'<img src="img/etap-3.jpg" alt="ETAP driver management and rewards screenshot" loading="lazy"><span class="paper-title">The product around the operating work.</span><small class="paper-source">ETAP · supplied project image</small>',action:'data-case="etap"',open:'Read ETAP',desktop:[.92,.56],phone:[.07,.60]},
-      {id:'pacioli',label:'Geometry study',angle:6,width:270,mobile:150,kind:'paper-wide',body:'<img src="img/pacioli.jpg" alt="Geometric solids from De Divina Proportione" loading="lazy"><span class="paper-title">Making a complicated shape legible.</span><small class="paper-source">Luca Pacioli · 1509</small>',action:'data-open-art="3"',open:'Open the study',desktop:[.88,.05],phone:[.94,.53]},
+      {id:'etap',label:'Product evidence',angle:-3,width:320,mobile:165,kind:'paper-wide',body:'<img src="/img/etap-3.jpg" alt="ETAP driver management and rewards screenshot" loading="lazy"><span class="paper-title">The product around the operating work.</span><small class="paper-source">ETAP · supplied project image</small>',action:'data-case="etap"',open:'Read ETAP',desktop:[.92,.56],phone:[.07,.60]},
+      {id:'pacioli',label:'Geometry study',angle:6,width:270,mobile:150,kind:'paper-wide',body:'<img src="/img/pacioli.jpg" alt="Geometric solids from De Divina Proportione" loading="lazy"><span class="paper-title">Making a complicated shape legible.</span><small class="paper-source">Luca Pacioli · 1509</small>',action:'data-open-art="3"',open:'Open the study',desktop:[.88,.05],phone:[.94,.53]},
       {id:'note',label:'Loose note',angle:-4,width:240,mobile:153,kind:'note-paper',body:'<div class="note-message">The interesting part is often the handoff.<span class="paper-stamp">Who picks it up next?</span></div>',action:'data-method',open:'Follow the note',desktop:[.40,.79],phone:[.48,.95]}
     ],
     workbench: [
-      {id:'hoist',label:'Mechanism study',angle:-5,width:310,mobile:170,kind:'workbench-card',body:'<img src="img/hoist-neg.jpg" alt="Leonardo da Vinci’s hoist study in the supplied modern negative treatment" loading="lazy"><span class="paper-title">A mechanism drawn so it can be understood.</span><small class="paper-source">Leonardo da Vinci · modern treatment</small>',action:'data-open-art="1"',open:'Open the drawing',desktop:[.04,.15],phone:[.03,.05]},
+      {id:'hoist',label:'Mechanism study',angle:-5,width:310,mobile:170,kind:'workbench-card',body:'<img src="/img/leonardo.jpg" alt="Leonardo da Vinci’s naturally monochrome hoist study" loading="lazy"><span class="paper-title">A mechanism drawn so it can be understood.</span><small class="paper-source">Leonardo da Vinci · hoist study</small>',action:'data-open-art="1"',open:'Open the drawing',desktop:[.04,.15],phone:[.03,.05]},
       {id:'sequence',label:'Working sequence',angle:4,width:240,mobile:148,kind:'workbench-card',body:'<div class="scrap-line">Observe.</div><div class="scrap-line">Draw the handoffs.</div><div class="scrap-line">Build with people.</div><div class="scrap-line">Check what changed.</div><div class="pencil-rule"></div>',action:'data-method',open:'Open the method note',desktop:[.45,.04],phone:[.98,.12]},
-      {id:'honey',label:'Studio fragment',angle:3,width:295,mobile:170,kind:'workbench-card',body:'<img src="img/honey-3.jpg" alt="HoneyCoin brand work supplied in the studio case" loading="lazy"><span class="paper-title">One part of a shared delivery.</span><small class="paper-source">HoneyCoin · with Rvysion</small>',action:'data-case="honeycoin"',open:'Read HoneyCoin',desktop:[.92,.40],phone:[.05,.59]},
+      {id:'honey',label:'Studio fragment',angle:3,width:295,mobile:170,kind:'workbench-card',body:'<img src="/img/honey-3.jpg" alt="HoneyCoin brand work supplied in the studio case" loading="lazy"><span class="paper-title">One part of a shared delivery.</span><small class="paper-source">HoneyCoin · with Rvysion</small>',action:'data-case="honeycoin"',open:'Read HoneyCoin',desktop:[.92,.40],phone:[.05,.59]},
       {id:'chalk',label:'Your drawing sheet',angle:-5,width:240,mobile:148,kind:'note-paper',body:'<span class="editor-label">Make a small mark. Mouse, pen or touch.</span><canvas id="chalk-canvas" width="600" height="390" aria-label="Your red chalk drawing sheet. You can also add a loop with the button below."></canvas><button type="button" class="text-button chalk-loop" data-chalk-loop>Add a loop ↗</button>',action:'data-chalk-clear',open:'Clear the sheet',desktop:[.35,.81],phone:[.95,.56]},
       {id:'your-note',label:'Your loose note',angle:3,width:265,mobile:170,kind:'note-paper',body:'<label class="editor-label" for="visitor-note">Leave a thought for yourself. Saved in this browser.</label><textarea class="note-editor" id="visitor-note" maxlength="180" placeholder="What would you keep?" aria-label="Your private draft note"></textarea>',action:'data-note-clear',open:'Clear your note',desktop:[.82,.92],phone:[.52,.97]}
     ]
@@ -116,7 +108,7 @@
   };
   let board = null, activeDrag = null, boardObserver = null;
   function renderArchive() {
-    return `<div class="archive-shelf"><button type="button" class="archive-object" data-case-index><div class="archive-folder"><small>Selected work / 01 to 06</small><span>The cases</span></div><span class="object-label">Open the six folders <span aria-hidden="true">↗</span></span><small class="object-kind">Projects &amp; contributions</small></button><button type="button" class="archive-object" data-open-art="3"><img class="archive-print" src="img/pacioli.jpg" alt="Geometry study from De Divina Proportione" loading="lazy"><span class="object-label">The geometry study <span aria-hidden="true">↗</span></span><small class="object-kind">Luca Pacioli · 1509</small></button><button type="button" class="archive-object" data-method><div class="archive-book">An operating<br>shape.<small>Notes from the work</small></div><span class="object-label">Open the notebook <span aria-hidden="true">↗</span></span><small class="object-kind">Method &amp; an Idara example</small></button><button type="button" class="archive-object" data-open-art="2"><img class="archive-print" src="img/jerome-neg.jpg" alt="Modern treatment of Dürer’s Saint Jerome in His Study" loading="lazy"><span class="object-label">A room for the work <span aria-hidden="true">↗</span></span><small class="object-kind">Dürer · modern treatment</small></button><button type="button" class="archive-object" data-case="honeycoin"><div class="archive-folder" style="background:#b9bbaa"><small>Payments / with Rvysion</small><span>A shared<br>delivery</span></div><span class="object-label">Open HoneyCoin <span aria-hidden="true">↗</span></span><small class="object-kind">Delivery &amp; product evidence</small></button><a class="archive-object" href="https://chukadele.com/resume" target="_blank" rel="noopener"><div class="archive-card"><span class="hand">the longer<br>version ↗</span><small>Chukwuka Dele-Oyeleru<br>Strategy &amp; Operations</small></div><span class="object-label">Read the résumé <span aria-hidden="true">↗</span></span><small class="object-kind">Experience &amp; context</small></a></div><p class="archive-instructions">Everything here is open to look at.</p>`;
+    return `<div class="archive-shelf"><button type="button" class="archive-object" data-case-index><div class="archive-folder"><small>Selected work / 01 to 06</small><span>The cases</span></div><span class="object-label">Open the six folders <span aria-hidden="true">↗</span></span><small class="object-kind">Projects &amp; contributions</small></button><button type="button" class="archive-object" data-open-art="3"><img class="archive-print" src="/img/pacioli.jpg" alt="Geometry study from De Divina Proportione" loading="lazy"><span class="object-label">The geometry study <span aria-hidden="true">↗</span></span><small class="object-kind">Luca Pacioli · 1509</small></button><button type="button" class="archive-object" data-method><div class="archive-book">An operating<br>shape.<small>Notes from the work</small></div><span class="object-label">Open the notebook <span aria-hidden="true">↗</span></span><small class="object-kind">Method &amp; an Idara example</small></button><button type="button" class="archive-object" data-open-art="2"><img class="archive-print" src="/img/jerome.jpg" alt="Dürer’s Saint Jerome in His Study" loading="lazy"><span class="object-label">A room for the work <span aria-hidden="true">↗</span></span><small class="object-kind">Dürer · 1514</small></button><button type="button" class="archive-object" data-case="honeycoin"><div class="archive-folder" style="background:#b9bbaa"><small>Payments / with Rvysion</small><span>A shared<br>delivery</span></div><span class="object-label">Open HoneyCoin <span aria-hidden="true">↗</span></span><small class="object-kind">Delivery &amp; product evidence</small></button><a class="archive-object" href="https://chukadele.com/resume" target="_blank" rel="noopener"><div class="archive-card"><span class="hand">the longer<br>version ↗</span><small>Chukwuka Dele-Oyeleru<br>Strategy &amp; Operations</small></div><span class="object-label">Read the résumé <span aria-hidden="true">↗</span></span><small class="object-kind">Experience &amp; context</small></a></div><p class="archive-instructions">Everything here is open to look at.</p>`;
   }
   function renderStudio() {
     if (activeDrag) finishDrag(true);
@@ -132,12 +124,15 @@
     const list = papers[state.ending];
     $('#studio-content').innerHTML = `<div class="paper-board ${state.ending==='workbench'?'workbench-board':''}" role="group" aria-label="${state.ending==='workbench'?'Rearrangeable workbench':'Draggable poster wall'}"><span class="paper-board-label" aria-hidden="true">${state.ending==='workbench'?'leave a little room to think':'pins are optional'}</span>${list.map(p=>`<article class="paper ${p.kind}" data-paper="${p.id}" style="--paper-width:${p.width}px;--mobile-width:${p.mobile}px;--small-width:${Math.min(p.mobile,148)}px;--angle:${p.angle}deg"><button class="drag-handle" type="button" data-drag="${p.id}" aria-label="Move ${p.label}. Arrow keys move it. Escape restores its starting position."><span>${p.label}</span><span aria-hidden="true">↔ ↕</span></button><div class="paper-body">${p.body}<button type="button" class="paper-open" ${p.action}><span>${p.open}</span><span aria-hidden="true">↗</span></button></div></article>`).join('')}</div>`;
     board = $('.paper-board');
+    applyPaperOrder();
     placePapers();
     boardObserver = new ResizeObserver(()=>{ if(!activeDrag)placePapers(); }); boardObserver.observe(board);
     if($('#visitor-note')) { $('#visitor-note').value=state.note; $('#visitor-note').addEventListener('input',e=>{state.note=e.target.value;save();}); }
     setupChalk();
   }
   function paperData(id) { return papers[state.ending]?.find(p=>p.id===id); }
+  function applyPaperOrder(){if(!board)return;const ids=papers[state.ending].map(p=>p.id);const saved=state.order[state.ending]||[];const order=[...ids.filter(id=>!saved.includes(id)),...saved.filter(id=>ids.includes(id))];order.forEach((id,index)=>board.querySelector(`[data-paper="${id}"]`).style.zIndex=String(index+2));}
+  function raisePaper(element){if(!board||!element)return;state.order[state.ending]=(state.order[state.ending]||[]).filter(id=>id!==element.dataset.paper);state.order[state.ending].push(element.dataset.paper);applyPaperOrder();save();}
   function setPaperPosition(element, x, y) {
     const data = paperData(element.dataset.paper);
     const point = boundPaper(x,y,element.offsetWidth,element.offsetHeight,board.clientWidth,board.clientHeight,data.angle);
@@ -172,6 +167,7 @@
     const handle=event.target.closest('[data-drag]');if(!handle||!board||event.button!==0)return;
     event.preventDefault();
     const element=handle.closest('[data-paper]');
+    handle.focus({preventScroll:true});raisePaper(element);
     const startX=Number(element.dataset.x),startY=Number(element.dataset.y);
     activeDrag={element,handle,pointer:event.pointerId,startX,startY,clientX:event.clientX,clientY:event.clientY};
     handle.setPointerCapture(event.pointerId);element.classList.add('is-dragging');
@@ -198,7 +194,8 @@
     announce(`${paperData(element.dataset.paper).label} moved. Escape puts it back.`);
   });
   document.addEventListener('focusout',event=>{if(event.target.matches('[data-drag]')){const element=event.target.closest('[data-paper]');delete element.dataset.keyboardX;delete element.dataset.keyboardY;}});
-  $('#board-reset').addEventListener('click',()=>{state.positions[state.ending]={};save();placePapers();announce('The original arrangement is restored.');});
+  document.addEventListener('focusin',event=>{const element=event.target.closest('[data-paper]');if(element)raisePaper(element);});
+  $('#board-reset').addEventListener('click',()=>{state.positions[state.ending]={};state.order[state.ending]=[];save();applyPaperOrder();placePapers();announce('The original arrangement is restored.');});
   $('#board-arrange').addEventListener('click',()=>{
     if(!board)return;
     const columns=innerWidth<=700?2:3, gap=innerWidth<=700?15:25;
@@ -206,7 +203,7 @@
     elements.forEach((element,index)=>{const column=index%columns,row=Math.floor(index/columns);const cell=board.clientWidth/columns;setPaperPosition(element,column*cell+(cell-element.offsetWidth)/2,row*rowHeight+gap);rememberPosition(element);});
     announce('The papers are arranged in rows.');
   });
-  $('#draft-reset').addEventListener('click',()=>{state.positions={};state.note='';state.marks=[];state.motion='system';save();setMotion();renderStudio();resetPainting();});
+  $('#draft-reset').addEventListener('click',()=>{state.positions={};state.order={};state.note='';state.marks=[];state.motion='system';save();setMotion();renderStudio();resetPainting();});
   document.addEventListener('click',event=>{
     const target=event.target.closest('button,a');if(!target)return;
     if(target.dataset.closeDialog){document.getElementById(target.dataset.closeDialog).close();return;}
@@ -215,10 +212,11 @@
       const url=new URL(location.href);url.searchParams.set('ending',state.ending);url.hash='studio';history.replaceState(null,'',url);renderStudio();$('#studio').scrollIntoView({behavior:motionReduced()?'instant':'smooth',block:'start'});return;
     }
     if(target.dataset.case){openCase(target.dataset.case,target);return;}
-    if(target.dataset.zoom||target.dataset.gallery){const id=target.dataset.zoom||target.dataset.gallery;const p=PROJECTS.find(p=>p.id===id);const index=target.dataset.zoom?Math.max(0,p.shots.findIndex(s=>s[0]===SKETCHES[id])):Number(target.dataset.imageIndex);openImages(p.shots.map(([file,caption])=>[`img/${file}.jpg`,caption]),index,target);return;}
-    if(target.classList.contains('colour-toggle')){const visual=target.closest('.project-visual');const colour=!visual.classList.contains('is-colour');visual.classList.toggle('is-colour',colour);target.setAttribute('aria-pressed',String(colour));target.textContent=colour?'Show drawing ↺':'Show colour ↗';return;}
+    if(target.dataset.zoom||target.dataset.gallery){const id=target.dataset.zoom||target.dataset.gallery;const p=PROJECTS.find(p=>p.id===id);const index=target.dataset.zoom?Math.max(0,p.shots.findIndex(s=>s[0]===SKETCHES[id])):Number(target.dataset.imageIndex);openImages(p.shots.map(([file,caption])=>[`/img/${file}.jpg`,caption]),index,target);return;}
+    if(target.classList.contains('colour-toggle')){const visual=target.closest('.project-visual');const colour=!visual.classList.contains('is-colour');visual.classList.toggle('is-colour',colour);visual.classList.toggle('is-drawing',!colour);revealColour(visual,colour,motionReduced());target.setAttribute('aria-pressed',String(colour));target.textContent=colour?'Show drawing ↺':'Show colour ↗';return;}
     if(target.hasAttribute('data-open-art')){openArt(Number(target.dataset.openArt),target);return;}
-    if(target.hasAttribute('data-art-zoom')){const a=ART[Number(target.dataset.artZoom)];openImages([[`img/${a.file}`,`${a.artist}, ${a.title}. ${a.note}`]],0,target);return;}
+    if(target.hasAttribute('data-art-zoom')){const a=ART[Number(target.dataset.artZoom)];openImages([[`/img/${a.file}`,`${a.artist}, ${a.title}. ${a.note}`]],0,target);return;}
+    if(target.hasAttribute('data-solid-start')){target.disabled=true;import('./solid.js').then(({mountSolid})=>mountSolid($('#solid-stage'),motionReduced)).then(()=>target.hidden=true).catch(()=>{target.disabled=false;target.textContent='The printed study is available above.';});return;}
     if(target.hasAttribute('data-method')){openMethod(target);return;}
     if(target.hasAttribute('data-case-index')){openIndex(target);return;}
     if(target.hasAttribute('data-note-clear')){state.note='';if($('#visitor-note'))$('#visitor-note').value='';save();announce('Your note is cleared.');}
@@ -273,7 +271,7 @@
   $('#paint-reset').addEventListener('click',resetPainting);
   canvas.addEventListener('pointermove',event=>{if(event.pointerType==='mouse'||event.pointerType==='pen')paintAt(event);},{passive:true});
   canvas.addEventListener('pointerdown',paintAt,{passive:true});
-  Promise.all([new Promise((resolve,reject)=>{drawing.onload=resolve;drawing.onerror=reject;drawing.src='img/athens-sinopia.jpg';}),new Promise((resolve,reject)=>{colour.onload=resolve;colour.onerror=reject;colour.src='img/athens-color.jpg';})]).then(()=>{paintReady=true;drawPainting();}).catch(()=>{$('#paint-status').textContent='The drawing is available below.';$('#paint-complete').disabled=true;$('#paint-reset').disabled=true;});
+  Promise.all([new Promise((resolve,reject)=>{drawing.onload=resolve;drawing.onerror=reject;drawing.src='/img/athens-sinopia.jpg';}),new Promise((resolve,reject)=>{colour.onload=resolve;colour.onerror=reject;colour.src='/img/athens-color.jpg';})]).then(()=>{paintReady=true;drawPainting();}).catch(()=>{$('#paint-status').textContent='The drawing is available below.';$('#paint-complete').disabled=true;$('#paint-reset').disabled=true;});
   new ResizeObserver(requestPaint).observe(canvas);
-  renderStudio();save();
+  renderStudio();save();setupMotion();
 })();

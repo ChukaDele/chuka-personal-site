@@ -1,0 +1,8 @@
+{
+  "name": "chuka-underdrawing-lab",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {"build": "astro build", "check": "node checks.mjs"},
+  "dependencies": {"astro": "7.3.5", "gsap": "3.15.0", "three": "0.186.1"}
+}

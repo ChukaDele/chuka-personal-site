@@ -1,0 +1,45 @@
+---
+import {PROJECTS, SKETCHES} from '../../data/projects.js';
+export function getStaticPaths(){return PROJECTS.map(project=>({params:{slug:project.id},props:{project}}));}
+const {project:p}=Astro.props;
+const index=PROJECTS.findIndex(project=>project.id===p.id);
+const next=PROJECTS[(index+1)%PROJECTS.length];
+const sketch=SKETCHES[p.id];
+const stages=[['01','Diagnosis',p.diagnosis],['02','Design',p.design],['03','Build',p.build],['04','Result',p.result]];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#eee2d0">
+    <title>{p.name} · Chuka’s work</title><meta name="description" content={p.headline}>
+    <link rel="stylesheet" href="/fonts.css"><link rel="stylesheet" href="/styles.css">
+  </head>
+  <body class="case-page">
+    <a class="skip" href="#case-story">Skip to the story</a>
+    <header class="site-header"><a class="signature" href="/" aria-label="Chuka, home">Chuka<span class="signature-dot">.</span></a><nav aria-label="Main navigation"><a href="/#work">All work</a><a href="/#method">Method</a><a href="https://chukadele.com/notes" target="_blank" rel="noopener">Notes ↗</a><a href="#contact">Contact</a><a class="resume-link" href="https://chukadele.com/resume" target="_blank" rel="noopener">Résumé ↗</a></nav></header>
+    <main>
+      <section class="inner-hero wrap">
+        <nav aria-label="Breadcrumb" class="case-breadcrumb"><a href="/#work">Work</a><span aria-hidden="true">/</span><span aria-current="page">{p.name}</span></nav>
+        <div class="inner-title"><div><p class="eyebrow">{p.sector} · {p.geography}</p><h1>{p.name}</h1></div><div class="inner-role"><span class="hand">my part in the work ↙</span><p>{p.role}</p><small>{p.period}</small></div></div>
+        <p class="inner-headline">{p.headline}</p>
+        <a class="breadcrumb hand" href="#case-story">Follow the work, from the first observation ↓</a>
+      </section>
+      {sketch && <figure class="inner-lead-figure wrap"><div class="project-visual"><div class="sketch-pair inner-sketch"><img src={`/img/${sketch}-sketch.jpg`} alt={`Modern drawn interpretation of ${p.name}’s supplied product screenshot`} fetchpriority="high"><img class="shot-colour" src={`/img/${sketch}.jpg`} alt={p.shots.find(s=>s[0]===sketch)?.[1]||p.shots[0][1]}></div><div class="visual-controls"><button type="button" class="colour-toggle" aria-pressed="false">Show colour ↗</button><button type="button" class="zoom-thumb" data-image-index={p.shots.findIndex(s=>s[0]===sketch)}>View larger +</button></div></div><figcaption>The drawing is a modern screenshot study. The colour image is the supplied product presentation.</figcaption></figure>}
+      <section class="inner-story wrap" id="case-story" aria-label="Case story">
+        {stages.map(([number,title,copy])=><article class="story-stage"><div><span class="hand stage-number">{number}</span><h2>{title}</h2></div><p>{copy}</p></article>)}
+        <div class="inner-outcome"><span class="hand">what changed ↗</span><div><strong>{p.id==='surface'?'Human sign-off':p.metric}</strong><p>{p.metricLabel}</p></div></div>
+      </section>
+      <section class="inner-evidence wrap" aria-labelledby="evidence-title"><div class="section-heading"><div><p class="eyebrow">Look closer</p><h2 id="evidence-title">{p.shots.length?'The work, in view.':'The shape of the workflow.'}</h2></div><span class="hand">a little evidence<br>behind the words</span></div>
+        {p.shots.length ? <div class="inner-gallery">{p.shots.map(([file,caption],imageIndex)=><figure><button class="gallery-image" type="button" data-image-index={imageIndex}><img src={`/img/${file}.jpg`} alt={caption} loading="lazy"><span>{caption}<b aria-hidden="true">View larger +</b></span></button></figure>)}</div> : <div class="inner-workflow"><article><span class="hand">01</span><h3>Source &amp; intake</h3><p>Keep the supplied evidence attached to the candidate record.</p></article><span aria-hidden="true">→</span><article><span class="hand">02</span><h3>Writer &amp; grader</h3><p>Separate the evaluation from its independent check.</p></article><span aria-hidden="true">→</span><article><span class="hand">03</span><h3>Recruiter sign-off</h3><p>A person approves the shortlist decision.</p></article></div>}
+        <p class="source-note">{p.sourceNote}</p>
+        {p.link && <a class="fill-button case-visit" href={p.link[1]} target="_blank" rel="noopener"><span>{p.link[0]}</span><span class="arrow-relay" aria-hidden="true"><i>↗</i><i>↗</i></span></a>}
+      </section>
+      <nav class="next-case wrap" aria-label="Continue reading"><a class="quiet-link" href="/#work">← All six cases</a><a href={`/work/${next.id}/`}><span class="eyebrow">Next case</span><strong>{next.name}</strong><span class="hand" aria-hidden="true">↗</span></a></nav>
+      <footer class="contact-footer wrap inner-footer" id="contact"><p class="hand contact-note">something worth working on?</p><div class="contact-heading"><h2>Let’s make<br>the next thing work.</h2><a class="fill-button contact-button" href="https://www.linkedin.com/in/chuka1" target="_blank" rel="noopener"><span>Get in touch</span><span class="arrow-relay" aria-hidden="true"><i>↗</i><i>↗</i></span></a></div><div class="footer-links"><span>Chukwuka Dele-Oyeleru · Strategy &amp; Operations</span><div><a href="https://www.linkedin.com/in/chuka1" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://chukadele.com/resume" target="_blank" rel="noopener">Résumé ↗</a></div></div><div class="footer-wordmark" aria-hidden="true">Chuka<span>.</span></div><div class="draft-meta">Underdrawing · interactive design draft <a href="/#studio">Back to the studio ↗</a></div></footer>
+    </main>
+    <dialog id="image-dialog" class="image-dialog" aria-labelledby="image-caption"><button class="dialog-close" type="button" id="image-close" aria-label="Close image">Close <span aria-hidden="true">×</span></button><figure><img id="lightbox-image" alt=""><figcaption id="image-caption"></figcaption></figure><div class="lightbox-nav"><button class="small-button" id="image-prev" type="button" aria-label="Previous image">← Previous</button><span id="image-count"></span><button class="small-button" id="image-next" type="button" aria-label="Next image">Next →</button></div></dialog>
+    <script type="application/json" id="case-data" set:html={JSON.stringify(p).replace(/</g,'\\u003c')}></script>
+    <script src="../../scripts/case-page.js"></script>
+  </body>
+</html>
