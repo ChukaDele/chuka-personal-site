@@ -1,17 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Arrow from '../../components/Arrow.astro';
-import { projects } from '../../data/projects.js';
+import { projects, imagesFor } from '../../data/projects.js';
 export function getStaticPaths() {return projects.map((project, i) => ({ params:{slug:project.id}, props:{project,next:projects[(i+1)%projects.length]} }));}
 const {project:p,next} = Astro.props;
+const {featured,gallery} = imagesFor(p);
 const stages=[['Diagnose',p.diagnosis],['Design',p.design],['Build',p.build],['Result',p.result]];
 ---
 <Base title={`${p.name} · Chuka Dele-Oyeleru · Plate`} description={p.headline}>
   <main id="main" class="case-page">
     <section id="top" class="case-hero gutter"><a class="back-link" href={`/#plate-${p.id}`}>← Back to the collection</a><div class="case-title-line"><p class="eyebrow">PLATE {p.number} / {p.sector}</p><span>{p.period}</span></div><h1 class="display case-title">{p.name}</h1><div class="case-intro"><p class="case-deck">{p.headline}</p><dl><div><dt>Role</dt><dd>{p.role}</dd></div><div><dt>Place</dt><dd>{p.geography}</dd></div><div><dt>Signal</dt><dd>{p.metric} / {p.metricShort}</dd></div></dl></div></section>
-    <figure class="case-opening"><img src={p.featuredShot ? `/shots/${p.featuredShot}.jpg` : '/art/engraving.jpg'} alt={p.featuredShot ? p.shots[0][1] : 'Historical print workshop: an editorial analogy for distinct roles in a workflow'} width="1440" height="900" fetchpriority="high" /><figcaption class="gutter">{p.featuredShot ? p.shots[0][1] : 'The Invention of Copper Engraving / Theodoor Galle after Jan van der Straet / circa 1591. An editorial analogy.'}</figcaption></figure>
+    <figure class="case-opening"><img src={featured ? `/shots/${featured[0]}.jpg` : '/art/engraving.jpg'} alt={featured ? featured[1] : 'Historical print workshop: an editorial analogy for distinct roles in a workflow'} width="1440" height="900" fetchpriority="high" /><figcaption class="gutter">{featured ? featured[1] : 'The Invention of Copper Engraving / Theodoor Galle after Jan van der Straet / circa 1591. An editorial analogy.'}</figcaption></figure>
     <section class="case-story gutter" aria-labelledby="case-story-title"><h2 id="case-story-title" class="display">THE DECISIONS</h2><div>{stages.map(([title,copy],i)=><article class="story-stage"><span class="stage-number">0{i+1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
-    {p.shots.length>1 && <section class="case-shots gutter" aria-label={`${p.name} project images`}>{p.shots.slice(1).map(([file,caption])=><figure><img src={`/shots/${file}.jpg`} alt={caption} width="1440" height="900" loading="lazy"/><figcaption>{caption}</figcaption></figure>)}</section>}
+    {gallery.length>0 && <section class="case-shots gutter" aria-label={`${p.name} project images`}>{gallery.map(([file,caption])=><figure><img src={`/shots/${file}.jpg`} alt={caption} width="1440" height="900" loading="lazy"/><figcaption>{caption}</figcaption></figure>)}</section>}
     {p.id==='surface' && <section class="workflow gutter" aria-label="Recruitment workflow"><p class="eyebrow">Workflow / editorial explanation</p><ol><li>Intake</li><li>Source checks</li><li>Evaluation</li><li>Human sign-off</li></ol><p>Each responsibility stays visible. The shortlist decision stays with a person.</p></section>}
     <section class="case-close gutter"><div><p class="eyebrow">The next plate</p><h2 class="display"><a href={`/work/${next.id}/`}>{next.name} ↗</a></h2><p>{next.chapter}</p></div><div>{p.link && <a class="fill-button" href={p.link[1]} target="_blank" rel="noopener">{p.link[0]} <Arrow /></a>}<a class="case-link" href="/#contact">Start a conversation <Arrow /></a></div></section>
   </main>

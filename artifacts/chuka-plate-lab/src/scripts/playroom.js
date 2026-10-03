@@ -6,7 +6,12 @@ const board = document.querySelector('[data-play-board]');
 const prints = [...document.querySelectorAll('[data-loose-print]')];
 const status = document.querySelector('[data-play-status]');
 let activeDrag = null;
-let z = 3;
+let nextZ = 1;
+
+function raisePrint(item) {
+  nextZ = Math.max(nextZ, ...prints.map(print => Number(print.style.zIndex) + 1));
+  item.style.zIndex = `${nextZ++}`;
+}
 
 function dimensions(item) {
   // Bounding boxes include rotation so every visible corner stays on the table.
@@ -29,16 +34,19 @@ function arrange(animate = false) {
     item.style.zIndex = `${3+i}`;
     place(item, board.clientWidth*positions[i][0]/100, board.clientHeight*positions[i][1]/100, animate);
   });
+  nextZ = Math.max(...prints.map(item => Number(item.style.zIndex))) + 1;
 }
 prints.forEach(item => {
   const handle = item.querySelector('[data-print-handle]');
+  item.addEventListener('focusin', () => raisePrint(item));
   handle.addEventListener('pointerdown', event => {
     if (event.button !== 0 || activeDrag) return;
     gsap.killTweensOf(item);
     const box = item.getBoundingClientRect();
     const table = board.getBoundingClientRect();
     activeDrag = {item,handle,pointer:event.pointerId,startX:event.clientX,startY:event.clientY,x:box.left+box.width/2-table.left,y:box.top+box.height/2-table.top,lastX:event.clientX,lastY:event.clientY,lastTime:performance.now(),vx:0,vy:0};
-    item.style.zIndex = `${++z}`;
+    handle.focus({preventScroll:true});
+    raisePrint(item);
     item.classList.add('is-moving');
     handle.setPointerCapture(event.pointerId);
     event.preventDefault();
@@ -68,10 +76,10 @@ prints.forEach(item => {
   handle.addEventListener('keydown', event => {
     const moves={ArrowLeft:[-16,0],ArrowRight:[16,0],ArrowUp:[0,-16],ArrowDown:[0,16]};
     if (event.key==='Home') {event.preventDefault();arrange(false);status.textContent='The prints are back in their starting positions.';return;}
-    if (event.key==='Escape' && activeDrag?.item===item) {event.preventDefault();const drag=activeDrag;place(item,drag.x,drag.y);handle.releasePointerCapture(drag.pointer);activeDrag=null;return;}
+    if (event.key==='Escape' && activeDrag?.item===item) {event.preventDefault();const drag=activeDrag;place(item,drag.x,drag.y);item.classList.remove('is-moving');handle.releasePointerCapture(drag.pointer);activeDrag=null;return;}
     if (!moves[event.key]) return;
     event.preventDefault();
-    item.style.zIndex=`${++z}`;
+    raisePrint(item);
     const [x,y]=moves[event.key],step=event.shiftKey?3:1;
     const p=place(item,parseFloat(item.style.left)+x*step,parseFloat(item.style.top)+y*step);
     status.textContent=`Print moved to ${Math.round(p.x/board.clientWidth*100)} percent across, ${Math.round(p.y/board.clientHeight*100)} percent down.`;

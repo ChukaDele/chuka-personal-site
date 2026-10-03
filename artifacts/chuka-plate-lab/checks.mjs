@@ -26,6 +26,16 @@ for (const page of pages) {
 }
 const home=await readFile('dist/index.html','utf8');
 for(const p of projects){assert(home.includes(`/work/${p.id}/`));assert(home.includes(p.role.replaceAll('&','&amp;')) || home.includes(p.role));}
+for (const p of projects) {
+  const html=await readFile(`dist/work/${p.id}/index.html`,'utf8');
+  for (const [file] of p.shots) {
+    assert.equal(html.split(`src="/shots/${file}.jpg"`).length-1,1,`${p.id}: ${file} must appear once`);
+  }
+}
+const rvysion=await readFile('dist/work/rvysion/index.html','utf8');
+const featuredRayna='src="/shots/rayna-2.jpg" alt="Rayna UI product presentation"';
+assert(rvysion.includes(featuredRayna),'Rvysion featured caption must describe rayna-2');
+assert(home.includes(featuredRayna),'Homepage Rvysion featured caption must describe rayna-2');
 assert(home.includes('data-draw-line') && home.includes('data-arrange') && home.includes('data-turn'));
 const css=await readFile('src/styles.css','utf8');assert(!/filter\s*:|mix-blend-mode\s*:/.test(css),'Natural imagery must remain untreated');
 const assets=await readdir('dist/_astro');

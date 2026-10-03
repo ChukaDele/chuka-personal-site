@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Arrow from '../components/Arrow.astro';
 import PlayFooter from '../components/PlayFooter.astro';
-import { projects } from '../data/projects.js';
+import { projects, imagesFor } from '../data/projects.js';
 ---
 <Base home>
   <main id="main">
@@ -18,7 +18,7 @@ import { projects } from '../data/projects.js';
       {projects.map((p, i) => <article class:list={['work-plate', {'reverse':i % 2 === 1}]} id={`plate-${p.id}`}>
         <div class="plate-meta"><span>PLATE {p.number} / {p.sector}</span><span>{p.period}</span></div>
         <a class="plate-image-link" href={`/work/${p.id}/`} aria-label={`Read ${p.name} case`}>
-          <div class="plate-image"><img src={p.featuredShot ? `/shots/${p.featuredShot}.jpg` : `/art/${p.art}`} alt={p.featuredShot ? p.shots[0][1] : 'A historical engraving of a print workshop, used as an editorial analogy for clear responsibilities'} width="1440" height="900" loading="lazy" /><span class="image-cue">Read the case <Arrow /></span></div>
+          <div class="plate-image"><img src={p.featuredShot ? `/shots/${p.featuredShot}.jpg` : `/art/${p.art}`} alt={imagesFor(p).featured?.[1] || 'A historical engraving of a print workshop, used as an editorial analogy for clear responsibilities'} width="1440" height="900" loading="lazy" /><span class="image-cue">Read the case <Arrow /></span></div>
         </a>
         <div class="plate-copy"><p class="plate-number display" aria-hidden="true">{p.number}</p><h3 class="display"><a href={`/work/${p.id}/`}>{p.name}</a></h3><p class="plate-role">{p.role}</p><p class="plate-headline">{p.headline}</p><div class="plate-result"><strong class:list={['display', {'word-result':p.metric.length>7}]}>{p.metric}</strong><span>{p.metricShort}</span></div><a class="case-link" href={`/work/${p.id}/`}>Read {p.name} case <Arrow /></a></div>
       </article>)}

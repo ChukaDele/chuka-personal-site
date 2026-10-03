@@ -214,3 +214,10 @@ export const projects = [
     "chapter": "A service made repeatable"
   }
 ];
+
+export function imagesFor(project) {
+  return {
+    featured: project.shots.find(([file]) => file === project.featuredShot) || null,
+    gallery: project.shots.filter(([file]) => file !== project.featuredShot)
+  };
+}
