@@ -1,0 +1,30 @@
+---
+import '../styles.css';
+const { title = 'Chuka Dele-Oyeleru · Plate', description = 'Strategy and operations. A collection of work by Chuka Dele-Oyeleru.', home = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#171713" />
+    <title>{title}</title>
+    <link rel="preload" href="/fonts/league-gothic.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class:list={['site-header', { 'on-hero': home }]}>
+      <a class="identity" href="/" aria-label="Chuka Dele-Oyeleru, home">Chuka Dele-Oyeleru</a>
+      <span class="direction-label">02 / Plate</span>
+      <nav aria-label="Main navigation">
+        <a href={home ? '#work' : '/#work'}>Work</a>
+        <a href="https://chukadele.com/resume" target="_blank" rel="noopener">Résumé ↗</a>
+        <a href={home ? '#contact' : '/#contact'}>Contact</a>
+      </nav>
+    </header>
+    <slot />
+    <script src="../scripts/motion.js"></script>
+  </body>
+</html>

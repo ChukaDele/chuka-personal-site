@@ -1,0 +1,37 @@
+---
+import Arrow from './Arrow.astro';
+---
+<footer id="contact" class="play-footer chapter" data-chapter="Contact" aria-labelledby="contact-title">
+  <div class="contact-top gutter">
+    <p class="eyebrow">IV / A conversation, then the work</p>
+    <h2 id="contact-title" class="display contact-heading">WHAT NEEDS<br /><span>BUILDING?</span></h2>
+    <div class="contact-copy"><p>Tell me what you are trying to make work, where it is getting stuck, and what a useful outcome would look like.</p><a class="fill-button" href="https://www.linkedin.com/in/chuka1" target="_blank" rel="noopener">Write to me on LinkedIn <Arrow /></a></div>
+  </div>
+  <section class="playroom gutter" aria-labelledby="play-title">
+    <div class="playroom-caption"><div><h3 id="play-title">A little room to play.</h3><p>Turn the solid. Move the prints. Leave a line.</p></div><button class="text-button" type="button" data-arrange>Arrange the table ↺</button></div>
+    <div class="play-board" data-play-board>
+      <div class="solid-scene" data-solid-scene>
+        <img class="solid-fallback" src="/art/proportion.jpg" alt="Geometric solids from Luca Pacioli’s De Divina Proportione, 1509" width="800" height="490" loading="lazy" />
+        <div class="solid-mount" data-solid-mount aria-hidden="true"></div>
+        <div class="solid-controls"><button type="button" class="round-button" data-turn aria-label="Turn the geometric solid">↻</button><span data-solid-hint>Drag to turn · or use the button</span></div>
+      </div>
+      <article class="loose-print art-print" data-loose-print data-x="68" data-y="14" data-angle="-7">
+        <button type="button" class="print-handle" aria-label="Move the Raphael print. Use arrow keys to move; Home to reset." data-print-handle><span aria-hidden="true">⠿</span> Move this print</button>
+        <img src="/art/athens.jpg" alt="Detail of Raphael’s The School of Athens" width="1800" height="1021" loading="lazy" />
+        <p>Raphael / The School of Athens<br /><span>1509 to 1511 · a study in company</span></p>
+      </article>
+      <article class="loose-print social-print" data-loose-print data-x="70" data-y="63" data-angle="6">
+        <button type="button" class="print-handle" aria-label="Move the LinkedIn card. Use arrow keys to move; Home to reset." data-print-handle><span aria-hidden="true">⠿</span> Move this card</button>
+        <a href="https://www.linkedin.com/in/chuka1" target="_blank" rel="noopener"><span class="display">SAY HELLO</span><span>LinkedIn ↗</span></a>
+      </article>
+      <article class="loose-print resume-print" data-loose-print data-x="47" data-y="72" data-angle="-3">
+        <button type="button" class="print-handle" aria-label="Move the résumé card. Use arrow keys to move; Home to reset." data-print-handle><span aria-hidden="true">⠿</span> Move this card</button>
+        <a href="https://chukadele.com/resume" target="_blank" rel="noopener"><span class="display">THE RECORD</span><span>Read the résumé ↗</span></a>
+      </article>
+      <div class="drawing-pad"><div class="pad-controls"><button type="button" data-draw aria-pressed="false">Pick up the chalk</button><button type="button" data-draw-line>Draw a line</button><button type="button" data-clear-drawing>Clear</button></div><canvas data-drawing-canvas aria-label="Optional chalk sketch area. Activate Pick up the chalk to draw, or use Draw a line." role="img"></canvas><p data-drawing-hint>Some ideas begin with a line.</p></div>
+    </div>
+    <p class="sr-only" role="status" data-play-status></p>
+  </section>
+  <div class="colophon gutter"><span>Chuka Dele-Oyeleru / Strategy & Operations</span><a href="#top">Back to the beginning ↑</a><span>Plate / an interactive direction draft</span></div>
+</footer>
+<script src="../scripts/playroom.js"></script>

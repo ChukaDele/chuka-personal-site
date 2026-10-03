@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import PlayFooter from '../components/PlayFooter.astro';
+import { projects } from '../data/projects.js';
+---
+<Base home>
+  <main id="main">
+    <section id="top" class="plate-hero chapter" data-chapter="Introduction" aria-labelledby="hero-title">
+      <figure class="hero-art"><img src="/art/athens.jpg" alt="Philosophers gather beneath monumental arches in Raphael’s The School of Athens" width="1800" height="1021" fetchpriority="high" /><figcaption>Raphael / The School of Athens / 1509 to 1511</figcaption></figure>
+      <div class="hero-name display" aria-hidden="true">DELE-OYELERU</div>
+      <div class="hero-copy"><p class="eyebrow">I / Strategy & Operations</p><h1 id="hero-title">I diagnose the problem, design how the work should run, and build what it needs.</h1><p class="hero-facts">Based in Manchester.<br />MBA, Alliance Manchester Business School.<br />Class of 2027.</p><a class="fill-button" href="#work">Enter the work <Arrow /></a></div>
+      <div class="hero-edition"><span>Chuka</span><span>SELECTED WORK / 2022 TO 2026</span></div>
+      <a class="hero-breadcrumb" href="#work"><span>Six projects. Different problems.</span><span>Follow the thread ↓</span></a>
+    </section>
+    <section id="work" class="work-gallery chapter gutter" data-chapter="The work" aria-labelledby="work-title">
+      <div class="gallery-heading"><div><p class="eyebrow">II / Work, with the decisions left in</p><h2 id="work-title" class="display">THE WORK</h2></div><p>From finding a market in the data<br />to building the system that serves it.<br /><a class="under-link" href="#practice">How the pieces connect ↓</a></p></div>
+      {projects.map((p, i) => <article class:list={['work-plate', {'reverse':i % 2 === 1}]} id={`plate-${p.id}`}>
+        <div class="plate-meta"><span>PLATE {p.number} / {p.sector}</span><span>{p.period}</span></div>
+        <a class="plate-image-link" href={`/work/${p.id}/`} aria-label={`Read ${p.name} case`}>
+          <div class="plate-image"><img src={p.featuredShot ? `/shots/${p.featuredShot}.jpg` : `/art/${p.art}`} alt={p.featuredShot ? p.shots[0][1] : 'A historical engraving of a print workshop, used as an editorial analogy for clear responsibilities'} width="1440" height="900" loading="lazy" /><span class="image-cue">Read the case <Arrow /></span></div>
+        </a>
+        <div class="plate-copy"><p class="plate-number display" aria-hidden="true">{p.number}</p><h3 class="display"><a href={`/work/${p.id}/`}>{p.name}</a></h3><p class="plate-role">{p.role}</p><p class="plate-headline">{p.headline}</p><div class="plate-result"><strong class:list={['display', {'word-result':p.metric.length>7}]}>{p.metric}</strong><span>{p.metricShort}</span></div><a class="case-link" href={`/work/${p.id}/`}>Read {p.name} case <Arrow /></a></div>
+      </article>)}
+      <p class="gallery-end">There is an operating thread through all six. <a href="#practice">Pull it ↓</a></p>
+    </section>
+    <section id="practice" class="practice chapter gutter" data-chapter="The practice" aria-labelledby="practice-title">
+      <div class="practice-intro"><p class="eyebrow">III / The thread</p><h2 id="practice-title" class="display">LOOK CLOSE.<br />THEN MAKE<br /><span>IT WORK.</span></h2><p>I work across strategy, operations and delivery. These projects show how I connect commercial questions to products, services, workflows and the people who run them.</p></div>
+      <div class="practice-steps"><div><span>01</span><h3>Diagnose</h3><p>Read the data, the incentives and the real constraint.</p></div><div><span>02</span><h3>Design</h3><p>Connect the proposition, workflow and ownership.</p></div><div><span>03</span><h3>Build</h3><p>Make the product or process work with the team.</p></div><div><span>04</span><h3>Improve</h3><p>Use the result to decide what changes next.</p></div></div>
+      <figure class="practice-art"><img src="/art/durer-melencolia-hero.webp" alt="Dürer’s Melencolia I, a figure surrounded by tools and a geometric solid" width="1440" height="1100" loading="lazy" /><figcaption>Albrecht Dürer / Melencolia I / 1514<br /><a href="https://www.metmuseum.org/art/collection/search/336228" target="_blank" rel="noopener">The Met, Public Domain ↗</a></figcaption></figure>
+      <a class="practice-breadcrumb" href="#contact">The work is serious.<br /><span>The table has a little room to play. ↓</span></a>
+    </section>
+  </main>
+  <PlayFooter />
+  <nav class="chapter-nav" aria-label="Page chapters"><a href="#top" aria-current="location"><span>01</span><span>Introduction</span></a><a href="#work"><span>02</span><span>The work</span></a><a href="#practice"><span>03</span><span>The practice</span></a><a href="#contact"><span>04</span><span>Contact & play</span></a><div class="reading-progress" aria-hidden="true"><i data-reading-progress></i></div></nav>
+</Base>

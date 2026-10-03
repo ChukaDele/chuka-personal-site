@@ -1,0 +1,14 @@
+{
+  "name": "chuka-plate-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "check": "node checks.mjs"
+  },
+  "dependencies": {
+    "astro": "7.3.5",
+    "three": "0.186.1",
+    "gsap": "3.15.0"
+  }
+}
