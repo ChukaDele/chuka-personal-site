@@ -4,7 +4,7 @@ import {gsap} from 'gsap';
 /* Lazy, optional and rendered only when a visitor changes the study. */
 export function mountSolid(stage, reduced) {
   if(!stage?.isConnected||!stage.closest('dialog')?.open)return;
-  stage.innerHTML='<div class="solid-canvas" tabindex="0" role="img" aria-label="A modern geometric study. Drag to turn it, or use the arrow buttons."></div><div class="solid-tools"><button type="button" class="small-button" data-turn="-1">← Turn left</button><button type="button" class="small-button" data-turn="1">Turn right →</button><button type="button" class="text-button" data-solid-reset>Reset ↺</button></div><p class="solid-caption">Drag to turn. Arrow keys also turn the shape. Escape resets it.</p>';
+  stage.innerHTML='<div class="solid-canvas" tabindex="0" role="img" aria-label="A modern geometric study. Drag to turn it, or use the arrow buttons."></div><div class="solid-tools"><button type="button" class="small-button" data-turn="-1">← Turn left</button><button type="button" class="small-button" data-turn="1">Turn right →</button><button type="button" class="text-button" data-solid-reset>Reset ↺</button></div><p class="solid-caption">Drag to turn. Arrow keys also turn the shape. Escape closes the study.</p>';
   const holder=stage.querySelector('.solid-canvas');
   let renderer;
   try{renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});}catch{stage.innerHTML='<p class="source-note">The printed geometric study is available above.</p>';return;}
@@ -22,7 +22,7 @@ export function mountSolid(stage, reduced) {
   function reset(){gsap.killTweensOf(group.rotation);group.rotation.set(.25,.4,.08);draw();}
   stage.querySelectorAll('[data-turn]').forEach(button=>button.addEventListener('click',()=>turn(Number(button.dataset.turn)*.4)));
   stage.querySelector('[data-solid-reset]').addEventListener('click',reset);
-  holder.addEventListener('keydown',event=>{const steps={ArrowLeft:[-.3,0],ArrowRight:[.3,0],ArrowUp:[0,-.3],ArrowDown:[0,.3]};if(steps[event.key]){event.preventDefault();turn(...steps[event.key]);}if(event.key==='Escape'){event.preventDefault();event.stopPropagation();reset();}});
+  holder.addEventListener('keydown',event=>{const steps={ArrowLeft:[-.3,0],ArrowRight:[.3,0],ArrowUp:[0,-.3],ArrowDown:[0,.3]};if(steps[event.key]){event.preventDefault();turn(...steps[event.key]);}});
   holder.addEventListener('pointerdown',event=>{if(event.button!==0)return;active={id:event.pointerId,x:event.clientX,y:event.clientY};holder.setPointerCapture(event.pointerId);});
   holder.addEventListener('pointermove',event=>{if(active?.id!==event.pointerId)return;gsap.killTweensOf(group.rotation);group.rotation.y+=(event.clientX-active.x)*.012;group.rotation.x+=(event.clientY-active.y)*.012;active.x=event.clientX;active.y=event.clientY;draw();});
   function end(){active=null;}holder.addEventListener('pointerup',end);holder.addEventListener('pointercancel',end);holder.addEventListener('lostpointercapture',end);

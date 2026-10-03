@@ -112,6 +112,7 @@ import {setupMotion, revealColour} from './motion.js';
   }
   function renderStudio() {
     if (activeDrag) finishDrag(true);
+    $('#board-status').textContent = '';
     boardObserver?.disconnect(); board = null;
     document.body.dataset.ending = state.ending;
     const copy = endingCopy[state.ending];
