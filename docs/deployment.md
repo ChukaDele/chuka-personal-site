@@ -69,3 +69,33 @@ original image-download URLs; those records explicitly distinguish the archive
 assertion of public-domain status from independently verified digital provenance.
 Supplied biography, outcomes and the Notes essay were retained without adding
 claims; Notes is excluded from indexing pending content review.
+
+## Minimal press download repair (2026-10-03)
+
+Restores the previously broken public URL
+`/press/chuka-dele-oyeleru-press-pack.zip` on base commit
+`0499cfd6c00026c90438ec713341086046f80c92`. The standard DEFLATE ZIP contains
+only these five current `public/press/` files at its root:
+
+- `chuka-dele-oyeleru-bios.txt`
+- `chuka-dele-oyeleru-cv.pdf`
+- `chuka-dele-oyeleru-editorial.jpg`
+- `chuka-dele-oyeleru-headshot.jpg`
+- `chuka-dele-oyeleru-speaking.jpg`
+
+Members are sorted by filename, use fixed ZIP timestamps of 1980-01-01
+00:00:00 and regular-file permissions 0644, and were verified byte-for-byte
+against the current public assets. ZIP CRC validation passed. No older archive
+press content or other resources were added. ZIP SHA-256:
+`f77f5e40ccfa19833e7b05e1950b86d96a54d1b2638648bded93fb5d9a9efb14`.
+
+Restored `build-artifact.py`, `tools/cv.html` and `tools/portrait-hatch.py`
+byte-for-byte from their `chuka-site/` members in the approved local archive
+`.launch-input/chuka-site.zip`, whose SHA-256 was verified as
+`f0a057b2936eaf5334585668d48def9207db432a69ee7999eb5fdffccae6fbdd`. These editable offline sources remain outside
+`public/`; they were not executed or adapted (including original source paths).
+
+This repair changes only the ZIP, those three source tools and this document;
+there are no page layout, copy, design or package changes. No build, server,
+browser, commit, push or deployment was run for this repair. The root controller
+will commit, push, deploy and verify the restored download through remote browser QA.
