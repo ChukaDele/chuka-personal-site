@@ -56,10 +56,13 @@ function Reveal(c, o) {
   const self = this, G = {}, view = o.view || [0, 0, 1, 1];
   let n = 0, done = {}, raf = 0, clock = 0, live = 0, lt = 0, spr = [], soft = null, grown = 0, inkCyc = -1, run = 0, bloomed = false;
   const coarse = matchMedia('(hover: none)').matches && o.touch !== false && !o.focus;
+  // Native canvas dimensions exist before the images and cover geometry are ready.
+  const imagesReady = () => n >= 2 && [B, T].every((im) => im.complete && im.naturalWidth > 0 && im.naturalHeight > 0);
+  const ready = () => imagesReady() && [c.width, c.height, G.k, G.iw, G.ih].every((v) => Number.isFinite(v) && v > 0) && [G.ox, G.oy].every(Number.isFinite);
   function geo() { const w = c.width, h = c.height, iw = T.naturalWidth, ih = T.naturalHeight, vw = (view[2] - view[0]) * iw, vh = (view[3] - view[1]) * ih;
     G.k = Math.max(w / vw, h / vh); G.ox = (w - vw * G.k) * o.fx - view[0] * iw * G.k; G.oy = (h - vh * G.k) * o.fy - view[1] * ih * G.k; G.iw = iw; G.ih = ih; }
   const cover = (ctx, img) => ctx.drawImage(img, G.ox, G.oy, G.iw * G.k, G.ih * G.k);
-  function dab(px, py, r) { const g = mx.createRadialGradient(px, py, r * 0.3, px, py, r); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)'); mx.fillStyle = g; mx.beginPath(); mx.arc(px, py, r, 0, 7); mx.fill(); }
+  function dab(px, py, r) { if (!ready() || ![px, py, r].every(Number.isFinite) || r <= 0) return; const g = mx.createRadialGradient(px, py, r * 0.3, px, py, r); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)'); mx.fillStyle = g; mx.beginPath(); mx.arc(px, py, r, 0, 7); mx.fill(); }
   const at = (p) => [G.ox + p[0] * G.iw * G.k, G.oy + p[1] * G.ih * G.k, p[2] * G.iw * G.k];
   function feather(k) { const kx = k.getContext('2d'), sw = k.width, sh = k.height; kx.globalCompositeOperation = 'destination-in'; kx.translate(sw / 2, sh / 2); kx.scale(1, sh / sw);
     const g = kx.createRadialGradient(0, 0, sw * 0.26, 0, 0, sw * 0.5); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)'); kx.fillStyle = g; kx.fillRect(-sw / 2, -sw / 2, sw, sw); return k; }
@@ -73,8 +76,8 @@ function Reveal(c, o) {
       if (!src) { kx.scale(1 / d, 1 / d); cover(kx, B); } else kx.drawImage(src, 0, 0, k.width, k.height); src = k; });
     soft = src; }
   let cutDone = false;
-  function build() { geo(); if (o.blur) soften(); spr = []; cutDone = false; settled.then(() => requestAnimationFrame(sprites)); }
-  function sprites() { if (cutDone || n < 2 || !c.width) return; cutDone = true;
+  function build() { geo(); if (!ready()) return; if (o.blur) soften(); spr = []; cutDone = false; settled.then(() => requestAnimationFrame(sprites)); }
+  function sprites() { if (cutDone || !ready()) return; cutDone = true;
     spr = (o.people || []).map((f) => { const kb = cut(B, f), kt = cut(T, f);
       const q = { b: kb, t: kt, w: kb.width, h: kb.height, px: G.ox + f[0] / 100 * G.iw * G.k, py: G.oy + (f[1] + f[3]) / 100 * G.ih * G.k, amp: f[4], sp: f[5], ph: f[6], bob: f[7] || 0, scr: f[8] || 0, br: f[9] || 0, ink: !!o.ink, alts: [] };
       ((o.redraws || {})[f[10]] || []).forEach((a) => { const im = new Image(); im.onload = () => q.alts.push({ k: cut(im, f, true), every: a.every, hold: a.hold, at: a.at }); im.src = a.src; });
@@ -103,7 +106,7 @@ function Reveal(c, o) {
       for (let xx = 0; xx <= len; xx += 1.5) ctx.lineTo(X0 + xx, y - 0.1 * xx + Math.sin(xx * 1.9 + r * 2.1) * Ht * 0.014);
       ctx.stroke(); }
     ctx.restore(); }
-  function render() { if (n < 2 || !c.width) return; const w = c.width, h = c.height;
+  function render() { if (!ready()) return; const w = c.width, h = c.height;
     x.globalCompositeOperation = 'source-over'; x.clearRect(0, 0, w, h); if (soft) x.drawImage(soft, 0, 0); else cover(x, B); if (!o.afterColour) people(x, 'b');
     tx.globalCompositeOperation = 'source-over'; tx.clearRect(0, 0, w, h); tx.drawImage(m, 0, 0); tx.globalCompositeOperation = 'source-in'; cover(tx, T); tx.globalCompositeOperation = 'source-atop'; inkOn(tx); people(tx, 't');
     x.drawImage(t, 0, 0); }
@@ -111,14 +114,15 @@ function Reveal(c, o) {
   function loop(id, now) { if (!live || id !== run) return; requestAnimationFrame((t) => loop(id, t)); if (now - lt < (innerWidth <= 820 ? 50 : 33)) return; lt = now; clock = now / 1000; render(); }
   let want = false; const go = () => { if (want && !live) { live = 1; const id = ++run; requestAnimationFrame((t) => loop(id, t)); } };
   // on a touch screen there is no cursor to paint with, so the colour arrives by itself, one patch after another
-  function bloom() { if (bloomed || !c.width) return; bloomed = true; const ps = o.patches || [];
+  function bloom() { if (bloomed || !ready()) return; bloomed = true; const ps = o.patches || [];
     if (reduce) { ps.forEach((q) => dab(...at(q))); kick(); return; }
     ps.forEach((q, i) => { const t0 = performance.now() + 500 + i * 420; const step = (now) => { const k = Math.min(1, Math.max(0, (now - t0) / 900)); if (k > 0) { const a = at(q); dab(a[0], a[1], a[2] * (0.35 + 0.65 * k * (2 - k))); kick(); } if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }); }
   this.play = (on) => { if (reduce || !(o.people || []).length) return; want = on; if (on) settled.then(go); else live = 0; };
-  this.size = () => { const r = c.getBoundingClientRect(); if (!r.width || n < 2) return; const d = Math.min(devicePixelRatio || 1, 1.5), w = Math.round(r.width * d), h = Math.round(r.height * d);
-    if (w !== c.width || h !== c.height) { c.width = m.width = t.width = w; c.height = m.height = t.height = h; done = {}; grown = 0; build(); (o.seeds || []).forEach((p) => dab(...at(p))); if (coarse) { if (bloomed) (o.patches || []).forEach((q) => dab(...at(q))); else settled.then(bloom); } self.scroll(); }
+  this.size = () => { const r = c.getBoundingClientRect(); if (!imagesReady()) return; const d = Math.min(devicePixelRatio || 1, 1.5), w = Math.round(r.width * d), h = Math.round(r.height * d);
+    if (![w, h].every((v) => Number.isFinite(v) && v > 0)) return;
+    if (!ready() || w !== c.width || h !== c.height) { c.width = m.width = t.width = w; c.height = m.height = t.height = h; done = {}; grown = 0; build(); if (!ready()) return; (o.seeds || []).forEach((p) => dab(...at(p))); if (coarse) { if (bloomed) (o.patches || []).forEach((q) => dab(...at(q))); else settled.then(bloom); } self.scroll(); }
     render(); };
-  this.scroll = () => { if (!c.width) return; const r = c.getBoundingClientRect(), vh = innerHeight, p = (vh - r.top) / (vh * 0.5 + r.height * 0.85);
+  this.scroll = () => { if (!ready()) return; const r = c.getBoundingClientRect(), vh = innerHeight, p = (vh - r.top) / (vh * 0.5 + r.height * 0.85); if (!Number.isFinite(p)) return;
     // one subject comes into focus and colour as the page is scrolled to it
     if (o.focus) { const f = o.focus, t = Math.min(1, Math.max(0, (p - 0.22) / 0.45)); if (t > grown + 0.02 || (t === 1 && grown < 1)) { grown = t; dab(...at([f[0], f[1], f[2] + (f[3] - f[2]) * t])); kick(); } }
     if (!coarse) (o.patches || []).forEach((q, i) => { if (!done[i] && p > 0.34 + i * 0.07) { done[i] = 1; dab(...at(q)); kick(); } }); };
@@ -126,7 +130,7 @@ function Reveal(c, o) {
   T.onerror = () => { if (B.complete && B.naturalWidth) { T.onerror = null; T.src = B.src; } };
   const small = innerWidth <= 820, load = () => { B.src = (small && o.baseSm) || o.base; T.src = (small && o.topSm) || o.top; };
   if (c.hasAttribute('data-lazy') && 'IntersectionObserver' in window) { const lo = new IntersectionObserver((en) => { if (en[0].isIntersecting) { lo.disconnect(); load(); } }, { rootMargin: '150% 0px' }); lo.observe(c); } else load();
-  if (o.touch === false) c.style.cursor = 'default'; else c.addEventListener('pointermove', (e) => { const r = c.getBoundingClientRect(), k = c.width / r.width; dab((e.clientX - r.left) * k, (e.clientY - r.top) * k, c.width * (o.rad || 0.1)); kick(); scratch(); });
+  if (o.touch === false) c.style.cursor = 'default'; else c.addEventListener('pointermove', (e) => { if (!ready()) return; const r = c.getBoundingClientRect(); if (!Number.isFinite(r.width) || r.width <= 0) return; const k = c.width / r.width; dab((e.clientX - r.left) * k, (e.clientY - r.top) * k, c.width * (o.rad || 0.1)); kick(); scratch(); });
   if ('IntersectionObserver' in window) new IntersectionObserver((en) => self.play(en[0].isIntersecting), { threshold: 0.03 }).observe(c); else self.play(true);
 }
 const reveals = $$('canvas[data-reveal]').map((c) => new Reveal(c, JSON.parse(c.dataset.reveal)));

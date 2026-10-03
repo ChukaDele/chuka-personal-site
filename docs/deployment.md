@@ -99,3 +99,29 @@ This repair changes only the ZIP, those three source tools and this document;
 there are no page layout, copy, design or package changes. No build, server,
 browser, commit, push or deployment was run for this repair. The root controller
 will commit, push, deploy and verify the restored download through remote browser QA.
+
+## Reveal readiness repair (2026-10-03)
+
+Remote preview QA at `cfc34f429dfa09d380ebeddf3de98e6a274e185e`
+reported repeated non-finite `createRadialGradient` arguments during fast scroll
+to the lazy home footer. Native canvas dimensions are nonzero before either
+image loads, so the old width-only scroll guard allowed undefined cover geometry
+to reach the gradient. Pointer painting also lacked a readiness guard.
+
+`Reveal` now requires both images to be loaded with positive intrinsic dimensions,
+positive finite canvas dimensions and scale, and finite cover offsets before
+scroll/pointer painting, rendering, sprite preparation or touch bloom. Sizing
+rejects invalid dimensions and initializes geometry even when the measured size
+matches the native canvas defaults. The shared dab helper additionally rejects
+non-finite coordinates/radii and non-positive radii; scroll progress and pointer
+width are checked before use. Early scroll and bloom calls leave reveal progress
+untouched so image-load sizing can apply the existing effects when ready.
+Painting colour, sprite parameters, scroll formulas and reduced-motion behavior
+are unchanged.
+
+Only `src/scripts/site.js` and this document were changed for this repair.
+Direct `node --check src/scripts/site.js` passed. The supplied QA evidence file
+could not be read in this runtime (`Operation not permitted`); diagnosis used
+the controller's reported trace and source inspection. No build, server, browser,
+commit, push or deployment was run. Delayed-image fast-scroll, early-pointer and
+touch regressions remain controller remote QA checks.
