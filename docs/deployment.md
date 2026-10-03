@@ -51,6 +51,27 @@ redirects to `/`. Query strings survive redirects.
 
 ## Remaining validation
 
+### Already-indexed metadata releases
+
+The site is already live and indexed. For the SEO/sharing/icon increment, after
+remote preview acceptance and independent review, the controller can deploy the
+exact reviewed SHA on clean `main` directly through the existing indexing-enabled
+command:
+
+```sh
+INDEXING_APPROVED_SHA="$(git rev-parse HEAD)" npm run deploy:enable-indexing
+```
+
+Confirm that HEAD is the exact reviewed SHA before executing. Do not run the
+plain `deploy` intermediate step for this release: it would rebuild live HTML
+with noindex. `deploy:enable-indexing` keeps indexing enabled while preserving
+the existing Notes/404 and noncanonical-origin protections. Preview still uses
+`deploy:preview` and stays noindex. This is a controller procedure, not a record
+of a deployment or a search/social cache refresh. Asset and rendered test
+commands are in `seo-sharing.md`.
+
+### Original implementation validation record
+
 Implementation-only Node tests passed without a server. The runtime denied
 `npm run test:unit && npm run lint` with `EPERM: operation not permitted, open
 /usr/local/lib/node_modules/npm/bin/npm-cli.js`. Direct `node --test` works.
