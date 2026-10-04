@@ -72,6 +72,18 @@ Generated stable URLs are `/favicon.ico` (16/32/48-pixel DIB images),
 `/apple-touch-icon.png` (180 pixels). Head links advertise the SVG, ICO, all four
 PNG sizes and Apple icon. No webmanifest is needed for this non-installable site.
 
+## Google Search Console ownership
+
+The URL-prefix property is `https://chukadele.com/`. The supplied Google HTML
+verification file, `public/google6f72ccdce44ee21f.html`, is intended to verify
+ownership for the user-approved personal Google account. Serve it unchanged at
+`https://chukadele.com/google6f72ccdce44ee21f.html` and keep it in every future
+site deployment so Google can recheck ownership.
+
+Ownership verification, sitemap submission and any recrawl requests remain with
+the release controller after exact-source deployment. This documentation does
+not confirm successful verification, submission, recrawling or refreshed results.
+
 ## Checks and release
 
 Source-only checks, without building or serving:
