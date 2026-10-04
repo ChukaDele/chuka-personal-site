@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { initLibrary } from './library.js';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -275,30 +276,13 @@ document.addEventListener('click', (e) => { const b = e.target.closest('[data-co
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => say('Copied'), () => say('Select the text to copy it')); else say('Select the text to copy it'); });
 
 /* ---------- the shelf: a volume comes off the shelf and turns to show its cover ---------- */
-$$('[data-case]').forEach((box) => {
-  const books = $$('[data-book]', box), pk = $('[data-pk]', box), pt = $('[data-pt]', box), pb = $('[data-pb]', box), pw = $('[data-pw]', box), pl = $('[data-pl]', box), plt = $('[data-plt]', box), idle = [pk.textContent, pt.textContent, pb.textContent];
-  const verb = { Book: 'Find the book', Talk: 'Watch it', Podcast: 'Listen', Essays: 'Read the essays' };
-  const touch = matchMedia('(hover: none), (max-width: 820px)').matches, back = $('[data-pback]', box);
-  if (back) back.addEventListener('click', () => pull(null));
-  let cur = null, intent = 0;
-  const pull = (b) => { if (cur === b) return; if (cur) cur.classList.remove('on'); cur = b; box.classList.toggle('has', !!b); if (back) back.hidden = !b;
-    if (b) { b.classList.add('on'); sound.play('tap', 0.4); pk.textContent = b.dataset.kind; pt.textContent = b.dataset.title; pb.textContent = b.dataset.by;
-      pw.textContent = b.dataset.why; pw.hidden = false; const pq = $('[data-pq]', box); if (pq) { pq.textContent = b.dataset.quote || ''; pq.hidden = !b.dataset.quote; } pl.href = b.dataset.href; plt.textContent = verb[b.dataset.kind] || 'Open'; pl.hidden = false;
-      if (!reduce) { gsap.fromTo([pk, pt, pb], { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'power3.out', stagger: 0.04, overwrite: true }); gsap.fromTo(pw, { clipPath: 'inset(-20% 100% -20% 0)' }, { clipPath: 'inset(-20% 0% -20% 0)', duration: 0.6, ease: 'power1.inOut', delay: 0.1, overwrite: true }); gsap.fromTo(pl, { opacity: 0 }, { opacity: 1, duration: 0.3, overwrite: true }); } }
-    else { [pk.textContent, pt.textContent, pb.textContent] = idle; pw.hidden = true; pl.hidden = true; const pq = $('[data-pq]', box); if (pq) pq.hidden = true; } };
-  books.forEach((b) => {
-    let was = null;
-    // a short pause before a book comes out, so brushing past the spines does not set them all moving
-    b.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'mouse') return; clearTimeout(intent); intent = setTimeout(() => pull(b), 130); });
-    b.addEventListener('pointerleave', () => clearTimeout(intent));
-    b.addEventListener('pointerdown', () => { was = cur; });
-    b.addEventListener('focus', () => pull(b));
-    b.addEventListener('click', (e) => { if (e.detail === 0) { pull(b); pl.focus(); return; } pull(was === b && !matchMedia('(hover:hover)').matches ? null : b); was = null; });
-  });
-  document.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; const back = document.activeElement === pl ? cur : null; if (back) back.focus(); else pull(null); });
-  // on a touch screen the first volume comes out by itself when the shelf arrives, so the shelf shows what it does
-  if (touch && 'IntersectionObserver' in window) { const sio = new IntersectionObserver((en) => { if (en[0].isIntersecting) { sio.disconnect(); setTimeout(() => { if (!cur) pull(books[0]); }, 500); } }, { threshold: 0.4 }); sio.observe($('.bookcase', box)); }
-});
+$$('[data-case]').forEach(box => initLibrary(box, (note, mobile) => {
+  sound.play('tap', 0.4);
+  if (reduce || mobile) return;
+  gsap.fromTo([...note.children].slice(0, 3), { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'power3.out', stagger: 0.04, overwrite: true, clearProps: 'transform,opacity' });
+  gsap.fromTo($('.why', note), { clipPath: 'inset(-20% 100% -20% 0)' }, { clipPath: 'inset(-20% 0% -20% 0)', duration: 0.6, ease: 'power1.inOut', delay: 0.1, overwrite: true, clearProps: 'clipPath' });
+  gsap.fromTo($('.btn', note), { opacity: 0 }, { opacity: 1, duration: 0.3, overwrite: true, clearProps: 'opacity' });
+}));
 
 /* ---------- phone menu: a full screen of its own. the page behind is out of reach while it is open, and Back closes it ---------- */
 const menuBtn = $('.menu-btn'), navEl = $('#site-nav');

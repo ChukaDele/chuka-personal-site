@@ -1,4 +1,7 @@
+export const identity = { brand: 'Chuka Dele', fullName: 'Chukwuka Dele-Oyeleru' };
+
 export const site = {
+  ...identity,
   name: 'Chuka Dele-Oyeleru',
   role: 'Strategy and operations',
   greeting: 'Chuka',

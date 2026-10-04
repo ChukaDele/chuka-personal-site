@@ -1,21 +1,46 @@
 # SEO and sharing
 
-Home title: **Chuka Dele-Oyeleru | Strategy & Operations**
+Every page, including 404, uses the exact head title, OG title and Twitter title
+**Chuka Dele** and description, OG description and Twitter description
+**Chukwuka Dele-Oyeleru**. `identity` in `src/data/site.js` is the canonical
+brand/full-name definition. Approved visible body identity is unchanged.
 
-Home description: **Strategy and operations, based in Manchester. I diagnose
-problems, design how work should run, and build what it needs. Explore my work.**
+`src/data/routes.js` retains contextual route copy and distinct images/alt text.
+`Base.astro` renders owner metadata directly, including for unknown routes.
+OG site name and WebSite.name use the short brand; Person.name uses the full
+legal name. Person.image remains the natural suit original. Strategy &
+Operations remains the professional classification.
 
-`src/data/routes.js` owns per-route titles, descriptions, image metadata and card
-copy. `Base.astro` renders matching canonical, OG and Twitter tags in the head.
-Known routes override page title props; the 404 keeps its supplied title.
 Notes and 404 remain noindex, as do all preview builds. Canonical URLs retain
 the existing `.html` paths and HTTPS production origin, including on preview.
+404 has no canonical or JSON-LD and retains its Worker status. Sitemap and
+redirect behavior are unchanged.
 
 JSON-LD contains only Person, WebSite and WebPage (ProfilePage for About).
-Identity uses the existing full name, LinkedIn URL and portrait, with Strategy &
-Operations as the role. The serializer escapes HTML-significant characters and
-line separators before inline embedding. No employers, education, availability,
-services, reviews or numerical outcomes are added to structured data.
+The serializer escapes HTML-significant characters and line separators before
+inline embedding. No employers, education, availability, services, reviews or
+numerical outcomes are added to structured data.
+
+## Library
+
+`src/data/library.js` owns eight notes, each with two paragraphs and one short
+quotation plus linked locator. Astro renders the complete paragraphs, quotes,
+source links and resource actions into the initial HTML. Without JavaScript,
+book anchors lead to those readable notes. With JavaScript, the same elements
+move into a single native modal drawer on one deliberate mobile tap, or remain
+beside the shelf on desktop hover intent/focus. There is no duplicate visible
+reading path or HTML assembled from data attributes.
+
+The drawer has bounded height, an internally scrolling reading area, safe-area
+padding, a persistent close control, backdrop/Escape dismissal, Tab wrapping,
+focus restoration and underlying scroll restoration. Breakpoint changes move
+the selected panel between presentations and release/reapply the scroll lock.
+Reduced motion disables the drawer entrance and book animation. The existing
+painting and other site interactions remain in place.
+
+See [Library sources](library-sources.md) for quote evidence, edition limits and
+pending controller checks. Runtime/mobile accessibility and resize QA remain
+controller-owned.
 
 ## Assets
 
@@ -102,16 +127,20 @@ ALLOW_INDEXING=true npm run build
 ALLOW_INDEXING=true node --test tests/build.test.mjs
 ```
 
-Tests check unique metadata, exact home copy, case contributions, safe JSON-LD,
+Tests check exact owner metadata on every page including 404, contextual route
+images, case contributions, actual Person/WebSite identity, safe JSON-LD,
 complete head tags, decoded image type/dimensions, asset byte equality in dist,
-icon sizes and Notes/404/preview indexing. Existing Worker tests continue to
+icon sizes, Library initial-HTML paragraph/quote/link coverage and
+Notes/404/preview indexing. Existing Worker tests continue to
 check runtime protections. Implementation ran the source/asset and Worker
 checks; rendered checks require the controller builds. Remote visual/sharing QA
 and independent review follow through the controller.
 
-This increment changes metadata, static share/icon assets, tests and docs only.
-Approved page bodies, artwork sources, motion, contact, routes, CV, press
-resources and all six stories remain unchanged. Follow the already-indexed
-release procedure in `deployment.md`. Versioned share URLs avoid reusing earlier
-image URLs; this is not a claim that search or social caches have refreshed.
-Crawler/provider actions remain with the release controller after publishing.
+This increment changes owner metadata, Library copy/presentation, tests and docs.
+All share cards and favicon bytes remain unchanged. The existing natural suit
+`home-v2.jpg` remains valid; changing head identity does not require rewriting
+the approved card. If its bytes change later, use `home-v3.jpg` and preserve v1/v2.
+
+Follow the already-indexed release procedure in `deployment.md`. Build,
+authenticated transport, exact-SHA review, preview QA and publication remain
+with the controller. No search/social cache refresh is claimed.

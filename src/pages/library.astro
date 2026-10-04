@@ -4,22 +4,7 @@ import Plate from '../components/Plate.astro';
 import Part from '../components/Part.astro';
 import Note from '../components/Note.astro';
 import End from '../components/End.astro';
-// each volume: [kind, title, by, cloth colour, ink colour, height, thickness]. The bindings are my own, not the publishers' covers.
-// [kind, title, by, cloth, ink, height, thickness, link, why (Chuka's own words), quote (optional: a line from the work, shown under the note when filled in)]
-const shelves = [
-  ['Books', [
-    ['Book', 'The Alchemist', 'Paulo Coelho', '#8a5a1f', '#f3e3c2', 300, 44, 'https://www.harpercollins.com/products/the-alchemist-paulo-coelho', 'My most read book of all time. The call to adventure into the unknown inspired my work, and my trip to Tangier. Maktub. I stopped asking permission to dream and started chasing irrational dreams. It was the first book I read in 2024, after more than 300 since my dad made me read my first at two years old.', ''],
-    ['Book', 'Zero to One', 'Peter Thiel with Blake Masters', '#1f2f4a', '#e9dfcb', 326, 52, 'https://www.penguinrandomhouse.com/books/234730/zero-to-one-by-peter-thiel-with-blake-masters/9780804139304/', 'A better version of Blue Ocean Strategy, and it covers much more. Nothing beats reading people who have done exceptional things. It has become a classic since I first read it as an undergraduate in 2015, and it was one of the things that opened my eyes to technology and venture building.', ''],
-    ['Book', 'The Hard Thing About Hard Things', 'Ben Horowitz', '#6e2a22', '#f0dcc4', 338, 66, 'https://www.harpercollins.com/products/the-hard-thing-about-hard-things-ben-horowitz', 'Ben is a legend in business operations. This opened my eyes to dealing with dilemmas, to the intricacies of startups, and to what it takes to succeed.', ''],
-    ['Book', 'The Almanack of Naval Ravikant', 'Eric Jorgenson', '#d9cfb8', '#2a1d14', 310, 56, 'https://www.navalmanack.com/home', 'Play long-term games. It gave me standing principles for business and life that are now part of my philosophy on what to build, and with whom to build it.', ''],
-  ]],
-  ['Talks, listening, essays', [
-    ['Talk', 'Become Someone For Whom Success Is Inevitable', 'Alex Hormozi', '#26463a', '#e6dcc4', 318, 40, 'https://www.youtube.com/watch?v=Gk8EGWoGnEQ', 'Work so hard that luck is of no consequence to your outcomes. Alex is another practitioner who preaches what he lives. I rewatch these three hours to ground myself in reality and to remember how much is still unexplored.', ''],
-    ['Talk', 'Are You Destined to Deal?', 'Jim Donovan', '#141312', '#d7b877', 296, 36, 'https://www.youtube.com/watch?v=RpUJfW4WTKw', 'I love professors who are practitioners, and Jim is one of the best. This and his other talk, Secrets to Optimal Client Service, are part of my operating procedures, personally and for my business.', ''],
-    ['Podcast', 'Founders', 'David Senra', '#4a2a3f', '#ecd9c6', 330, 60, 'https://www.founderspodcast.com/', 'I only found David in 2025 and have been an avid listener since. He now has the David Senra Show too. History is replicable and success leaves clues. Nothing gives you context and wisdom like the principles that helped the great be great, and his research and notes are thorough.', ''],
-    ['Essays', 'Paul Graham', 'The collected essays', '#1f4a4d', '#e9dfcb', 344, 74, 'https://paulgraham.com/articles.html', 'Agree or disagree with him, in a world of fluff and AI writing Paul knows how to distil an idea into digestible chunks while keeping the nuance that gives it context.', ''],
-  ]],
-];
+import { shelves } from '../data/library.js';
 ---
 <Base title="Library · Chuka Dele-Oyeleru" current="Library">
   <Plate word="Library" still="pacioli" frame alt="Luca Pacioli’s De Divina Proportione, 1509, open at two geometric solids drawn after Leonardo." credit="Luca Pacioli, <i>De Divina Proportione</i>, 1509, with solids after Leonardo.">
@@ -32,32 +17,48 @@ const shelves = [
   <Part word="Shelf">
     <div class="case" data-case>
       <div class="bookcase">
-      {shelves.map(([name, vols]) => (
+      {shelves.map(({name, volumes}) => (
         <div class="shelfrow">
           <ul class="shelf" aria-label={name}>
-            {vols.map(([kind, title, by, cloth, ink, h, t, href, why, quote]) => (
-              <li><button type="button" class="book" data-book data-kind={kind} data-title={title} data-by={by} data-href={href} data-why={why} data-quote={quote || undefined} aria-label={`${kind}: ${title}, ${by}`}
+            {volumes.map(({id, kind, title, by, cloth, ink, h, t}) => (
+              <li><a href={`library.html#${id}`} class="book" data-book aria-controls={id} aria-label={`${kind}: ${title}, ${by}`}
                 style={`--h:${h};--t:${t};--fs:${Math.min(t * 0.44, (0.66 * h) / (title.length * 0.4)).toFixed(1)};--cloth:${cloth};--ink:${ink}`}>
                 <span class="spine" aria-hidden="true"><i class="kind">{kind}</i><b>{title}</b><i class="by">{by.split('.')[0].split(' with ')[0]}</i></span>
                 <span class="cover" aria-hidden="true"><i class="kind">{kind}</i><b>{title}</b><i class="by">{by}</i></span>
                 <span class="back"></span>
                 <span class="leaves"></span>
-              </button></li>
+              </a></li>
             ))}
           </ul>
           <div class="board"><span>{name}</span></div>
         </div>
       ))}
       </div>
-      <div class="pulled" aria-live="polite">
-        <p class="label" data-pk>Pull one out</p>
-        <h2 data-pt>Eight volumes, two shelves.</h2>
-        <p data-pb>Pick a spine and it comes off the shelf.</p>
-        <p class="note why" data-pw hidden></p>
-        <blockquote class="q" data-pq hidden></blockquote>
-        <a class="btn fill" data-pl href="#" target="_blank" rel="noopener" hidden><span data-plt>Open</span> <span class="arr"></span></a>
-        <button type="button" class="cue back-btn" data-pback hidden>Put it back</button>
+      <div data-library-home>
+        <div class="pulled" data-library-idle hidden>
+          <p class="label">Pull one out</p>
+          <h2>Eight volumes, two shelves.</h2>
+          <p>Pick a spine and it comes off the shelf.</p>
+        </div>
+        {shelves.flatMap(shelf => shelf.volumes).map(volume => (
+          <article class="pulled library-note" id={volume.id} data-library-note aria-labelledby={`${volume.id}-title`}>
+            <p class="label">{volume.kind}</p>
+            <h2 id={`${volume.id}-title`} tabindex="-1">{volume.title}</h2>
+            <p>{volume.by}</p>
+            <div class="note why">{volume.paragraphs.map(paragraph => <p>{paragraph}</p>)}</div>
+            <blockquote class="q" cite={volume.quote.source}>
+              <p>“{volume.quote.text}”</p>
+              <footer><a href={volume.quote.source} title={volume.quote.edition} aria-label={volume.quote.edition ? `${volume.quote.locator}, ${volume.quote.edition}` : undefined} target="_blank" rel="noopener">{volume.quote.locator}</a></footer>
+            </blockquote>
+            <a class="btn fill" href={volume.href} target="_blank" rel="noopener">{({Book: 'Find the book', Talk: 'Watch it', Podcast: 'Listen', Essays: 'Read the essays'})[volume.kind]} <span class="arr" aria-hidden="true"></span></a>
+            <button type="button" class="cue back-btn" data-pback hidden>Put it back</button>
+          </article>
+        ))}
       </div>
+      <dialog class="library-drawer" data-library-drawer aria-label="Library note">
+        <button type="button" class="cue library-close" data-library-close autofocus>Close note</button>
+        <div class="library-reading" data-library-reading></div>
+      </dialog>
     </div>
   </Part>
 
