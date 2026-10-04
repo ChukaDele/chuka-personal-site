@@ -84,3 +84,17 @@ test('Cloudflare routes assets through wrapper without URL normalization or SPA 
   assert.equal(config.assets.html_handling, 'none');
   assert.equal(config.assets.not_found_handling, 'none');
 });
+
+test('public HTTP and www hosts redirect to HTTPS while previews remain isolated', async () => {
+  for (const host of ['http://chukadele.com', 'http://www.chukadele.com', 'https://www.chukadele.com']) {
+    for (const method of ['GET', 'HEAD']) {
+      const response = await worker.fetch(new Request(`${host}/about.html?ref=test`, { method }), env);
+      assert.equal(response.status, 308);
+      assert.equal(response.headers.get('Location'), 'https://chukadele.com/about.html?ref=test');
+    }
+  }
+  const preview = await worker.fetch(new Request('https://preview.workers.dev/about.html'), env);
+  assert.equal(preview.status, 200);
+  assert.equal(preview.headers.get('Location'), null);
+  assert.equal(preview.headers.get('X-Robots-Tag'), 'noindex, nofollow');
+});

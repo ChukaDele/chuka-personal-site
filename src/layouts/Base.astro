@@ -6,8 +6,8 @@ import { origin, pages, canonicalPath, structuredData, serializeJsonLd } from '.
 const path = canonicalPath(Astro.url.pathname);
 const metadata = pages[path];
 const { current = '', preload } = Astro.props;
-const title = site.brand;
-const description = site.fullName;
+const title = metadata?.title ?? site.brand;
+const description = metadata?.description ?? site.fullName;
 const noindex = Astro.props.noindex || path === '/notes.html' || import.meta.env.ALLOW_INDEXING !== 'true';
 const canonical = new URL(path, origin).href;
 const imageMetadata = metadata ?? pages['/'];

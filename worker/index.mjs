@@ -20,6 +20,9 @@ export default {
       return finish(new Response('Deployment provenance is not configured.', { status: 503, headers: { 'Cache-Control': 'no-store' } }));
     }
     if (!['GET', 'HEAD'].includes(request.method)) return finish(new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD' } }));
+    if (['chukadele.com', 'www.chukadele.com'].includes(url.hostname) && !url.port && url.origin !== origin) {
+      return finish(new Response(null, { status: 308, headers: { Location: `${origin}${url.pathname}${url.search}`, 'Cache-Control': 'public, max-age=0, must-revalidate' } }));
+    }
     const redirect = redirects[url.pathname.replace(/\/$/, '')];
     if (redirect) return finish(new Response(null, { status: 308, headers: { Location: `${redirect}${url.search}`, 'Cache-Control': 'public, max-age=0, must-revalidate' } }));
     if (url.pathname === '/robots.txt') {

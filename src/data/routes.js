@@ -4,7 +4,7 @@ import { identity } from './site.js';
 export const origin = 'https://chukadele.com';
 // One registry for head metadata and static card copy; visible page prose is separate.
 const page = (title, description, slug, heading, lines, picture, imageAlt, version = 1) => ({
-  title: identity.brand, description: identity.fullName,
+  title: title.replaceAll('Chuka Dele-Oyeleru', identity.brand), description,
   contextualTitle: title, contextualDescription: description,
   image: `/og/${slug}-v${version}.jpg`, imageType: 'image/jpeg', imageWidth: 1200, imageHeight: 630,
   imageAlt, card: { heading, lines, picture },
@@ -78,7 +78,7 @@ export function structuredData(path, identity) {
   return {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'Person', '@id': personId, name: identity.fullName, url: `${origin}/`,
+      { '@type': 'Person', '@id': personId, name: identity.fullName, alternateName: [identity.brand, identity.name], url: `${origin}/`,
         jobTitle: 'Strategy & Operations', image: `${origin}/press/chuka-dele-oyeleru-speaking.jpg`, sameAs: [identity.linkedin] },
       { '@type': 'WebSite', '@id': websiteId, name: identity.brand, url: `${origin}/`,
         inLanguage: 'en-GB', publisher: { '@id': personId } },

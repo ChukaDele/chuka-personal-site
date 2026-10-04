@@ -51,9 +51,9 @@ redirects to `/`. Query strings survive redirects.
 
 ## Remaining validation
 
-### Already-indexed metadata releases
+### Indexing-enabled metadata releases
 
-The site is already live and indexed. For the SEO/sharing/icon increment, after
+As checked on 4 October 2026, the site is live and permits indexing on the canonical HTTPS origin. Google indexing coverage remains unconfirmed until Search Console URL Inspection and Page indexing are checked. For the SEO/sharing/icon increment, after
 remote preview acceptance and independent review, the controller can deploy the
 exact reviewed SHA on clean `main` directly through the existing indexing-enabled
 command:

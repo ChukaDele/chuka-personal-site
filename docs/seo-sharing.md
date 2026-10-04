@@ -1,15 +1,13 @@
 # SEO and sharing
 
-Every page, including 404, uses the exact head title, OG title and Twitter title
-**Chuka Dele** and description, OG description and Twitter description
-**Chukwuka Dele-Oyeleru**. `identity` in `src/data/site.js` is the canonical
-brand/full-name definition. Approved visible body identity is unchanged.
+Each registered page uses its contextual title and description from
+`src/data/routes.js`. Titles use the public brand Chuka Dele. Unknown routes
+retain the short brand/full-name fallback. OG and Twitter titles/descriptions
+match the page metadata; card images remain unchanged.
 
-`src/data/routes.js` retains contextual route copy and distinct images/alt text.
-`Base.astro` renders owner metadata directly, including for unknown routes.
-OG site name and WebSite.name use the short brand; Person.name uses the full
-legal name. Person.image remains the natural suit original. Strategy &
-Operations remains the professional classification.
+OG site name and WebSite.name use Chuka Dele. Person.name uses
+Chukwuka Dele-Oyeleru, with Chuka Dele and Chuka Dele-Oyeleru as alternate names.
+The existing LinkedIn identity link and Strategy & Operations classification remain.
 
 Notes and 404 remain noindex, as do all preview builds. Canonical URLs retain
 the existing `.html` paths and HTTPS production origin, including on preview.
@@ -141,6 +139,6 @@ All share cards and favicon bytes remain unchanged. The existing natural suit
 `home-v2.jpg` remains valid; changing head identity does not require rewriting
 the approved card. If its bytes change later, use `home-v3.jpg` and preserve v1/v2.
 
-Follow the already-indexed release procedure in `deployment.md`. Build,
+Follow the indexing-enabled release procedure in `deployment.md`. Build,
 authenticated transport, exact-SHA review, preview QA and publication remain
 with the controller. No search/social cache refresh is claimed.

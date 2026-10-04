@@ -28,8 +28,8 @@ test('source metadata preserves the approved identity and accurate route distinc
   assert.ok(existsSync('public/og/home-v1.jpg'), 'preserve the previously shared homepage card');
   assert.equal(site.brand, 'Chuka Dele');
   assert.equal(site.fullName, 'Chukwuka Dele-Oyeleru');
-  assert.equal(pages['/'].title, site.brand);
-  assert.equal(pages['/'].description, site.fullName);
+  assert.equal(pages['/'].title, 'Chuka Dele | Strategy & Operations');
+  assert.match(pages['/'].description, /Strategy and operations, based in Manchester/);
   for (const property of ['image', 'imageAlt']) {
     assert.equal(new Set(Object.values(pages).map(page => page[property])).size, 13, `unique ${property}`);
   }
@@ -50,12 +50,15 @@ test('source metadata preserves the approved identity and accurate route distinc
     assert.doesNotMatch(`${page.contextualTitle} ${page.contextualDescription} ${page.card.lines.join(' ')}`, /\d|%|×/);
   }
   for (const page of Object.values(pages)) {
-    assert.equal(page.title, site.brand);
-    assert.equal(page.description, site.fullName);
+    assert.ok(page.title.includes(site.brand));
+    assert.equal(page.description, page.contextualDescription);
   }
   const [person, website] = structuredData('/', site)['@graph'];
   assert.equal(person.name, 'Chukwuka Dele-Oyeleru');
   assert.equal(website.name, 'Chuka Dele');
+  assert.deepEqual(person.alternateName, [site.brand, site.name]);
+  assert.equal(new Set(Object.values(pages).map(page => page.title)).size, 13);
+  assert.equal(new Set(Object.values(pages).map(page => page.description)).size, 13);
   assert.equal(indexablePaths.length, 12);
   assert.ok(!indexablePaths.includes('/notes.html'));
 });
