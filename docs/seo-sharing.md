@@ -32,13 +32,15 @@ font references. No dependencies, generated historical art or photo effects are
 introduced. Existing image content is contained in full, without filtering.
 Keep the final JPEG/PNG/ICO files in source control; deployment needs no generator.
 
-Each card is a 1200×630 progressive JPEG, currently 36 to 65 KB. Principal labels
-stay within the central 580-pixel width for a square crop. Images are deliberately
-secondary to readable identity/project/contribution labels at feed size.
+Each card is a 1200×630 progressive JPEG under 150 KB. The homepage pairs a
+large, contained natural-colour suit portrait with a two-line full name, role
+and domain. Its face and copy stay within the central square crop; the supplied
+photo is resized without cropping, distortion, filters or likeness edits. Other
+cards retain their existing layout and central 580-pixel labels.
 
 | Route | Card under `/og/` | Existing image |
 | --- | --- | --- |
-| `/` | `home-v1.jpg` | `jerome-mono` |
+| `/` | `home-v2.jpg` | `p-speaking` (natural suit portrait) |
 | `/about.html` | `about-v1.jpg` | `portrait-mono` |
 | `/work.html` | `work-v1.jpg` | `weighing-mono` |
 | `/library.html` | `library-v1.jpg` | `pacioli` |
@@ -51,6 +53,12 @@ secondary to readable identity/project/contribution labels at feed size.
 | `/work-honeycoin.html` | `honeycoin-v1.jpg` | `honey-1` |
 | `/work-rvysion.html` | `rvysion-v1.jpg` | `rayna-1` |
 | `/work-the-bredge.html` | `the-bredge-v1.jpg` | `bredge-1` |
+
+`/og/home-v1.jpg` is intentionally preserved for already-shared links that still
+request the old asset URL. Home OG and Twitter metadata now use the stable
+`/og/home-v2.jpg` URL and describe the natural suit portrait. Person.image uses
+the supplied original `/press/chuka-dele-oyeleru-speaking.jpg`. Regeneration
+leaves the other 12 cards and all favicon assets byte-identical.
 
 Historical sources are already documented in `content/artworks.ts`; portraits
 and project images are the supplied site assets. Surface Talent is labelled as
@@ -92,5 +100,6 @@ and independent review follow through the controller.
 This increment changes metadata, static share/icon assets, tests and docs only.
 Approved page bodies, artwork sources, motion, contact, routes, CV, press
 resources and all six stories remain unchanged. Follow the already-indexed
-release procedure in `deployment.md`. New `-v1.jpg` share URLs avoid reusing the
-old raw-image URLs; this is not a claim that search or social caches have refreshed.
+release procedure in `deployment.md`. Versioned share URLs avoid reusing earlier
+image URLs; this is not a claim that search or social caches have refreshed.
+Crawler/provider actions remain with the release controller after publishing.

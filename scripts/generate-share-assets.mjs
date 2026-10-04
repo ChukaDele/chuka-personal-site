@@ -14,11 +14,11 @@ const bodyFont = create(await readFile(local('public/fonts/alegreya-sans-latin-4
 
 // Bake every glyph into native SVG geometry: no SVG <text>, CSS font loading,
 // system-font substitutions, or browser-only font references at rasterization.
-function lettering(copy, font, size, baseline, colour = paper, maxWidth = 580) {
+function lettering(copy, font, size, baseline, colour = paper, maxWidth = 580, centre = 600) {
   const glyphs = font.glyphsForString(copy);
   const advance = glyphs.reduce((sum, glyph) => sum + glyph.advanceWidth, 0);
   const scale = Math.min(size / font.unitsPerEm, maxWidth / advance);
-  let x = (1200 - advance * scale) / 2;
+  let x = centre - advance * scale / 2;
   return glyphs.map(glyph => {
     const path = `<path fill="${colour}" transform="translate(${x.toFixed(4)} ${baseline}) scale(${scale} ${-scale})" d="${glyph.path.toSVG()}"/>`;
     x += glyph.advanceWidth * scale;
@@ -29,6 +29,27 @@ function lettering(copy, font, size, baseline, colour = paper, maxWidth = 580) {
 await mkdir(local('public/og'), { recursive: true });
 for (const [route, metadata] of Object.entries(pages)) {
   const { heading, lines, picture } = metadata.card;
+  if (route === '/') {
+    // Home alone uses the natural suit portrait. Keep home-v1.jpg untouched:
+    // already-shared links may still request that original asset URL.
+    const portrait = await sharp(local(`public/img/${picture}.webp`))
+      .resize(440, 550, { fit: 'inside' }).png().toBuffer();
+    // The central square (x=285..915) retains the face, suit and all copy.
+    const graphics = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+      <rect width="1200" height="630" fill="${ink}"/>
+      ${lettering('Chuka', headingFont, 90, 209, paper, 270, 775)}
+      ${lettering('Dele-Oyeleru', headingFont, 80, 295, paper, 270, 775)}
+      <path d="M665 323H885" stroke="${copper}" stroke-width="2"/>
+      ${lettering('Strategy &', bodyFont, 38, 377, copper, 270, 775)}
+      ${lettering('Operations', bodyFont, 38, 419, copper, 270, 775)}
+      ${lettering('chukadele.com', bodyFont, 32, 495, paper, 270, 775)}
+    </svg>`;
+    const output = local(`public${metadata.image}`);
+    await sharp(Buffer.from(graphics)).composite([{ input: portrait, left: 190, top: 40 }])
+      .jpeg({ quality: 86, chromaSubsampling: '4:4:4', progressive: true }).toFile(output);
+    console.log(`${metadata.image}: ${(await readFile(output)).length} bytes`);
+    continue;
+  }
   // Contain the complete supplied image: no filters, retouching or removed content.
   const plate = await sharp(local(`public/img/${picture}.webp`))
     .resize(1040, 250, { fit: 'inside' }).png().toBuffer({ resolveWithObject: true });

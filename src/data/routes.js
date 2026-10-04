@@ -2,16 +2,16 @@ import { works } from './works.js';
 
 export const origin = 'https://chukadele.com';
 // One registry for head metadata and static card copy; visible page prose is separate.
-const page = (title, description, slug, heading, lines, picture, imageAlt) => ({
+const page = (title, description, slug, heading, lines, picture, imageAlt, version = 1) => ({
   title, description,
-  image: `/og/${slug}-v1.jpg`, imageType: 'image/jpeg', imageWidth: 1200, imageHeight: 630,
+  image: `/og/${slug}-v${version}.jpg`, imageType: 'image/jpeg', imageWidth: 1200, imageHeight: 630,
   imageAlt, card: { heading, lines, picture },
 });
 export const pages = {
   '/': page('Chuka Dele-Oyeleru | Strategy & Operations',
     'Strategy and operations, based in Manchester. I diagnose problems, design how work should run, and build what it needs. Explore my work.',
-    'home', 'Chuka Dele-Oyeleru', ['Strategy & Operations'], 'jerome-mono',
-    'Chuka Dele-Oyeleru: Strategy & Operations, chukadele.com, with Dürer’s Saint Jerome in His Study.'),
+    'home', 'Chuka Dele-Oyeleru', ['Strategy & Operations'], 'p-speaking',
+    'Chuka Dele-Oyeleru smiling in a light grey suit, in natural colour, with Strategy & Operations and chukadele.com.', 2),
   '/about.html': page('About | Chuka Dele-Oyeleru',
     'Chuka Dele-Oyeleru’s path from quantity surveying to strategy and operations, and his approach to ownership, building for use and improving from evidence.',
     'about', 'About Chuka', ['Strategy & Operations'], 'portrait-mono',
@@ -77,7 +77,7 @@ export function structuredData(path, identity) {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'Person', '@id': personId, name: identity.name, url: `${origin}/`,
-        jobTitle: 'Strategy & Operations', image: `${origin}/img/portrait-mono.webp`, sameAs: [identity.linkedin] },
+        jobTitle: 'Strategy & Operations', image: `${origin}/press/chuka-dele-oyeleru-speaking.jpg`, sameAs: [identity.linkedin] },
       { '@type': 'WebSite', '@id': websiteId, name: identity.name, url: `${origin}/`,
         inLanguage: 'en-GB', publisher: { '@id': personId } },
       { '@type': path === '/about.html' ? 'ProfilePage' : 'WebPage', '@id': `${origin}${path}#webpage`,

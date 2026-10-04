@@ -21,6 +21,10 @@ const head = html => html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/)[1];
 
 test('source metadata preserves the approved identity and accurate route distinctions', () => {
   assert.equal(Object.keys(pages).length, 13);
+  assert.equal(pages['/'].image, '/og/home-v2.jpg');
+  assert.equal(pages['/'].card.picture, 'p-speaking');
+  assert.match(pages['/'].imageAlt, /smiling in a light grey suit, in natural colour/);
+  assert.ok(existsSync('public/og/home-v1.jpg'), 'preserve the previously shared homepage card');
   assert.equal(pages['/'].title, 'Chuka Dele-Oyeleru | Strategy & Operations');
   assert.equal(pages['/'].description, 'Strategy and operations, based in Manchester. I diagnose problems, design how work should run, and build what it needs. Explore my work.');
   for (const property of ['title', 'description', 'image', 'imageAlt']) {
@@ -144,7 +148,7 @@ test(`rendered metadata, JSON-LD and indexing (${process.env.ALLOW_INDEXING === 
     assert.equal(person.name, site.name);
     assert.equal(person.jobTitle, 'Strategy & Operations');
     assert.deepEqual(person.sameAs, [site.linkedin]);
-    assert.equal(person.image, `${origin}/img/portrait-mono.webp`);
+    assert.equal(person.image, `${origin}/press/chuka-dele-oyeleru-speaking.jpg`);
     assert.equal(website.url, `${origin}/`);
     assert.equal(webpage['@type'], path === '/about.html' ? 'ProfilePage' : 'WebPage');
     assert.doesNotMatch(scripts[0][1], /"(?:worksFor|alumniOf|hasOfferCatalog|review|aggregateRating|availableChannel)"/);
