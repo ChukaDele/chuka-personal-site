@@ -13,7 +13,7 @@ Source implementation only; controller owns builds, browser checks and hardware 
 
 Controller: opt in with `UI_STRESS_QA=true npm run build`, then visit `/__qa/mobile/demo.html`, `/__qa/mobile/worst.html`, `/__qa/mobile/empty.html`, `/__qa/mobile/one.html` on the preview. The **Demo data / Worst case / Zero works / One work** control uses persistent static URLs and no custom transition. It is sticky in flow to avoid covering the final contact content; shared menu/dialog layers sit above it.
 
-`astro.config.mjs` conditionally injects the route from outside `src/pages`. A plain build without `UI_STRESS_QA=true` has no QA route, fixture imports or toggle. Every fixture page passes `noindex` even when indexing is otherwise enabled. Controller must verify plain-build output excludes `__qa` and synthetic strings, and opt-in output has robots noindex. Do not deploy the opt-in build.
+`astro.config.mjs` conditionally injects the route from outside `src/pages`. A plain build without `UI_STRESS_QA=true` has no QA route, fixture imports or toggle. Every fixture page passes `noindex` even when indexing is otherwise enabled. Controller must verify plain-build output excludes `__qa` and synthetic strings, and opt-in output has robots noindex. Do not deploy the opt-in build to production; it may be deployed only to an isolated noindex preview.
 
 `Works.astro` extracts the original home rows and work index cards; those public pages and the fixture use the same renderer. `Write.astro` and `End.astro` accept contact props defaulting to the authored site data. No public data or SEO metadata was edited. Fixtures do not enter structured data, navigation identity, work detail pages or form submission settings.
 
