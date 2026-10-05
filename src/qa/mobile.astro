@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import Part from '../components/Part.astro';
+import Works from '../components/Works.astro';
+import Write from '../components/Write.astro';
+import End from '../components/End.astro';
+import { scenarios } from './mobile-data.js';
+
+export function getStaticPaths() {
+  return Object.entries(scenarios).map(([state, data]) => ({ params: { state }, props: { data } }));
+}
+const { data } = Astro.props;
+---
+<Base noindex>
+  <aside class="qa-notice">
+    <h1>Mobile layout preview</h1>
+    <p>{data.label}. Synthetic fixtures are layout samples, not public claims. Work links open the original authored pages. Letter controls retain the real form; do not submit fixture data.</p>
+  </aside>
+  <Part word="Rows"><Works works={data.works} compact /></Part>
+  <Part word="Works"><Works works={data.works} /></Part>
+  <Write contact={data.contact} />
+  <End contact={data.contact} />
+  <nav class="qa-toggle" aria-label="Preview data">
+    {Object.entries(scenarios).map(([state, scenario]) => (
+      <a href={`/__qa/mobile/${state}.html`} aria-current={Astro.params.state === state ? 'page' : undefined}>{scenario.label}</a>
+    ))}
+  </nav>
+</Base>
+<style>
+  .qa-notice{padding:100px var(--gut) 0;max-width:70ch}
+  .qa-notice h1{font:600 1.5rem/1.3 system-ui}
+  .qa-notice p{margin-top:1rem}
+  .qa-toggle{position:sticky;bottom:0;z-index:7;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));background:#333;color:white;font:14px/1.4 system-ui}
+  .qa-toggle a{padding:12px;border-radius:4px;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  .qa-toggle a[aria-current]{background:white;color:#222}
+</style>

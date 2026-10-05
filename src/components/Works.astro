@@ -1,0 +1,31 @@
+---
+import { works as authoredWorks, ring } from '../data/works.js';
+const { works = authoredWorks, compact = false } = Astro.props;
+---
+{compact ? (
+    <div class="rows work-list">
+      {works.map((w) => (
+        <a class="row fill" href={`work-${w.id}.html`} data-name={w.name}>
+          <span class="nm">{w.name}</span>
+          <span class="ln">{w.line}<small>{w.roleFull || w.role} · {w.when}</small></span>
+          <span class="fg"><b>{w.fig}<Fragment set:html={ring} /></b><i>{w.lab}</i><span class="cue">Open the work <span class="arr"></span></span></span>
+        </a>
+      ))}
+    </div>
+) : (
+    <div class="work-list">
+      {works.map((w) => (
+        <a class="piece fill" href={`work-${w.id}.html`} data-name={w.name}>
+          <div>
+            <h2>{w.name}</h2>
+            <p class="ttl">{w.title}</p>
+          </div>
+          <div class="side">
+            <dl class="creds"><dt>Role</dt><dd>{w.role}</dd><dt>When</dt><dd>{w.when}</dd><dt>Where</dt><dd>{w.where}</dd></dl>
+            <span class="fg"><b>{w.fig}<Fragment set:html={ring} /></b><i>{w.lab}</i></span>
+            <span class="cue">Open the work <span class="arr"></span></span>
+          </div>
+        </a>
+      ))}
+    </div>
+)}

@@ -1,13 +1,13 @@
 ---
 import { site } from '../data/site.js';
-const { label = 'Write to me', kicker = 'Next', next, path = 'hello' } = Astro.props;
+const { contact = site, label = 'Write to me', kicker = 'Next', next, path = 'hello' } = Astro.props;
 ---
 <footer class="end">
   <div class="cap2">
     <p class="label">{label}</p>
-    <a class="mail" href={`mailto:${site.email}`}>{site.email}<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6 C 14 2, 30 9, 48 5 S 80 3, 99 6" /></svg></a>
+    <a class="mail" href={`mailto:${contact.email}`}>{contact.email}<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M1 6 C 14 2, 30 9, 48 5 S 80 3, 99 6" /></svg></a>
     <button type="button" class="btn fill" data-letter={path}>Start a letter <span class="arr"></span></button>
-    <p class="reply">{site.reply}</p>
+    {contact.reply && <p class="reply">{contact.reply}</p>}
   </div>
   {next && <a class="next" href={next[1]} data-name={next[0]}><span class="label">{kicker}</span><b>{next[0]} <span class="arr"></span></b></a>}
 </footer>

@@ -4,7 +4,7 @@ import Plate from '../components/Plate.astro';
 import Part from '../components/Part.astro';
 import Note from '../components/Note.astro';
 import End from '../components/End.astro';
-import { works, ring } from '../data/works.js';
+import Works from '../components/Works.astro';
 ---
 <Base title="Work · Chuka Dele-Oyeleru" current="Work">
   <Plate word="Work" still="weighing-mono" pos="50% 40%" alt="Quentin Massys’s painting of a moneylender weighing coins on a small balance while his wife looks up from her book." credit="Quentin Massys, <i>The Moneylender and His Wife</i>, 1514.">
@@ -14,21 +14,7 @@ import { works, ring } from '../data/works.js';
   </Plate>
 
   <Part word="Six">
-    <div>
-      {works.map((w) => (
-        <a class="piece fill" href={`work-${w.id}.html`} data-name={w.name}>
-          <div>
-            <h2>{w.name}</h2>
-            <p class="ttl">{w.title}</p>
-          </div>
-          <div class="side">
-            <dl class="creds"><dt>Role</dt><dd>{w.role}</dd><dt>When</dt><dd>{w.when}</dd><dt>Where</dt><dd>{w.where}</dd></dl>
-            <span class="fg"><b>{w.fig}<Fragment set:html={ring} /></b><i>{w.lab}</i></span>
-            <span class="cue">Open the work <span class="arr"></span></span>
-          </div>
-        </a>
-      ))}
-    </div>
+    <Works />
   </Part>
 
   <End next={['About', 'about.html']} />

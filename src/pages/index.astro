@@ -4,7 +4,7 @@ import Plate from '../components/Plate.astro';
 import Part from '../components/Part.astro';
 import Note from '../components/Note.astro';
 import Write from '../components/Write.astro';
-import { works, ring } from '../data/works.js';
+import Works from '../components/Works.astro';
 import { site } from '../data/site.js';
 const rooms = [
   ['About', 'about.html', 'How a quantity surveyor came to run operations, build products and design services.'],
@@ -28,15 +28,7 @@ const rooms = [
 
   <Part word="Works">
     <p class="label" id="work">Selected works, 2022 to 2026</p>
-    <div class="rows">
-      {works.map((w) => (
-        <a class="row fill" href={`work-${w.id}.html`} data-name={w.name}>
-          <span class="nm">{w.name}</span>
-          <span class="ln">{w.line}<small>{w.roleFull || w.role} · {w.when}</small></span>
-          <span class="fg"><b>{w.fig}<Fragment set:html={ring} /></b><i>{w.lab}</i><span class="cue">Open the work <span class="arr"></span></span></span>
-        </a>
-      ))}
-    </div>
+    <Works compact />
   </Part>
 
   <Part word="Inside">
