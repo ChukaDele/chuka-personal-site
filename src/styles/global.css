@@ -211,8 +211,8 @@ blockquote{font-family:var(--display);text-transform:uppercase;font-size:clamp(3
 .note.inline svg{margin-top:-6px}
 .cap2{display:grid;gap:10px;justify-items:start}
 @media (min-width:821px){
-  .end .cap2{min-width:0;max-width:100%}
-  .end .mail{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+  .end .cap2,.write .cap{min-width:0;max-width:100%}
+  .end .mail,.write .mail{max-width:100%;white-space:normal;overflow-wrap:anywhere}
 }
 .group{display:grid;gap:10px}
 .role{display:grid;gap:12px;justify-items:start;padding-top:clamp(20px,2.4vw,30px);border-top:1px solid var(--line)}
