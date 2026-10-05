@@ -194,6 +194,9 @@ blockquote{font-family:var(--display);text-transform:uppercase;font-size:clamp(3
   .part>.vword{position:static;writing-mode:horizontal-tb;transform:none;font-size:20vw}
   .row,.row.two{grid-template-columns:1fr auto;padding:20px 4px}
   .ln{grid-column:1/-1;grid-row:2}
+  .work-list .row{grid-template-columns:minmax(0,1fr)}
+  .work-list .row .ln{grid-column:auto;grid-row:auto}
+  .work-list .row .fg{min-width:0;justify-items:start;text-align:left;overflow-wrap:anywhere}
   .plain li{grid-template-columns:1fr}
   .with-note{grid-template-columns:1fr}.with-note .note{padding-top:0}
   .shots{grid-template-columns:1fr}
