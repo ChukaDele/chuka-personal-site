@@ -6,6 +6,7 @@ import sharp from 'sharp';
 import { pages, origin, indexablePaths, serializeJsonLd, structuredData } from '../src/data/routes.js';
 import { site } from '../src/data/site.js';
 import { shelves } from '../src/data/library.js';
+import { works } from '../src/data/works.js';
 
 const decode = value => value.replace(/&(#x[\da-f]+|#\d+|amp|quot|apos|lt|gt);/gi, (_, entity) => {
   if (entity[0] === '#') return String.fromCodePoint(entity[1].toLowerCase() === 'x' ? parseInt(entity.slice(2), 16) : Number(entity.slice(1)));
@@ -61,6 +62,24 @@ test('source metadata preserves the approved identity and accurate route distinc
   assert.equal(new Set(Object.values(pages).map(page => page.description)).size, 13);
   assert.equal(indexablePaths.length, 12);
   assert.ok(!indexablePaths.includes('/notes.html'));
+});
+
+test('Surface Talent distinguishes the internship from post-internship release hardening', () => {
+  const surfaceTalent = works.find(work => work.id === 'surface-talent');
+  assert.ok(surfaceTalent);
+  assert.equal(surfaceTalent.when, '15 June to 4 September 2026');
+  assert.match(surfaceTalent.scope, /reliability and handover/);
+  assert.match(surfaceTalent.brief.at(-1), /internship ended on 4 September.*production-verified on 8 October/);
+
+  const reliability = surfaceTalent.parts.find(part => part.word === 'Reliability');
+  assert.ok(reliability);
+  assert.match(reliability.title, /release discipline/);
+  assert.match(reliability.steps.map(([, text]) => text).join(' '), /fail|uncertain|review|release/i);
+
+  const outcome = surfaceTalent.parts.find(part => part.word === 'Outcome');
+  assert.ok(outcome);
+  assert.match(outcome.list.find(([label]) => label === '8 October 2026')?.[1] || '', /post-internship hardening.*production deployment/);
+  assert.match(outcome.list.find(([label]) => label === 'Not claimed')?.[1] || '', /hire is not credited to the software.*did not make the placement/);
 });
 
 test('source JSON-LD safely round-trips closing scripts and HTML-significant characters', () => {
