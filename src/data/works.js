@@ -72,7 +72,7 @@ export const works = [
     id: 'surface-talent', name: 'Surface Talent', kind: 'Specialist recruitment', where: 'United Kingdom', when: '15 June to 4 September 2026', role: 'MBA internship',
     roleFull: 'MBA internship: research, design, implementation and verification',
     scope: 'Role and candidate evidence, assessment, public intake, reliability and handover',
-    line: 'Built role and candidate evidence workflows around the existing CRM and delivered the new website; the client reported its first external inbound enquiry converted into an exclusive retainer.',
+    line: 'Built evidence workflows around the existing CRM and delivered the new recruitment website.',
     title: 'Building the operating foundation for specialist recruitment.',
     fig: 'Used', lab: 'in a hiring process that ended with an August start', shot: 'surface-1', shotNote: 'Role setup in Surface Talent. A role starts from its context, before any candidate is assessed.', site: null,
     brief: ['Surface Talent recruits for surface engineering and metal finishing in the UK. It is a narrow field, and a generic match on job titles does not find the right people.',

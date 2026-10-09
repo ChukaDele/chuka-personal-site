@@ -67,6 +67,8 @@ test('source metadata preserves the approved identity and accurate route distinc
 test('Surface Talent distinguishes the internship from post-internship release hardening', () => {
   const surfaceTalent = works.find(work => work.id === 'surface-talent');
   assert.ok(surfaceTalent);
+  assert.ok(surfaceTalent.line.length <= 100, 'keep the homepage summary comparable to the other work summaries');
+  assert.doesNotMatch(JSON.stringify(surfaceTalent), /testimonial|amazon|gift|blockquote|[“”]|"quote"/i);
   assert.equal(surfaceTalent.when, '15 June to 4 September 2026');
   assert.match(surfaceTalent.scope, /reliability and handover/);
   assert.match(surfaceTalent.brief.at(-1), /internship ended on 4 September.*production-verified on 8 October/);
@@ -78,8 +80,13 @@ test('Surface Talent distinguishes the internship from post-internship release h
 
   const outcome = surfaceTalent.parts.find(part => part.word === 'Outcome');
   assert.ok(outcome);
+  const clientOutcome = outcome.list.find(([label]) => label === 'Client-reported outcome')?.[1] || '';
+  assert.match(clientOutcome, /client reported[^.]*website[^.]*first external inbound enquiry[^.]*converted into an exclusive retainer/i);
+  assert.match(outcome.list.find(([label]) => label === '8 September 2026')?.[1] || '', /website handover/i);
   assert.match(outcome.list.find(([label]) => label === '8 October 2026')?.[1] || '', /post-internship hardening.*production deployment/);
   assert.match(outcome.list.find(([label]) => label === 'Not claimed')?.[1] || '', /hire is not credited to the software.*did not make the placement/);
+  const decisions = surfaceTalent.parts.find(part => part.word === 'Decisions');
+  assert.match(decisions?.steps.map(([, text]) => text).join(' ') || '', /candidate moves forward[^.]*recruiter[’']s call/i);
 });
 
 test('source JSON-LD safely round-trips closing scripts and HTML-significant characters', () => {
