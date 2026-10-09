@@ -30,7 +30,8 @@ export async function startLenisPilot({ gsap, ScrollTrigger }) {
     autoRaf: false,
     smoothWheel: true,
     syncTouch: false,
-    anchors: false,
+    // Preserve instant anchor navigation, including keyboard activation.
+    anchors: { immediate: true },
     respectReducedMotion: true,
     allowNestedScroll: false,
     prevent: (node) => Boolean(node.closest?.(
