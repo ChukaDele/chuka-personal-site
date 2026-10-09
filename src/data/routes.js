@@ -64,6 +64,16 @@ export const pages = {
     'The Bredge: operating model work by Chuka Dele-Oyeleru, with a supplied project screenshot.'),
 };
 
+// Draft reuses the approved portrait share image; it has its own page copy.
+pages['/playground.html'] = {
+  ...pages['/'],
+  title: 'Playground — Draft | Chuka Dele',
+  contextualTitle: 'Playground — Draft | Chuka Dele-Oyeleru',
+  description: 'A draft collection of colour and typography interactions, alongside selected Rvysion studio motion with authorship credits.',
+  contextualDescription: 'A draft collection of colour and typography interactions, alongside selected Rvysion studio motion with authorship credits.',
+  noindex: true,
+};
+
 // Safe for an inline script, including future copy containing closing script tags.
 export function serializeJsonLd(value) {
   return JSON.stringify(value).replace(/[<>&\u2028\u2029]/g, char =>
@@ -89,7 +99,7 @@ export function structuredData(path, identity) {
     ],
   };
 }
-export const indexablePaths = Object.keys(pages).filter(path => path !== '/notes.html');
+export const indexablePaths = Object.keys(pages).filter(path => path !== '/notes.html' && !pages[path].noindex);
 export function canonicalPath(path) {
   if (path === '/' || path === '/index.html') return '/';
   return path.endsWith('.html') ? path : `${path.replace(/\/$/, '')}.html`;

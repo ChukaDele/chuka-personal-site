@@ -22,7 +22,7 @@ function meta(html, key) {
 const head = html => html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/)[1];
 
 test('source metadata preserves the approved identity and accurate route distinctions', () => {
-  assert.equal(Object.keys(pages).length, 13);
+  assert.equal(Object.keys(pages).length, 14);
   assert.equal(pages['/'].image, '/og/home-v2.jpg');
   assert.equal(pages['/'].card.picture, 'p-speaking');
   assert.match(pages['/'].imageAlt, /smiling in a light grey suit, in natural colour/);
@@ -58,8 +58,8 @@ test('source metadata preserves the approved identity and accurate route distinc
   assert.equal(person.name, 'Chukwuka Dele-Oyeleru');
   assert.equal(website.name, 'Chuka Dele');
   assert.deepEqual(person.alternateName, [site.brand, site.name]);
-  assert.equal(new Set(Object.values(pages).map(page => page.title)).size, 13);
-  assert.equal(new Set(Object.values(pages).map(page => page.description)).size, 13);
+  assert.equal(new Set(Object.values(pages).map(page => page.title)).size, 14);
+  assert.equal(new Set(Object.values(pages).map(page => page.description)).size, 14);
   assert.equal(indexablePaths.length, 12);
   assert.ok(!indexablePaths.includes('/notes.html'));
 });
@@ -231,7 +231,7 @@ test(`rendered metadata, JSON-LD and indexing (${process.env.ALLOW_INDEXING === 
     assert.deepEqual(links.filter(link => link.rel === 'canonical').map(link => link.href), [`${origin}${path}`]);
     assert.doesNotMatch(html, /name="twitter:(?:site|creator)"/);
     const robots = elements(html, 'meta').filter(item => item.name === 'robots');
-    assert.deepEqual(robots.map(item => item.content), path === '/notes.html' || process.env.ALLOW_INDEXING !== 'true' ? ['noindex, nofollow'] : [], path);
+    assert.deepEqual(robots.map(item => item.content), page.noindex || path === '/notes.html' || process.env.ALLOW_INDEXING !== 'true' ? ['noindex, nofollow'] : [], path);
     const scripts = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
     assert.equal(scripts.length, 1, path);
     assert.doesNotMatch(scripts[0][1], /[<>&\u2028\u2029]/);
