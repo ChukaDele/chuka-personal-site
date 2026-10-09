@@ -80,11 +80,12 @@ test('Surface Talent distinguishes the internship from post-internship release h
 
   const outcome = surfaceTalent.parts.find(part => part.word === 'Outcome');
   assert.ok(outcome);
-  const clientOutcome = outcome.list.find(([label]) => label === 'Client-reported outcome')?.[1] || '';
-  assert.match(clientOutcome, /client reported[^.]*website[^.]*first external inbound enquiry[^.]*converted into an exclusive retainer/i);
-  assert.match(outcome.list.find(([label]) => label === '8 September 2026')?.[1] || '', /website handover/i);
-  assert.match(outcome.list.find(([label]) => label === '8 October 2026')?.[1] || '', /post-internship hardening.*production deployment/);
-  assert.match(outcome.list.find(([label]) => label === 'Not claimed')?.[1] || '', /hire is not credited to the software.*did not make the placement/);
+  assert.equal(outcome.title, 'In use');
+  assert.deepEqual(outcome.list, [
+    ['Hiring process', 'Assessment and interview analysis supported a hiring process that ended with an August start.'],
+    ['Website', 'The client reported that the website generated Surface Talent’s first external inbound enquiry, which became an exclusive retainer.'],
+  ]);
+  assert.ok(!Object.hasOwn(outcome, 'result'));
   const decisions = surfaceTalent.parts.find(part => part.word === 'Decisions');
   assert.match(decisions?.steps.map(([, text]) => text).join(' ') || '', /candidate moves forward[^.]*recruiter[’']s call/i);
 });
