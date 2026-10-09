@@ -1,4 +1,4 @@
-import { origin, redirects, indexablePaths } from '../src/data/routes.js';
+import { origin, redirects, indexablePaths, pages } from '../src/data/routes.js';
 
 export default {
   async fetch(request, env) {
@@ -13,7 +13,7 @@ export default {
       headers.set('Content-Security-Policy', "frame-ancestors 'none'");
       headers.set('X-Frame-Options', 'DENY');
       headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-      if (!indexable || url.pathname === '/notes.html' || response.status >= 400) headers.set('X-Robots-Tag', 'noindex, nofollow');
+      if (!indexable || pages[url.pathname]?.noindex || url.pathname === '/notes.html' || response.status >= 400) headers.set('X-Robots-Tag', 'noindex, nofollow');
       return new Response(request.method === 'HEAD' ? null : response.body, { status: response.status, statusText: response.statusText, headers });
     };
     if (!/^[a-f0-9]{40}$/.test(env.DEPLOY_SHA || '')) {
