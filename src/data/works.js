@@ -98,7 +98,7 @@ export const works = [
         steps: [['Draw the boundary', 'Recruitly remained the structured profile source. Surface Talent owned the evidence and review state needed where recruiter trust depends on the original CV.'],
           ['Fail closed', 'When candidate identity, evidence or assessment lineage was uncertain, the system held, recomputed or asked for review instead of guessing.'],
           ['Prove the release', 'Before the final handover, the exact release passed review, the full test and build pipeline, migration and parser checks, and authenticated browser acceptance on the deployed application.']] },
-      { word: 'Outcome', title: 'Outcome',
+      { word: 'Outcome', title: 'In use',
         list: [['Hiring process', 'Assessment and interview analysis supported a hiring process that ended with an August start.'],
           ['Website', 'The client reported that the website generated Surface Talent’s first external inbound enquiry, which became an exclusive retainer.']] },
     ],
