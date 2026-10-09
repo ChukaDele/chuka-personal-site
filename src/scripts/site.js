@@ -313,6 +313,13 @@ function motion() {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
 }
 if (!reduce) motion();
+
+// Lenis is an opt-in comparison only. The normal experience always stays native.
+if (new URLSearchParams(location.search).get('lenis-preview') === '1') {
+  import('./lenis-pilot.js')
+    .then(({ startLenisPilot }) => startLenisPilot({ gsap, ScrollTrigger }))
+    .catch((error) => console.warn('Lenis preview unavailable; native scrolling retained.', error));
+}
 try { sessionStorage.setItem('seen', '1'); } catch (e) {}
 
 /* ---------- small things: a drawing that rests when it is off screen, sketches that say when there is more to the side, bios that copy ---------- */
