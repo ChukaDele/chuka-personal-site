@@ -133,12 +133,13 @@ test('ETAP automatic captions and transcript preserve source wording, extent and
   assert.equal(c.language, 'en');
   assert.equal(c.label, 'English (automatic)');
   const expected = [
-    [0, 1600, 'time and intact am my driver sticking to'],
-    [1600, 3400, 'the rout or taking detour that are not'],
-    [3400, 5040, 'necessary how can I cut full cost and'],
-    [5040, 6759, 'increase the lifespan of my V how can we'],
-    [6759, 9559, 'reduce down time run through your mind'],
-    [9559, 12000, 'every day this is where EAB telematics'],
+    [0, 520, "…and intact?"],
+    [550, 1920, "Are my drivers sticking to your routes?"],
+    [1980, 3640, "Or taking detours that are not necessary?"],
+    [3640, 6240, "How can I cut fuel cost and increase the lifespan of my vehicles?"],
+    [6240, 7500, "How can we reduce downtime?"],
+    [8100, 9980, "Run through your mind every day."],
+    [10660, 12000, "This is where ETAP Telematics"],
   ];
   assert.deepEqual(c.cues.map(q => [q.startMs, q.endMs, q.text]), expected);
   for (const q of c.cues) {
@@ -146,7 +147,8 @@ test('ETAP automatic captions and transcript preserve source wording, extent and
     assert.ok(q.sourceSegments.every(s => s.startMs < 17000 && s.endMs > 5000));
     assert.equal(q.startMs, Math.max(0, q.sourceSegments[0].startMs - 5000));
     assert.equal(q.endMs, Math.min(12000, q.sourceSegments.at(-1).endMs - 5000));
-    assert.equal(q.text, q.sourceSegments.map(s => s.text).join('').trim());
+    const normalized = q.sourceSegments.map(s => s.text).join(' ').replace('E -Tab', 'ETAP').replace('full cost', 'fuel cost');
+    assert.equal(q.text, (q.startMs === 0 ? '…' : '') + normalized);
   }
   const stamp = ms => new Date(ms).toISOString().slice(11, 23);
   assert.equal(read(`../public/${c.src}`), 'WEBVTT\n\n' + expected.map(([a, b, text]) => `${stamp(a)} --> ${stamp(b)}\n${text}`).join('\n\n') + '\n');
@@ -158,19 +160,41 @@ test('ETAP automatic captions and transcript preserve source wording, extent and
   assert.match(renderer, /p.video.captions && <track kind="captions" src=\{p.video.captions.src\} srclang=\{p.video.captions.language\} label=\{p.video.captions.label\}/);
   assert.match(renderer, /English automatic captions/);
   assert.match(renderer, /href=\{p.video.captions.transcript\}>plain text transcript \(automatic\)/);
-  assert.doesNotMatch(renderer + transcript, /human.verified/i);
+  assert.match(transcript, /not human-verified/);
+  assert.equal(c.humanVerified, false);
+  assert.match(c.origin, /Local full-source MacWhisper.*WhisperKit Large v3 Turbo/);
+  assert.deepEqual(c.normalizations.map(n => [n.from, n.to]), [["full cost", "fuel cost"], ["E-Tab", "ETAP"]]);
+  assert.match(c.normalizations[0].justification, /question card.*fuel costs/);
+  assert.match(c.normalizations[1].justification, /brand\/logo\/title/);
+  assert.deepEqual(c.cues[0].sourceSegments[0], { text: "and", startMs: 4980, endMs: 5140 });
+  assert.deepEqual(c.cues.at(-1).sourceSegments.at(-1), { text: "Telematics", startMs: 16840, endMs: 17400 });
+  assert.doesNotMatch(c.cues.map(q => q.text).join(" "), /comes|\bin\b|\bV\b|EAB|rout\b|full cost/);
 });
 
-const captionSource = new URL('../.launch-input/approved-project-media/etap-publisher-auto-captions.json3', import.meta.url);
-test('local recovered publisher source matches the caption provenance and retained segments', { skip: !existsSync(captionSource) }, () => {
+const captionSource = new URL('../.launch-input/audio-audit/etap-full-source.json', import.meta.url);
+test('local full-source MacWhisper evidence matches exact retained word intervals', { skip: !existsSync(captionSource) }, () => {
   const raw = readFileSync(captionSource);
   const c = media.find(m => m.id === 'E-V1').captions;
+  assert.equal(c.sourceFile, '.launch-input/audio-audit/etap-full-source.json');
   assert.equal(createHash('sha256').update(raw).digest('hex'), c.sourceSha256);
-  const events = JSON.parse(raw).events.filter(e => e.segs?.some(s => s.utf8.trim()));
-  const segments = events.flatMap((e, i) => e.segs.map((s, j) => ({
-    text: s.utf8,
-    startMs: e.tStartMs + (s.tOffsetMs ?? 0),
-    endMs: j + 1 < e.segs.length ? e.tStartMs + (e.segs[j + 1].tOffsetMs ?? 0) : Math.min(e.tStartMs + e.dDurationMs, events[i + 1]?.tStartMs ?? Infinity),
-  }))).filter(s => s.text.trim() && s.startMs < 17000 && s.endMs > 5000);
-  assert.deepEqual(c.cues.flatMap(q => q.sourceSegments), segments);
+  const groups = JSON.parse(raw).segments.map(s => s.words
+    .filter(w => w.start < 17000 && w.end > 5000)
+    .map(w => ({ text: w.text, startMs: w.start, endMs: w.end }))).filter(g => g.length);
+  assert.deepEqual(c.cues.map(q => q.sourceSegments), groups);
+  const filmstrip = readFileSync(new URL(`../${c.normalizationEvidence.sourceFile}`, import.meta.url));
+  assert.equal(createHash('sha256').update(filmstrip).digest('hex'), c.normalizationEvidence.sourceSha256);
 });
+
+for (const id of ['H-V1', 'I-V1']) {
+  const audit = media.find(m => m.id === id).audioAudit;
+  test(`${id} records no detected speech with the automated limitation`, () => {
+    assert.match(audit.result, /no detected speech/);
+    assert.match(audit.limitation, /does not prove absence.*no essential narrative audio established/);
+  });
+  const path = new URL(`../${audit.sourceFile}`, import.meta.url);
+  test(`${id} local audio evidence is empty`, { skip: !existsSync(path) }, () => {
+    const raw = readFileSync(path);
+    assert.equal(createHash('sha256').update(raw).digest('hex'), audit.sourceSha256);
+    assert.deepEqual(JSON.parse(raw), { segments: [], text: '' });
+  });
+}

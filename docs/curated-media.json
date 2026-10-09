@@ -53,7 +53,14 @@
     "caption": "Original Rvysion motion presentation of HoneyCoin’s business dashboard.",
     "imageWidth": 1200,
     "imageHeight": 814,
-    "defaultMuted": true
+    "defaultMuted": true,
+    "audioAudit": {
+      "sourceFile": ".launch-input/audio-audit/honeycoin-product-07.json",
+      "sourceSha256": "3aa4be5836a37761dabd1092fd9bc0a081a477d3e886588407f6754edf488d5c",
+      "method": "Local MacWhisper, WhisperKit Large v3 Turbo; performed by root without a paid service or history.",
+      "result": "Empty segments and text: no detected speech.",
+      "limitation": "Automated result does not prove absence of speech or meaningful sound; no essential narrative audio established."
+    }
   },
   {
     "id": "I-I1",
@@ -78,7 +85,14 @@
     "posterSourceSha256": "fbca61ef6b0573c20a0c265cd2b5efe965b101a2046d1177a7811092419998d6",
     "caption": "Original Rvysion animation of Idara’s registration and licensing service entry points.",
     "imageWidth": 1200,
-    "imageHeight": 998
+    "imageHeight": 998,
+    "audioAudit": {
+      "sourceFile": ".launch-input/audio-audit/idara-product-07.json",
+      "sourceSha256": "3aa4be5836a37761dabd1092fd9bc0a081a477d3e886588407f6754edf488d5c",
+      "method": "Local MacWhisper, WhisperKit Large v3 Turbo; performed by root without a paid service or history.",
+      "result": "Empty segments and text: no detected speech.",
+      "limitation": "Automated result does not prove absence of speech or meaningful sound; no essential narrative audio established."
+    }
   },
   {
     "id": "E-V1",
@@ -101,293 +115,314 @@
       "label": "English (automatic)",
       "transcript": "captions/etap-fleet-review-excerpt.en-auto.txt",
       "sourceURL": "https://www.youtube.com/watch?v=2c5S8CDZwIM",
-      "sourceFile": ".launch-input/approved-project-media/etap-publisher-auto-captions.json3",
-      "sourceSha256": "c275ed544dd873a04297774f2c425cc3728a35435f59d2a3d8cc04ce6206ef5e",
+      "sourceFile": ".launch-input/audio-audit/etap-full-source.json",
+      "sourceSha256": "ed9c41d099334df5fef98af99d4496bd37a109cb47ae4abc6c021c8dc5ad3320",
       "automatic": true,
       "originalStartMs": 5000,
       "originalEndMs": 17000,
       "excerptStartMs": 0,
       "excerptEndMs": 12000,
-      "timingMethod": "Word starts are event tStartMs plus segment tOffsetMs (default 0). Word ends use the next segment start; the last word ends at the earlier of event end and next text event start, excluding rolling-caption retention. Select word intervals overlapping [5000,17000), subtract 5000 and clamp to [0,12000]. Group retained words by source event. Words unchanged.",
+      "timingMethod": "Retain full-source word intervals overlapping [5000,17000), subtract 5000 and clamp to [0,12000]. Group by source sentence and preserve punctuation. Prefix the opening fragment with an ellipsis. Telematics crosses the end boundary; exclude comes in after 17000.",
       "cues": [
         {
           "startMs": 0,
-          "endMs": 1600,
-          "text": "time and intact am my driver sticking to",
+          "endMs": 520,
+          "text": "…and intact?",
           "sourceSegments": [
             {
-              "text": "time",
-              "startMs": 4920,
-              "endMs": 5080
+              "text": "and",
+              "startMs": 4980,
+              "endMs": 5140
             },
             {
-              "text": " and",
-              "startMs": 5080,
-              "endMs": 5279
-            },
-            {
-              "text": " intact",
-              "startMs": 5279,
-              "endMs": 5680
-            },
-            {
-              "text": " am",
-              "startMs": 5680,
-              "endMs": 5759
-            },
-            {
-              "text": " my",
-              "startMs": 5759,
-              "endMs": 5879
-            },
-            {
-              "text": " driver",
-              "startMs": 5879,
-              "endMs": 6160
-            },
-            {
-              "text": " sticking",
-              "startMs": 6160,
-              "endMs": 6399
-            },
-            {
-              "text": " to",
-              "startMs": 6399,
-              "endMs": 6600
+              "text": "intact?",
+              "startMs": 5140,
+              "endMs": 5520
             }
           ]
         },
         {
-          "startMs": 1600,
-          "endMs": 3400,
-          "text": "the rout or taking detour that are not",
+          "startMs": 550,
+          "endMs": 1920,
+          "text": "Are my drivers sticking to your routes?",
           "sourceSegments": [
             {
-              "text": "the",
-              "startMs": 6600,
-              "endMs": 6720
+              "text": "Are",
+              "startMs": 5550,
+              "endMs": 5700
             },
             {
-              "text": " rout",
-              "startMs": 6720,
-              "endMs": 7040
+              "text": "my",
+              "startMs": 5700,
+              "endMs": 5760
             },
             {
-              "text": " or",
-              "startMs": 7040,
-              "endMs": 7200
+              "text": "drivers",
+              "startMs": 5760,
+              "endMs": 6020
             },
             {
-              "text": " taking",
-              "startMs": 7200,
-              "endMs": 7480
+              "text": "sticking",
+              "startMs": 6020,
+              "endMs": 6340
             },
             {
-              "text": " detour",
-              "startMs": 7480,
+              "text": "to",
+              "startMs": 6340,
+              "endMs": 6580
+            },
+            {
+              "text": "your",
+              "startMs": 6580,
+              "endMs": 6740
+            },
+            {
+              "text": "routes?",
+              "startMs": 6740,
+              "endMs": 6920
+            }
+          ]
+        },
+        {
+          "startMs": 1980,
+          "endMs": 3640,
+          "text": "Or taking detours that are not necessary?",
+          "sourceSegments": [
+            {
+              "text": "Or",
+              "startMs": 6980,
+              "endMs": 7080
+            },
+            {
+              "text": "taking",
+              "startMs": 7080,
+              "endMs": 7380
+            },
+            {
+              "text": "detours",
+              "startMs": 7380,
+              "endMs": 7880
+            },
+            {
+              "text": "that",
+              "startMs": 7880,
               "endMs": 8000
             },
             {
-              "text": " that",
+              "text": "are",
               "startMs": 8000,
-              "endMs": 8080
+              "endMs": 8100
             },
             {
-              "text": " are",
-              "startMs": 8080,
-              "endMs": 8200
+              "text": "not",
+              "startMs": 8100,
+              "endMs": 8280
             },
             {
-              "text": " not",
-              "startMs": 8200,
-              "endMs": 8400
+              "text": "necessary?",
+              "startMs": 8280,
+              "endMs": 8640
             }
           ]
         },
         {
-          "startMs": 3400,
-          "endMs": 5040,
-          "text": "necessary how can I cut full cost and",
+          "startMs": 3640,
+          "endMs": 6240,
+          "text": "How can I cut fuel cost and increase the lifespan of my vehicles?",
           "sourceSegments": [
             {
-              "text": "necessary",
-              "startMs": 8400,
-              "endMs": 8800
+              "text": "How",
+              "startMs": 8640,
+              "endMs": 8760
             },
             {
-              "text": " how",
-              "startMs": 8800,
+              "text": "can",
+              "startMs": 8760,
               "endMs": 8880
             },
             {
-              "text": " can",
+              "text": "I",
               "startMs": 8880,
-              "endMs": 8960
+              "endMs": 8980
             },
             {
-              "text": " I",
-              "startMs": 8960,
-              "endMs": 9080
+              "text": "cut",
+              "startMs": 8980,
+              "endMs": 9260
             },
             {
-              "text": " cut",
-              "startMs": 9080,
-              "endMs": 9320
+              "text": "full",
+              "startMs": 9260,
+              "endMs": 9500
             },
             {
-              "text": " full",
-              "startMs": 9320,
-              "endMs": 9639
+              "text": "cost",
+              "startMs": 9500,
+              "endMs": 9800
             },
             {
-              "text": " cost",
-              "startMs": 9639,
-              "endMs": 9880
+              "text": "and",
+              "startMs": 9800,
+              "endMs": 9940
             },
             {
-              "text": " and",
-              "startMs": 9880,
-              "endMs": 10040
+              "text": "increase",
+              "startMs": 9940,
+              "endMs": 10220
+            },
+            {
+              "text": "the",
+              "startMs": 10220,
+              "endMs": 10360
+            },
+            {
+              "text": "lifespan",
+              "startMs": 10360,
+              "endMs": 10680
+            },
+            {
+              "text": "of",
+              "startMs": 10680,
+              "endMs": 10920
+            },
+            {
+              "text": "my",
+              "startMs": 10920,
+              "endMs": 11100
+            },
+            {
+              "text": "vehicles?",
+              "startMs": 11100,
+              "endMs": 11240
             }
           ]
         },
         {
-          "startMs": 5040,
-          "endMs": 6759,
-          "text": "increase the lifespan of my V how can we",
+          "startMs": 6240,
+          "endMs": 7500,
+          "text": "How can we reduce downtime?",
           "sourceSegments": [
             {
-              "text": "increase",
-              "startMs": 10040,
-              "endMs": 10320
+              "text": "How",
+              "startMs": 11240,
+              "endMs": 11280
             },
             {
-              "text": " the",
-              "startMs": 10320,
-              "endMs": 10440
-            },
-            {
-              "text": " lifespan",
-              "startMs": 10440,
-              "endMs": 10840
-            },
-            {
-              "text": " of",
-              "startMs": 10840,
-              "endMs": 10960
-            },
-            {
-              "text": " my",
-              "startMs": 10960,
-              "endMs": 11120
-            },
-            {
-              "text": " V",
-              "startMs": 11120,
-              "endMs": 11360
-            },
-            {
-              "text": " how",
-              "startMs": 11360,
+              "text": "can",
+              "startMs": 11280,
               "endMs": 11440
             },
             {
-              "text": " can",
+              "text": "we",
               "startMs": 11440,
-              "endMs": 11559
+              "endMs": 11580
             },
-            {
-              "text": " we",
-              "startMs": 11559,
-              "endMs": 11759
-            }
-          ]
-        },
-        {
-          "startMs": 6759,
-          "endMs": 9559,
-          "text": "reduce down time run through your mind",
-          "sourceSegments": [
             {
               "text": "reduce",
-              "startMs": 11759,
-              "endMs": 12280
+              "startMs": 11580,
+              "endMs": 12020
             },
             {
-              "text": " down",
-              "startMs": 12280,
-              "endMs": 12639
-            },
-            {
-              "text": " time",
-              "startMs": 12639,
-              "endMs": 13160
-            },
-            {
-              "text": " run",
-              "startMs": 13160,
-              "endMs": 13440
-            },
-            {
-              "text": " through",
-              "startMs": 13440,
-              "endMs": 13639
-            },
-            {
-              "text": " your",
-              "startMs": 13639,
-              "endMs": 13839
-            },
-            {
-              "text": " mind",
-              "startMs": 13839,
-              "endMs": 14559
+              "text": "downtime?",
+              "startMs": 12020,
+              "endMs": 12500
             }
           ]
         },
         {
-          "startMs": 9559,
-          "endMs": 12000,
-          "text": "every day this is where EAB telematics",
+          "startMs": 8100,
+          "endMs": 9980,
+          "text": "Run through your mind every day.",
           "sourceSegments": [
             {
+              "text": "Run",
+              "startMs": 13100,
+              "endMs": 13260
+            },
+            {
+              "text": "through",
+              "startMs": 13260,
+              "endMs": 13500
+            },
+            {
+              "text": "your",
+              "startMs": 13500,
+              "endMs": 13640
+            },
+            {
+              "text": "mind",
+              "startMs": 13640,
+              "endMs": 14000
+            },
+            {
               "text": "every",
-              "startMs": 14559,
-              "endMs": 14920
+              "startMs": 14000,
+              "endMs": 14640
             },
             {
-              "text": " day",
-              "startMs": 14920,
-              "endMs": 15799
+              "text": "day.",
+              "startMs": 14640,
+              "endMs": 14980
+            }
+          ]
+        },
+        {
+          "startMs": 10660,
+          "endMs": 12000,
+          "text": "This is where ETAP Telematics",
+          "sourceSegments": [
+            {
+              "text": "This",
+              "startMs": 15660,
+              "endMs": 16020
             },
             {
-              "text": " this",
-              "startMs": 15799,
-              "endMs": 16240
+              "text": "is",
+              "startMs": 16020,
+              "endMs": 16299
             },
             {
-              "text": " is",
-              "startMs": 16240,
-              "endMs": 16400
+              "text": "where",
+              "startMs": 16299,
+              "endMs": 16520
             },
             {
-              "text": " where",
-              "startMs": 16400,
-              "endMs": 16560
+              "text": "E",
+              "startMs": 16520,
+              "endMs": 16740
             },
             {
-              "text": " EAB",
-              "startMs": 16560,
-              "endMs": 16960
+              "text": "-Tab",
+              "startMs": 16740,
+              "endMs": 16840
             },
             {
-              "text": " telematics",
-              "startMs": 16960,
-              "endMs": 17640
+              "text": "Telematics",
+              "startMs": 16840,
+              "endMs": 17400
             }
           ]
         }
-      ]
+      ],
+      "origin": "Local full-source MacWhisper transcription, WhisperKit Large v3 Turbo; performed by root without a paid service or history.",
+      "humanVerified": false,
+      "limitation": "Automatic transcription; not human-verified and may contain errors.",
+      "normalizations": [
+        {
+          "from": "full cost",
+          "to": "fuel cost",
+          "justification": "On-screen question card says fuel costs; retain spoken singular cost."
+        },
+        {
+          "from": "E-Tab",
+          "to": "ETAP",
+          "justification": "Official brand/logo/title identifies ETAP."
+        }
+      ],
+      "normalizationEvidence": {
+        "sourceFile": ".launch-input/audio-audit/etap-source-filmstrip.jpg",
+        "sourceSha256": "fee752fa3a901f9b1ce4ffa70e58216b17e9455d087101827130ebd30ff0fdcb"
+      }
     }
   },
   {
