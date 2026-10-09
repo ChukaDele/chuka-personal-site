@@ -5,11 +5,58 @@ gsap.registerPlugin(ScrollTrigger);
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+const reduce = motionPreference.matches;
 const place = () => { const t = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null; scrollTo({ top: t ? t.getBoundingClientRect().top + scrollY - 20 : 0, behavior: 'instant' }); };
 if (location.hash.length > 1) { place(); addEventListener('load', place, { once: true }); }
 const ARROW = '<svg viewBox="0 0 20 14" aria-hidden="true"><path d="M1 7h17M12 1l6 6-6 6"/></svg>';
 $$('.arr').forEach((a) => (a.innerHTML = ARROW + ARROW));
+
+/* ---------- videos: visible, silent playback; native controls keep the final say ---------- */
+let videoPageActive = true;
+const videos = $$('video').map((video) => {
+  let manualPause = false, ownPauses = 0, pending = false;
+  // Set the live property too: the HTML attribute alone is only the default.
+  video.muted = true;
+  const visible = () => {
+    const r = video.getBoundingClientRect();
+    return videoPageActive && !document.hidden && r.width > 0 && r.height > 0 &&
+      r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth;
+  };
+  const pause = () => {
+    if (!video.paused) { ownPauses++; video.pause(); }
+  };
+  video.addEventListener('pause', () => {
+    if (ownPauses) ownPauses--;
+    else manualPause = true;
+  });
+  video.addEventListener('play', () => {
+    if (!visible()) { pause(); return; }
+    manualPause = false;
+  });
+  const sync = () => {
+    if (!visible()) { pause(); return; }
+    if (motionPreference.matches || manualPause || pending || !video.paused || video.ended) return;
+    // Keep preload="none"; play itself starts the first demand fetch, in view only.
+    video.muted = true;
+    pending = true;
+    video.play().catch((error) => {
+      // Leaving view can abort an in-flight play; that is not a manual pause.
+      if (error.name !== 'AbortError') manualPause = true;
+    }).finally(() => { pending = false; });
+  };
+  return { sync, pause };
+});
+const syncVideos = () => videos.forEach((video) => video.sync());
+syncVideos();
+addEventListener('load', syncVideos, { once: true });
+document.addEventListener('visibilitychange', syncVideos);
+motionPreference.addEventListener('change', () => {
+  if (motionPreference.matches) videos.forEach((video) => video.pause());
+  else syncVideos();
+});
+addEventListener('pagehide', () => { videoPageActive = false; syncVideos(); });
+addEventListener('pageshow', () => { videoPageActive = true; syncVideos(); });
 
 /* ---------- sound: real recordings only, dropped into /audio. Nothing synthesised. ---------- */
 const files = JSON.parse(document.body.dataset.audio || '[]');
@@ -136,9 +183,9 @@ function Reveal(c, o) {
 }
 const reveals = $$('canvas[data-reveal]').map((c) => new Reveal(c, JSON.parse(c.dataset.reveal)));
 let tick = 0;
-addEventListener('scroll', () => { if (!tick) tick = requestAnimationFrame(() => { tick = 0; reveals.forEach((r) => r.scroll()); }); }, { passive: true });
+addEventListener('scroll', () => { if (!tick) tick = requestAnimationFrame(() => { tick = 0; syncVideos(); reveals.forEach((r) => r.scroll()); }); }, { passive: true });
 let rz = 0;
-addEventListener('resize', () => { if (!rz) rz = requestAnimationFrame(() => { rz = 0; reveals.forEach((r) => r.size()); }); });
+addEventListener('resize', () => { if (!rz) rz = requestAnimationFrame(() => { rz = 0; syncVideos(); reveals.forEach((r) => r.size()); }); });
 
 /* ---------- the scroll: a sheet of paper unrolls from the foot of the screen and carries you to the next page ---------- */
 const sheetEl = $('#sheet'), label = $('p', sheetEl), word = $('.w', sheetEl), quill = $('.quill', sheetEl), flat = $('.flat', sheetEl);

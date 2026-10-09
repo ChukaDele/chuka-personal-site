@@ -79,7 +79,7 @@ test('Bredge excludes the unsupported first-month engagement delivery claim', ()
   assert.doesNotMatch(JSON.stringify(bredge), /most engagements|first[\s-]+month|30[\s-]+days/i);
 });
 
-test('all four Part videos hint demand loading and retain responsive, labelled manual playback', () => {
+test('all four Part videos retain demand loading and labelled, muted native controls', () => {
   const renderer = read('../src/pages/work-[id].astro');
   const tag = renderer.match(/<video\b[^>]*>/)[0];
   assert.match(tag, /\bcontrols\b/);
@@ -91,16 +91,12 @@ test('all four Part videos hint demand loading and retain responsive, labelled m
   assert.match(tag, /aria-label=\{p.video.label\}/);
   assert.match(tag, /aria-describedby=/);
   assert.doesNotMatch(tag, /autoplay|loop/i);
-  // The native muted attribute also sets defaultMuted, without a JS playback owner.
-  assert.match(tag, /muted=\{p.video.defaultMuted\}/);
-  assert.equal(work('honeycoin').parts.find(p => p.video).video.defaultMuted, true);
-  assert.equal(work('etap').parts.find(p => p.video).video.defaultMuted, false);
-  assert.equal(media.find(m => m.id === 'H-V1').defaultMuted, true);
-  assert.equal(media.find(m => m.id === 'E-V1').defaultMuted, false);
+  // Owner supersession, 2026-10-09: all videos start muted, including ETAP.
+  // Historical per-asset defaults remain provenance, not playback policy.
+  assert.match(tag, /\bmuted\s/);
   assert.match(renderer, /<figcaption id=\{`\$\{w.id\}-\$\{p.word\}-video-caption`\}/);
   assert.match(read('../src/styles/global.css'), /\.case-video video\{[^}]*width:100%;height:auto;object-fit:contain/);
-  // No JS playback owner: reduced-motion users retain the static poster until intentional play.
-  assert.doesNotMatch(read('../src/scripts/site.js'), /\bvideo\b|case-video/);
+  assert.match(read('../src/scripts/site.js'), /const videos = \$\$\('video'\)/);
 });
 
 test('captions separate presentation figures, personal role, studio authorship and dated evidence', () => {

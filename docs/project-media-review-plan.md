@@ -94,3 +94,13 @@ The existing Part/Pic renderer receives only an opt-in full-width image layout a
 17 focused curated-media/association tests pass, including all local receipt/audio evidence checks with no skips. Six source-only identity, Surface, metadata, library and icon checks pass. The supplied R-I1 original hash matches its receipt; copied derivatives match byte-for-byte. The existing provenance, dimensions, dated Surface and video/caption gates remain in force. Declared lint commands run directly through Node, with changed JS/tests also syntax-checked; whitespace checks pass.
 
 No build, browser, network, deployment, push or paid operation was performed. Controller owns the build slot, authenticated transport, GitHub/Cloudflare operations, remote visual and functional QA, and fresh independent exact-SHA review before publication. Full-width composition and responsive readability remain to be checked remotely; source tests cannot establish visual acceptance.
+
+## Owner supersession — 9 October 2026: muted autoplay
+
+The owner now requests silent autoplay for ALL videos. This supersedes the manual-only playback, HoneyCoin-only mute and ETAP unmuted-default requirements recorded above. Historical asset metadata remains provenance; the shared renderer now gives every video native controls, playsinline and a muted default.
+
+The existing site.js scroll/resize lifecycle checks actual viewport intersection before automatic play and pauses offscreen, on document hide and on page exit. The live muted property is set before each automatic play. Native unmute remains a user choice during playback; automatic resumption starts silent. Manual pause persists, ended clips do not restart, rejected autoplay falls back to native play, and reduced motion keeps manual muted playback (including live preference changes). No loops were added.
+
+Preload remains none even at play time; no script load or preload escalation occurs offscreen. Browser request behavior still needs exact-SHA network verification by the parent. Captions, transcript, full aspect ratio, media bytes, case prose and provenance remain unchanged. Parent owns builds, transport, browser QA, independent review and production; this increment is source-only.
+
+Source validation: 24 focused media, association and playback checks plus six source-only metadata/identity/asset regressions pass. All five declared lint commands pass through direct Node syntax checks, as do the changed test files and Git whitespace check. No build, server, browser, push or deployment was run.
