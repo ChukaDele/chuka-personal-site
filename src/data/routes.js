@@ -67,8 +67,8 @@ export const pages = {
 // Draft reuses the approved portrait share image; it has its own page copy.
 pages['/playground.html'] = {
   ...pages['/'],
-  title: 'Playground — Draft | Chuka Dele',
-  contextualTitle: 'Playground — Draft | Chuka Dele-Oyeleru',
+  title: 'Playground draft | Chuka Dele',
+  contextualTitle: 'Playground draft | Chuka Dele-Oyeleru',
   description: 'A draft collection of colour and typography interactions, alongside selected Rvysion studio motion with authorship credits.',
   contextualDescription: 'A draft collection of colour and typography interactions, alongside selected Rvysion studio motion with authorship credits.',
   noindex: true,
