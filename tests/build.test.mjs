@@ -230,7 +230,7 @@ test(`rendered metadata, JSON-LD and indexing (${process.env.ALLOW_INDEXING === 
       ['/favicon-512.png', 'icon', '512x512', 'image/png'],
       ['/apple-touch-icon.png', 'apple-touch-icon', '180x180'],
     ]) {
-      const matches = links.filter(link => link.href === href && link.rel === rel && link.sizes === sizes && (!type || link.type === type));
+      const matches = links.filter(link => link.href === `${href}?v=c-mark-v2` && link.rel === rel && link.sizes === sizes && (!type || link.type === type));
       assert.equal(matches.length, 1, `${path}: ${href}`);
       assert.deepEqual(readFileSync(`dist${href}`), readFileSync(`public${href}`));
     }

@@ -18,6 +18,40 @@ const env = {
 };
 const fetch = (path, overrides = {}, init = {}) => worker.fetch(new Request(`https://chukadele.com${path}`, init), { ...env, ...overrides });
 
+test('versioned favicon queries reach assets unchanged for GET and HEAD', async () => {
+  for (const [path, type] of [
+    ['/favicon.ico', 'image/x-icon'],
+    ['/favicon.svg', 'image/svg+xml'],
+    ...[32, 48, 192, 512].map(size => [`/favicon-${size}.png`, 'image/png']),
+    ['/apple-touch-icon.png', 'image/png'],
+  ]) {
+    const bytes = readFileSync(`public${path}`);
+    for (const method of ['GET', 'HEAD']) {
+      const url = `https://chukadele.com${path}?v=c-mark-v2`;
+      let calls = 0;
+      const response = await worker.fetch(new Request(url, { method }), {
+        ...env,
+        ASSETS: { async fetch(request) {
+          calls++;
+          assert.equal(request.url, url);
+          assert.equal(request.method, method);
+          return new Response(method === 'HEAD' ? null : bytes, { headers: {
+            'Content-Type': type,
+            'Cache-Control': 'public, max-age=0, must-revalidate',
+          } });
+        } },
+      });
+      assert.equal(calls, 1);
+      assert.equal(response.status, 200);
+      assert.equal(response.headers.get('Location'), null);
+      assert.equal(response.headers.get('Content-Type'), type);
+      assert.equal(response.headers.get('Cache-Control'), 'public, max-age=0, must-revalidate');
+      if (method === 'HEAD') assert.equal(response.body, null);
+      else assert.deepEqual(Buffer.from(await response.arrayBuffer()), bytes);
+    }
+  }
+});
+
 test('every legacy route redirects directly with query and provenance', async () => {
   for (const [from, to] of Object.entries(redirects)) {
     for (const suffix of ['', '/']) {
