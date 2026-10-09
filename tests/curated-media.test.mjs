@@ -79,12 +79,14 @@ test('Bredge excludes the unsupported first-month engagement delivery claim', ()
   assert.doesNotMatch(JSON.stringify(bredge), /most engagements|first[\s-]+month|30[\s-]+days/i);
 });
 
-test('Part video contract is responsive, labelled and manual-play even with reduced motion', () => {
+test('all four Part videos hint demand loading and retain responsive, labelled manual playback', () => {
   const renderer = read('../src/pages/work-[id].astro');
   const tag = renderer.match(/<video\b[^>]*>/)[0];
   assert.match(tag, /\bcontrols\b/);
   assert.match(tag, /\bplaysinline\b/);
-  assert.match(tag, /preload="metadata"/);
+  assert.equal(videos.length, 4);
+  assert.match(tag, /preload="none"/);
+  assert.match(tag, /width=\{p.video.width\} height=\{p.video.height\}/);
   assert.match(tag, /poster=\{`img\/\$\{p.video.poster\}.webp`\}/);
   assert.match(tag, /aria-label=\{p.video.label\}/);
   assert.match(tag, /aria-describedby=/);
