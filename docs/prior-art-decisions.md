@@ -33,3 +33,15 @@ the same revalidation policy as other HTML files. No SPA fallback or SSR runtime
 Canonical/social metadata belongs to Astro; build and runtime indexing are set
 together by the deploy script. Only `https://chukadele.com` can be indexed, after
 the existing exact-SHA indexing promotion. Notes remains noindex.
+
+## CONDITIONAL ADOPT — Lenis for controlled scrolling experiments
+
+Lenis 1.3.26 is an **optional project-scoped dependency**, not a default global
+scroll replacement. The existing Astro site already uses GSAP ScrollTrigger,
+canvas reveals, animated page transitions and native scrolling. To avoid
+breaking keyboard navigation, mobile native input and nested dialogs, Lenis
+runs only on desktop with an explicit `?lenis-preview=1` comparison flag.
+
+The baseline is always native. Current code is a reversible pilot, not production
+acceptance. Its GSAP ticker integration, teardown conditions, browser/device QA
+criteria and go/no-go decision are documented in [Lenis pilot](lenis-pilot.md).
