@@ -16,3 +16,7 @@ All cover images are stored locally and used only to identify the books in Chuka
 ## Founders podcast
 
 The website, YouTube channel and Spotify show links were resolved from the official Founders website on 10 August 2026.
+
+## Curated project media — 9 October 2026
+
+The owner-approved narrowed selection, attribution boundaries and placement decisions are recorded in [the project media review plan](project-media-review-plan.md). [The media ledger](curated-media.json) records the 11 integrated IDs and approved input hashes. Studio presentations are credited separately from Chuka’s contribution; interface figures are not presented as measured outcomes. Source images and reviewed posters were converted to WebP without cropping. Approved MP4 bytes are unchanged. No historical artwork or generated media was added.

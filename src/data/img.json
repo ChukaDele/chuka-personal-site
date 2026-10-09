@@ -173,5 +173,60 @@
  "ph-5": {
   "w": 900,
   "h": 1200
+ },
+ "surface-home-20261009": {
+  "w": 2880,
+  "h": 1974,
+  "sm": true
+ },
+ "surface-candidates-20261009": {
+  "w": 2880,
+  "h": 1974,
+  "sm": true
+ },
+ "honeycoin-product-13": {
+  "w": 2228,
+  "h": 1256,
+  "sm": true
+ },
+ "honeycoin-product-15": {
+  "w": 2228,
+  "h": 1257,
+  "sm": true
+ },
+ "honeycoin-product-07-poster": {
+  "w": 1200,
+  "h": 814,
+  "sm": true
+ },
+ "idara-product-08": {
+  "w": 2228,
+  "h": 1324,
+  "sm": true
+ },
+ "idara-product-07-poster": {
+  "w": 1200,
+  "h": 998,
+  "sm": true
+ },
+ "etap-fleet-review-excerpt-poster": {
+  "w": 640,
+  "h": 360,
+  "sm": false
+ },
+ "bredge-2": {
+  "w": 1280,
+  "h": 800,
+  "sm": true
+ },
+ "lateral-product-14": {
+  "w": 2228,
+  "h": 1672,
+  "sm": true
+ },
+ "lateral-product-07-poster": {
+  "w": 1200,
+  "h": 676,
+  "sm": true
  }
 }

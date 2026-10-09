@@ -8,23 +8,35 @@ The owner selected **USE SUPPLIED OUTCOME, NO QUOTE**. The added outcome attribu
 
 PR6 is available locally at `origin/content/surface-talent-release-20261008`, exact commit `a9d2ab2f73a0709efe4c8fd2048a66e04b72bad4`. Its two-file diff matches `.launch-input/pr6-exact.diff` byte for byte. The verified reliability contribution, post-internship brief, **8 October 2026** release milestone and relevant regression test are integrated into the `184a32a` draft, preserving the supplied client-attributed outcome without a quote and the current `v=c-mark-v2` favicon tests. The internship dates remain **15 June–4 September 2026**; the **8 September** website handover and **8 October** post-internship application release remain separate events. This is local source integration only; PR6 has not been merged or published by this task.
 
-## Current assets and proposed review
+## Owner-approved curated integration — 9 October 2026
 
-All current image IDs below refer to existing supplied WebP assets in `public/img`, retained unchanged. Proposed material is unapproved and is not asserted to exist or to be cleared for use.
+Goal: d3ffd0fc-c9d8-43f6-8a75-20b4cb77929e. Implementation branch: codex/project-updates-review-20261009, clean baseline 72027c7ded8354880d103995aee52bbf7a54ce46.
 
-| Case | Current images | Proposed material and review criteria |
-| --- | --- | --- |
-| Surface Talent | `surface-1` role setup; `surface-2` pool import; `surface-3` public candidate route. Existing captions date the captures to 22 September 2026. | Review the public website, role setup, import and evidence workflow from the controller’s local pack. Record capture date, version and contribution for each; distinguish internship delivery from later reliability work. Check candidate/client data before selecting any crop. |
-| Rvysion | `rayna-1`, `rayna-2`: Rayna UI and components. | Review broader studio work. Attribute each asset to the relevant project, studio contributors and Chuka’s specific contribution; do not imply that studio visuals are all his design work. |
-| HoneyCoin | `honey-1` product; `honey-2` wallet/transfer flows; `honey-3` brand. | Review product flows and original motion, with delivery leadership through Rvysion distinguished from design/engineering authorship. |
-| Idara | `idara-3` platform; `idara-1` registration/compliance proposition; `idara-2` registration services. | Review registration, compliance and original motion from the relevant rebuild; identify version and product/service contribution through Rvysion. |
-| ETAP | `etap-1` product; `etap-video` launch; `etap-event` event; `etap-2` fleet scoring. | Review original launch, fleet and event material. Preserve team context, presenter attribution and the distinction between product evidence and personal operating outcomes. |
-| The Bredge | `bredge-1` client-facing service; `bredge-3` sample reporting build. | Review the actual service’s current state. Label samples and work in progress accurately; do not turn planned capabilities into delivered outcomes. |
+The owner approved the recommended pack, then explicitly narrowed the main portfolio to the strongest work rather than a portfolio dump. This selection supersedes the broader selected_ids and older placement suggestions in the local approval receipts. Exact integrated whitelist: **S-I1 S-I2 H-I2 H-I3 H-V1 I-I1 I-V1 E-V1 B-I2 R-I2 R-V2**.
 
-## Owner review before all media uploads
+| Case | Curated placement |
+| --- | --- |
+| Surface Talent | S-I1 website homepage becomes the case hero. S-I2 replaces the older candidate capture. Both are public staging captures dated 9 October 2026, not production proof. Existing role/import captures retain their 22 September date. |
+| HoneyCoin | H-I2 accounts/withdrawal and H-I3 funding/payment replace the older gallery; one H-V1 overview in Delivery. Existing hero remains for product context. Studio interface figures are not operating results. |
+| Idara | I-I1 website/order interface becomes the hero; I-V1 service-entry motion in Service. Older gallery removed to avoid repetition. Chuka’s product/service leadership is distinct from studio authorship. |
+| Rvysion | R-I2 Lateral Frontiers hero replaces Rayna imagery; a small Client part includes the full original R-V2 and reviewed poster. Approved role: “I led strategy and the project for the Lateral Frontiers rebrand and new website.” Studio designers and engineers receive design/build credit. Existing factual Rayna own-product narrative and results remain. |
+| ETAP | Only E-V1, the approved 12-second excerpt from original 00:05 to 00:17, replaces the launch still. Credit identifies co-presentation with a colleague. Existing fleet and event evidence remain. |
+| The Bredge | B-I2 problem illustration replaces the B-I1 hero carrying an unsupported engagement claim. Existing B-I3 sample remains, explicitly labelled illustrative figures, not client data or results. No new outcome claims. |
 
-The controller is sourcing the new pack locally in the separate website workspace at `output/project-review-20261009`. Do not duplicate downloads or mutate source projects. This implementation adds no new media to `public` or Git and uploads no media, HTML or quote.
+Do not integrate H-I1, I-I2, E-I1, E-I2, Voxtell, new Rayna media, alternates or a Bredge brand film. Future design explorations belong in a **separate playground**, not this main portfolio. That is local planning only: no new playground route or publishing is included here. No new quote or gift material is included.
 
-Before **any media upload**, the owner must review and approve the exact asset, destination, crop/edit, caption, provenance, rights/privacy checks and per-asset contribution attribution. Local availability is not approval. Maintain a selection record with those fields and the owner’s decision before integration. No invented diagrams or generative screenshots. Any subsequently approved motion must reinforce observation becoming structure and respect reduced-motion preferences with a useful static alternative. Add any newly approved historical source to `content/artworks.ts`.
+## Provenance and rendering
 
-No servers, browsing, pushes, merges or deployments are part of this review. Source validation uses the relevant existing tests, a production build and a whitespace diff check.
+The local approval receipts in .launch-input/approved-project-media and .launch-input/approved-lateral-media authorize the selected assets and destinations. [curated-media.json](curated-media.json) records each integrated ID, source, approved input SHA-256 and reviewed poster SHA-256 where applicable. Original downloads and receipts stay local.
+
+Images follow the existing WebP/full-size plus 900px pattern with original aspect ratio and no crop. Posters use the reviewed frame with encoding conversion only (plus a responsive 900px derivative). All four MP4s are byte-for-byte copies of the approved files: no re-edit, re-encoding or new excerpt. The full Lateral film is approximately 40.8 MB; metadata preload and intentional native playback avoid autoplay downloads.
+
+The existing Part case renderer accepts an optional video field, with native controls, playsinline, metadata preload, dimensions, accessible label, associated caption and fallback link. Videos start at a static poster for every motion preference, including reduced motion; playback requires intentional user action. Existing artwork, favicon and motion code are unchanged. No historical artwork was added.
+
+## Validation and controller handoff
+
+This is local source integration and a clean commit only. The controller owns resource leases and the **one exact-commit preview build** and subsequent browser/review checks. This worker must not use MajorCLI, acquire a build, compile, serve, browse, push, deploy or change production.
+
+Run source checks with `node --test tests/curated-media.test.mjs`, relevant source-only regression checks, `npm run lint` and `GIT_CONFIG_GLOBAL=/dev/null git diff --check`. Source contracts and media hashes do not establish visual acceptance; responsive, accessibility, playback and reduced-motion browser review remain with the controller on the exact committed preview.
+
+Worker validation: all four curated-media tests and the existing identity metadata and Surface release source regressions passed. The npm executable was unreadable in this environment; its five declared lint commands were run directly with `node --check`, plus checks of the changed data and test files. Whitespace checks passed. A source comparison against 72027c7 confirmed all pre-existing claim copy, roles, dates, results and narrative unchanged, excluding the explicitly changed media captions and added Lateral Client part. Every full-size WebP/poster was also compared byte-for-byte with an encoding-only conversion of its approved input. No compile, local server, browser, push or deployment was run.

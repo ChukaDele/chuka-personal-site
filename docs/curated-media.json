@@ -1,0 +1,132 @@
+[
+  {
+    "id": "S-I1",
+    "kind": "image",
+    "name": "surface-home-20261009",
+    "source": "https://surface-talent-staging.thebredge.workers.dev/",
+    "sourceSha256": "9525ed86a3aa5c351331ff4a124518415688734ddfd715840ffa6301ec75ae54",
+    "caption": "Surface Talent website hero. Public staging capture, 9 October 2026.",
+    "imageWidth": 2880,
+    "imageHeight": 1974
+  },
+  {
+    "id": "S-I2",
+    "kind": "image",
+    "name": "surface-candidates-20261009",
+    "source": "https://surface-talent-staging.thebredge.workers.dev/candidates",
+    "sourceSha256": "589431df91c14e8a8585c140c2a6e49e82fa900efcb177d8193f4d7f88a6a8aa",
+    "caption": "Public staging candidate registration route. Captured 9 October 2026 with every field empty.",
+    "imageWidth": 2880,
+    "imageHeight": 1974
+  },
+  {
+    "id": "H-I2",
+    "kind": "image",
+    "name": "honeycoin-product-13",
+    "source": "https://www.rvysion.co/case-studies/honeycoin-product",
+    "sourceSha256": "dbd14264252d71f8c837fded16717888fa32ce2052aa9c0ab2c823514c0f0388",
+    "caption": "HoneyCoin account and withdrawal interfaces, presented by Rvysion. Displayed figures are interface content, not reported operating results.",
+    "imageWidth": 2228,
+    "imageHeight": 1256
+  },
+  {
+    "id": "H-I3",
+    "kind": "image",
+    "name": "honeycoin-product-15",
+    "source": "https://www.rvysion.co/case-studies/honeycoin-product",
+    "sourceSha256": "8eef5d25f518496e18b04ed463e65b165bf494020c4b1fe61f4277cd397b4c92",
+    "caption": "HoneyCoin funding and payment steps, presented by Rvysion. Amounts are interface content, not verified transactions.",
+    "imageWidth": 2228,
+    "imageHeight": 1257
+  },
+  {
+    "id": "H-V1",
+    "kind": "video",
+    "name": "honeycoin-product-07-poster",
+    "source": "https://www.rvysion.co/case-studies/honeycoin-product",
+    "sourceSha256": "fc6e2ea9fc9008c490e971073ebb716faffb316d710794411ad1e41bb0f95e0a",
+    "src": "honeycoin-product-07",
+    "width": 1114,
+    "height": 756,
+    "duration": 8,
+    "posterSourceSha256": "521d3e33c20c603385e598b4f8cc2c6def1f3564503a0b8b0852d76171cc2c7e",
+    "caption": "Original Rvysion motion presentation of HoneyCoin’s business dashboard.",
+    "imageWidth": 1200,
+    "imageHeight": 814
+  },
+  {
+    "id": "I-I1",
+    "kind": "image",
+    "name": "idara-product-08",
+    "source": "https://www.rvysion.co/case-studies/idara-product",
+    "sourceSha256": "11717894222d4b8dec3a57943ccc2e893b48176583d184b16cc4ef43302c5575",
+    "caption": "Idara’s public website and order-status interface, from Rvysion’s studio presentation. This is presentation content.",
+    "imageWidth": 2228,
+    "imageHeight": 1324
+  },
+  {
+    "id": "I-V1",
+    "kind": "video",
+    "name": "idara-product-07-poster",
+    "source": "https://www.rvysion.co/case-studies/idara-product",
+    "sourceSha256": "0b7c5317adffc61384fd88a95f458cfd20291ae981c457886ed52daf2a60a620",
+    "src": "idara-product-07",
+    "width": 2288,
+    "height": 1902,
+    "duration": 4.666667,
+    "posterSourceSha256": "fbca61ef6b0573c20a0c265cd2b5efe965b101a2046d1177a7811092419998d6",
+    "caption": "Original Rvysion animation of Idara’s registration and licensing service entry points.",
+    "imageWidth": 1200,
+    "imageHeight": 998
+  },
+  {
+    "id": "E-V1",
+    "kind": "video",
+    "name": "etap-fleet-review-excerpt-poster",
+    "source": "https://www.youtube.com/watch?v=2c5S8CDZwIM",
+    "sourceSha256": "46b83857d6910fa75dee0f3bd567866e3799f227997fd30e073e81a06958b537",
+    "src": "etap-fleet-review-excerpt",
+    "width": 640,
+    "height": 360,
+    "duration": 12.012,
+    "posterSourceSha256": "528f808dcdb72981d244324097f80af1769e53b1b861b7862d535bbb6ab346ed",
+    "caption": "Co-presenting ETAP for Business’s fleet and telematics film. Official-channel excerpt, original 00:05 to 00:17.",
+    "imageWidth": 640,
+    "imageHeight": 360
+  },
+  {
+    "id": "B-I2",
+    "kind": "image",
+    "name": "bredge-2",
+    "source": "Supplied historical website capture",
+    "sourceSha256": "59788a82030970cec614c98438e8d185bd2c088483f85313d1ead59130084ca7",
+    "caption": "The Bredge website illustrates conflicting customer counts across disconnected systems. The counts illustrate the proposition, not client results.",
+    "imageWidth": 1280,
+    "imageHeight": 800
+  },
+  {
+    "id": "R-I2",
+    "kind": "image",
+    "name": "lateral-product-14",
+    "source": "https://www.rvysion.co/case-studies/lateral-product",
+    "sourceSha256": "ad15a298ecef8a2b44142bc9ccc2c86fc9864c348ad4c5eb9b032bd9dc2d22c6",
+    "caption": "Rvysion studio work: Lateral Frontiers website and investment-thesis presentation.",
+    "imageWidth": 2228,
+    "imageHeight": 1672
+  },
+  {
+    "id": "R-V2",
+    "kind": "video",
+    "name": "lateral-product-07-poster",
+    "source": "https://www.rvysion.co/case-studies/lateral-product",
+    "sourceSha256": "4fe365159fac9846090aa1e79c14adb5c377ce1ced0dd8bb5c60cad6d7dfb7c4",
+    "src": "lateral-product-07",
+    "width": 1920,
+    "height": 1080,
+    "duration": 30,
+    "posterSourceSha256": "35e90d2e157ae87b038aab31f02ea4482950ca9c6632a55554c29556973ff92d",
+    "caption": "Original Rvysion presentation film of the Lateral Frontiers website.",
+    "imageWidth": 1200,
+    "imageHeight": 676
+  }
+]

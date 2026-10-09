@@ -247,6 +247,9 @@ a.cue{color:var(--fg);border-bottom:1px solid var(--line);padding-bottom:4px;mar
 .shots{align-items:start}
 .shots.n1{grid-template-columns:minmax(0,900px)}
 .shots.n2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.case-video{display:grid;gap:8px;min-width:0;margin:24px 0}
+.case-video video{display:block;width:100%;height:auto;object-fit:contain;background:var(--panel)}
+.case-video figcaption{font-size:14px;color:var(--mute)}
 .shots .f{aspect-ratio:auto;background:none}
 .shots img{height:auto;object-fit:initial;filter:none}
 
