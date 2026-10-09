@@ -46,5 +46,6 @@ test('Lenis is loaded only through the explicitly gated pilot', () => {
   assert.match(pilot, /lenis\.destroy\(\)/);
   assert.match(pilot, /ScrollTrigger\.update\(\)/);
   assert.match(pilot, /reducedMotion\.matches/);
+  assert.match(pilot, /anchors: \{ immediate: true \}/);
   assert.match(pilot, /prevent: \(node\)/);
 });
