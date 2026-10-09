@@ -37,11 +37,15 @@ const ask = { etap: ['Hiring for operations?', 'hiring'], 'surface-talent': ['Hi
       <h2>{p.title}</h2>
       {p.text && <p>{p.text}</p>}
       {p.video && <figure class="case-video">
-        <video controls playsinline preload="metadata" poster={`img/${p.video.poster}.webp`} width={p.video.width} height={p.video.height} aria-label={p.video.label} aria-describedby={`${w.id}-${p.word}-video-caption`}>
+        <video controls playsinline muted={p.video.defaultMuted} preload="metadata" poster={`img/${p.video.poster}.webp`} width={p.video.width} height={p.video.height} aria-label={p.video.label} aria-describedby={`${w.id}-${p.word}-video-caption`}>
           <source src={`video/${p.video.src}.mp4`} type="video/mp4" />
+          {p.video.captions && <track kind="captions" src={p.video.captions.src} srclang={p.video.captions.language} label={p.video.captions.label} />}
           <a href={`video/${p.video.src}.mp4`}>Watch {p.video.label}</a>
         </video>
-        <figcaption id={`${w.id}-${p.word}-video-caption`}>{p.video.caption}</figcaption>
+        <figcaption id={`${w.id}-${p.word}-video-caption`}>
+          {p.video.caption}
+          {p.video.captions && <p>English automatic captions and <a href={p.video.captions.transcript}>plain text transcript (automatic)</a> from the <a href={p.video.captions.sourceURL}>official ETAP video</a>. Automatic wording may contain errors.</p>}
+        </figcaption>
       </figure>}
       {p.steps && <div class="steps">{p.steps.map(([k, t]) => <div><h3>{k}</h3><p>{t}</p></div>)}</div>}
       {p.list && <ul class="plain">{p.list.map(([k, v]) => <li><b>{k}</b><span>{v}</span></li>)}</ul>}

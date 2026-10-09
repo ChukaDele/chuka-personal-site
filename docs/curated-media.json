@@ -52,7 +52,8 @@
     "posterSourceSha256": "521d3e33c20c603385e598b4f8cc2c6def1f3564503a0b8b0852d76171cc2c7e",
     "caption": "Original Rvysion motion presentation of HoneyCoin’s business dashboard.",
     "imageWidth": 1200,
-    "imageHeight": 814
+    "imageHeight": 814,
+    "defaultMuted": true
   },
   {
     "id": "I-I1",
@@ -92,7 +93,302 @@
     "posterSourceSha256": "528f808dcdb72981d244324097f80af1769e53b1b861b7862d535bbb6ab346ed",
     "caption": "Co-presenting ETAP for Business’s fleet and telematics film. Official-channel excerpt, original 00:05 to 00:17.",
     "imageWidth": 640,
-    "imageHeight": 360
+    "imageHeight": 360,
+    "defaultMuted": false,
+    "captions": {
+      "src": "captions/etap-fleet-review-excerpt.en-auto.vtt",
+      "language": "en",
+      "label": "English (automatic)",
+      "transcript": "captions/etap-fleet-review-excerpt.en-auto.txt",
+      "sourceURL": "https://www.youtube.com/watch?v=2c5S8CDZwIM",
+      "sourceFile": ".launch-input/approved-project-media/etap-publisher-auto-captions.json3",
+      "sourceSha256": "c275ed544dd873a04297774f2c425cc3728a35435f59d2a3d8cc04ce6206ef5e",
+      "automatic": true,
+      "originalStartMs": 5000,
+      "originalEndMs": 17000,
+      "excerptStartMs": 0,
+      "excerptEndMs": 12000,
+      "timingMethod": "Word starts are event tStartMs plus segment tOffsetMs (default 0). Word ends use the next segment start; the last word ends at the earlier of event end and next text event start, excluding rolling-caption retention. Select word intervals overlapping [5000,17000), subtract 5000 and clamp to [0,12000]. Group retained words by source event. Words unchanged.",
+      "cues": [
+        {
+          "startMs": 0,
+          "endMs": 1600,
+          "text": "time and intact am my driver sticking to",
+          "sourceSegments": [
+            {
+              "text": "time",
+              "startMs": 4920,
+              "endMs": 5080
+            },
+            {
+              "text": " and",
+              "startMs": 5080,
+              "endMs": 5279
+            },
+            {
+              "text": " intact",
+              "startMs": 5279,
+              "endMs": 5680
+            },
+            {
+              "text": " am",
+              "startMs": 5680,
+              "endMs": 5759
+            },
+            {
+              "text": " my",
+              "startMs": 5759,
+              "endMs": 5879
+            },
+            {
+              "text": " driver",
+              "startMs": 5879,
+              "endMs": 6160
+            },
+            {
+              "text": " sticking",
+              "startMs": 6160,
+              "endMs": 6399
+            },
+            {
+              "text": " to",
+              "startMs": 6399,
+              "endMs": 6600
+            }
+          ]
+        },
+        {
+          "startMs": 1600,
+          "endMs": 3400,
+          "text": "the rout or taking detour that are not",
+          "sourceSegments": [
+            {
+              "text": "the",
+              "startMs": 6600,
+              "endMs": 6720
+            },
+            {
+              "text": " rout",
+              "startMs": 6720,
+              "endMs": 7040
+            },
+            {
+              "text": " or",
+              "startMs": 7040,
+              "endMs": 7200
+            },
+            {
+              "text": " taking",
+              "startMs": 7200,
+              "endMs": 7480
+            },
+            {
+              "text": " detour",
+              "startMs": 7480,
+              "endMs": 8000
+            },
+            {
+              "text": " that",
+              "startMs": 8000,
+              "endMs": 8080
+            },
+            {
+              "text": " are",
+              "startMs": 8080,
+              "endMs": 8200
+            },
+            {
+              "text": " not",
+              "startMs": 8200,
+              "endMs": 8400
+            }
+          ]
+        },
+        {
+          "startMs": 3400,
+          "endMs": 5040,
+          "text": "necessary how can I cut full cost and",
+          "sourceSegments": [
+            {
+              "text": "necessary",
+              "startMs": 8400,
+              "endMs": 8800
+            },
+            {
+              "text": " how",
+              "startMs": 8800,
+              "endMs": 8880
+            },
+            {
+              "text": " can",
+              "startMs": 8880,
+              "endMs": 8960
+            },
+            {
+              "text": " I",
+              "startMs": 8960,
+              "endMs": 9080
+            },
+            {
+              "text": " cut",
+              "startMs": 9080,
+              "endMs": 9320
+            },
+            {
+              "text": " full",
+              "startMs": 9320,
+              "endMs": 9639
+            },
+            {
+              "text": " cost",
+              "startMs": 9639,
+              "endMs": 9880
+            },
+            {
+              "text": " and",
+              "startMs": 9880,
+              "endMs": 10040
+            }
+          ]
+        },
+        {
+          "startMs": 5040,
+          "endMs": 6759,
+          "text": "increase the lifespan of my V how can we",
+          "sourceSegments": [
+            {
+              "text": "increase",
+              "startMs": 10040,
+              "endMs": 10320
+            },
+            {
+              "text": " the",
+              "startMs": 10320,
+              "endMs": 10440
+            },
+            {
+              "text": " lifespan",
+              "startMs": 10440,
+              "endMs": 10840
+            },
+            {
+              "text": " of",
+              "startMs": 10840,
+              "endMs": 10960
+            },
+            {
+              "text": " my",
+              "startMs": 10960,
+              "endMs": 11120
+            },
+            {
+              "text": " V",
+              "startMs": 11120,
+              "endMs": 11360
+            },
+            {
+              "text": " how",
+              "startMs": 11360,
+              "endMs": 11440
+            },
+            {
+              "text": " can",
+              "startMs": 11440,
+              "endMs": 11559
+            },
+            {
+              "text": " we",
+              "startMs": 11559,
+              "endMs": 11759
+            }
+          ]
+        },
+        {
+          "startMs": 6759,
+          "endMs": 9559,
+          "text": "reduce down time run through your mind",
+          "sourceSegments": [
+            {
+              "text": "reduce",
+              "startMs": 11759,
+              "endMs": 12280
+            },
+            {
+              "text": " down",
+              "startMs": 12280,
+              "endMs": 12639
+            },
+            {
+              "text": " time",
+              "startMs": 12639,
+              "endMs": 13160
+            },
+            {
+              "text": " run",
+              "startMs": 13160,
+              "endMs": 13440
+            },
+            {
+              "text": " through",
+              "startMs": 13440,
+              "endMs": 13639
+            },
+            {
+              "text": " your",
+              "startMs": 13639,
+              "endMs": 13839
+            },
+            {
+              "text": " mind",
+              "startMs": 13839,
+              "endMs": 14559
+            }
+          ]
+        },
+        {
+          "startMs": 9559,
+          "endMs": 12000,
+          "text": "every day this is where EAB telematics",
+          "sourceSegments": [
+            {
+              "text": "every",
+              "startMs": 14559,
+              "endMs": 14920
+            },
+            {
+              "text": " day",
+              "startMs": 14920,
+              "endMs": 15799
+            },
+            {
+              "text": " this",
+              "startMs": 15799,
+              "endMs": 16240
+            },
+            {
+              "text": " is",
+              "startMs": 16240,
+              "endMs": 16400
+            },
+            {
+              "text": " where",
+              "startMs": 16400,
+              "endMs": 16560
+            },
+            {
+              "text": " EAB",
+              "startMs": 16560,
+              "endMs": 16960
+            },
+            {
+              "text": " telematics",
+              "startMs": 16960,
+              "endMs": 17640
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "B-I2",
@@ -128,7 +424,10 @@
       "output": ".launch-input/approved-lateral-media/lateral-delivery.mp4",
       "destination": "public/video/lateral-product-07.mp4",
       "command": "ffmpeg -i original -map 0:v:0 -map 0:a? -c:v libx264 -preset slow -crf 22 -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart derivative",
-      "commandPlaceholders": { "original": "input", "derivative": "output" },
+      "commandPlaceholders": {
+        "original": "input",
+        "derivative": "output"
+      },
       "containerEncoder": "Lavf62.12.102",
       "videoEncoder": "Lavc62.28.102 libx264",
       "codec": "h264",
@@ -148,7 +447,7 @@
       "ssim": {
         "comparedFrames": 900,
         "y": 0.993634,
-        "u": 0.994480,
+        "u": 0.99448,
         "v": 0.994237,
         "all": 0.993875,
         "decibels": 22.129028,
@@ -161,7 +460,7 @@
     "height": 1080,
     "duration": 30,
     "posterSourceSha256": "35e90d2e157ae87b038aab31f02ea4482950ca9c6632a55554c29556973ff92d",
-    "caption": "Original Rvysion presentation film of the Lateral Frontiers website.",
+    "caption": "Full 30-second Rvysion studio presentation of the Lateral Frontiers website.",
     "imageWidth": 1200,
     "imageHeight": 676
   }

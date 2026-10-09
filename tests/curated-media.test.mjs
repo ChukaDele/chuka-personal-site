@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 import { works } from '../src/data/works.js';
@@ -88,7 +88,13 @@ test('Part video contract is responsive, labelled and manual-play even with redu
   assert.match(tag, /poster=\{`img\/\$\{p.video.poster\}.webp`\}/);
   assert.match(tag, /aria-label=\{p.video.label\}/);
   assert.match(tag, /aria-describedby=/);
-  assert.doesNotMatch(tag, /autoplay|loop|muted/i);
+  assert.doesNotMatch(tag, /autoplay|loop/i);
+  // The native muted attribute also sets defaultMuted, without a JS playback owner.
+  assert.match(tag, /muted=\{p.video.defaultMuted\}/);
+  assert.equal(work('honeycoin').parts.find(p => p.video).video.defaultMuted, true);
+  assert.equal(work('etap').parts.find(p => p.video).video.defaultMuted, false);
+  assert.equal(media.find(m => m.id === 'H-V1').defaultMuted, true);
+  assert.equal(media.find(m => m.id === 'E-V1').defaultMuted, false);
   assert.match(renderer, /<figcaption id=\{`\$\{w.id\}-\$\{p.word\}-video-caption`\}/);
   assert.match(read('../src/styles/global.css'), /\.case-video video\{[^}]*width:100%;height:auto;object-fit:contain/);
   // No JS playback owner: reduced-motion users retain the static poster until intentional play.
@@ -105,6 +111,8 @@ test('captions separate presentation figures, personal role, studio authorship a
   const client = work('rvysion').parts.find(p => p.word === 'Client');
   assert.match(client.text, /I led strategy and the project for the Lateral Frontiers rebrand and new website/);
   assert.match(client.text, /studio designers and engineers delivered the design and build/);
+  assert.equal(client.video.caption, 'Full 30-second Rvysion studio presentation of the Lateral Frontiers website.');
+  assert.doesNotMatch(work('rvysion').shotNote + client.video.caption, /not authenticated|led strategy|designers and engineers/);
   assert.equal(media.find(m => m.id === 'R-V2').duration, 30);
   assert.match(work('rvysion').parts.find(p => p.word === 'Venture').result[1], /Rayna UI/);
   const etap = work('etap').parts.find(p => p.video).video;
@@ -113,4 +121,56 @@ test('captions separate presentation figures, personal role, studio authorship a
   for (const id of ['honeycoin', 'idara']) assert.match(work(id).parts.find(p => p.video).video.caption, /Studio presentation.*not reported results.*Chuka.*studio/i);
   assert.match(work('the-bredge').shotNote, /Illustrative figures.*not client data or reported results/);
   assert.match(work('the-bredge').shots[0][1], /illustrative figures.*not client data or reported results/);
+});
+
+test('ETAP automatic captions and transcript preserve source wording, extent and metadata', () => {
+  const c = media.find(m => m.id === 'E-V1').captions;
+  const v = work('etap').parts.find(p => p.video).video;
+  assert.equal(c.sourceURL, 'https://www.youtube.com/watch?v=2c5S8CDZwIM');
+  assert.equal(c.automatic, true);
+  assert.deepEqual([c.originalStartMs, c.originalEndMs, c.excerptStartMs, c.excerptEndMs], [5000, 17000, 0, 12000]);
+  for (const key of ['src', 'language', 'label', 'transcript', 'sourceURL']) assert.equal(v.captions[key], c[key]);
+  assert.equal(c.language, 'en');
+  assert.equal(c.label, 'English (automatic)');
+  const expected = [
+    [0, 1600, 'time and intact am my driver sticking to'],
+    [1600, 3400, 'the rout or taking detour that are not'],
+    [3400, 5040, 'necessary how can I cut full cost and'],
+    [5040, 6759, 'increase the lifespan of my V how can we'],
+    [6759, 9559, 'reduce down time run through your mind'],
+    [9559, 12000, 'every day this is where EAB telematics'],
+  ];
+  assert.deepEqual(c.cues.map(q => [q.startMs, q.endMs, q.text]), expected);
+  for (const q of c.cues) {
+    assert.ok(q.startMs >= 0 && q.endMs <= 12000 && q.startMs < q.endMs);
+    assert.ok(q.sourceSegments.every(s => s.startMs < 17000 && s.endMs > 5000));
+    assert.equal(q.startMs, Math.max(0, q.sourceSegments[0].startMs - 5000));
+    assert.equal(q.endMs, Math.min(12000, q.sourceSegments.at(-1).endMs - 5000));
+    assert.equal(q.text, q.sourceSegments.map(s => s.text).join('').trim());
+  }
+  const stamp = ms => new Date(ms).toISOString().slice(11, 23);
+  assert.equal(read(`../public/${c.src}`), 'WEBVTT\n\n' + expected.map(([a, b, text]) => `${stamp(a)} --> ${stamp(b)}\n${text}`).join('\n\n') + '\n');
+  const transcript = read(`../public/${c.transcript}`);
+  assert.equal(transcript.split('\n\n')[1], expected.map(([, , text]) => text).join('\n') + '\n');
+  assert.match(transcript, /English transcript \(automatic\)/);
+  assert.ok(transcript.includes(c.sourceURL));
+  const renderer = read('../src/pages/work-[id].astro');
+  assert.match(renderer, /p.video.captions && <track kind="captions" src=\{p.video.captions.src\} srclang=\{p.video.captions.language\} label=\{p.video.captions.label\}/);
+  assert.match(renderer, /English automatic captions/);
+  assert.match(renderer, /href=\{p.video.captions.transcript\}>plain text transcript \(automatic\)/);
+  assert.doesNotMatch(renderer + transcript, /human.verified/i);
+});
+
+const captionSource = new URL('../.launch-input/approved-project-media/etap-publisher-auto-captions.json3', import.meta.url);
+test('local recovered publisher source matches the caption provenance and retained segments', { skip: !existsSync(captionSource) }, () => {
+  const raw = readFileSync(captionSource);
+  const c = media.find(m => m.id === 'E-V1').captions;
+  assert.equal(createHash('sha256').update(raw).digest('hex'), c.sourceSha256);
+  const events = JSON.parse(raw).events.filter(e => e.segs?.some(s => s.utf8.trim()));
+  const segments = events.flatMap((e, i) => e.segs.map((s, j) => ({
+    text: s.utf8,
+    startMs: e.tStartMs + (s.tOffsetMs ?? 0),
+    endMs: j + 1 < e.segs.length ? e.tStartMs + (e.segs[j + 1].tOffsetMs ?? 0) : Math.min(e.tStartMs + e.dDurationMs, events[i + 1]?.tStartMs ?? Infinity),
+  }))).filter(s => s.text.trim() && s.startMs < 17000 && s.endMs > 5000);
+  assert.deepEqual(c.cues.flatMap(q => q.sourceSegments), segments);
 });
