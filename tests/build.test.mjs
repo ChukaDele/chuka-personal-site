@@ -80,7 +80,7 @@ test('Surface Talent distinguishes the internship from post-internship release h
 
   const outcome = surfaceTalent.parts.find(part => part.word === 'Outcome');
   assert.ok(outcome);
-  assert.equal(outcome.title, 'Outcome');
+  assert.equal(outcome.title, 'In use');
   assert.deepEqual(outcome.list, [
     ['Hiring process', 'Assessment and interview analysis supported a hiring process that ended with an August start.'],
     ['Website', 'The client reported that the website generated Surface Talent’s first external inbound enquiry, which became an exclusive retainer.'],
