@@ -69,8 +69,8 @@ pages['/playground.html'] = {
   ...pages['/'],
   title: 'Playground Draft | Chuka Dele',
   contextualTitle: 'Playground Draft | Chuka Dele-Oyeleru',
-  description: 'A draft collection of colour and typography interactions, alongside selected Rvysion studio motion with authorship credits.',
-  contextualDescription: 'A draft collection of colour and typography interactions, alongside selected Rvysion studio motion with authorship credits.',
+  description: 'Two classic-inspired games with portal routes and charged-brick chains, alongside selected Rvysion studio motion with authorship credits.',
+  contextualDescription: 'Two classic-inspired games with portal routes and charged-brick chains, alongside selected Rvysion studio motion with authorship credits.',
   noindex: true,
 };
 

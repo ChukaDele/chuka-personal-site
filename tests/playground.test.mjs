@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
-import { enhancePlayground } from '../src/scripts/playground.js';
 import { pages, indexablePaths } from '../src/data/routes.js';
 import { site } from '../src/data/site.js';
 import worker from '../worker/index.mjs';
@@ -12,57 +11,6 @@ const read = path => readFileSync(new URL(`../${path}`, import.meta.url));
 const page = read('src/pages/playground.astro').toString();
 const receipt = JSON.parse(read('docs/playground-media.json'));
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
-
-test('draft controls update artwork, clamp bounds, reset independently and restore page state', () => {
-  // EventTarget exercises the actual listeners without introducing a DOM dependency.
-  const elements = new Map();
-  for (const selector of ['#colour-range', '#spacing-range', '[data-poster]', '[data-ink-toggle]', '[data-reveal]', '#colour-output', '#spacing-output', '[data-colour-reset]', '[data-type-reset]']) {
-    const attributes = new Map();
-    elements.set(selector, Object.assign(new EventTarget(), {
-      dataset: {}, style: new Map(),
-      setAttribute: (name, value) => attributes.set(name, value),
-      getAttribute: name => attributes.get(name),
-    }));
-    elements.get(selector).style.setProperty = elements.get(selector).style.set;
-  }
-  const get = selector => elements.get(selector);
-  const colour = get('#colour-range');
-  const spacing = get('#spacing-range');
-  Object.assign(colour, { min: '0', max: '100', value: '50' });
-  Object.assign(spacing, { min: '-0.02', max: '0.12', value: '0.02' });
-  const controls = [{ hidden: true }, { hidden: true }];
-  const sync = enhancePlayground({ querySelector: get, querySelectorAll: () => controls });
-  const fire = (selector, type = 'click') => get(selector).dispatchEvent(new Event(type));
-  assert.ok(controls.every(control => !control.hidden));
-  assert.equal(get('[data-reveal]').style.get('--reveal'), '50%');
-  for (const [input, expected] of [['-5', '0%'], ['100', '100%'], ['150', '100%'], ['37', '37%']]) {
-    colour.value = input; fire('#colour-range', 'input');
-    assert.equal(get('[data-reveal]').style.get('--reveal'), expected);
-    assert.equal(get('#colour-output').value, expected);
-  }
-  for (const [input, expected] of [['-1', '-0.02 em'], ['1', '0.12 em'], ['0.07', '0.07 em']]) {
-    spacing.value = input; fire('#spacing-range', 'input');
-    assert.equal(get('#spacing-output').value, expected);
-  }
-  fire('[data-ink-toggle]');
-  assert.equal(get('[data-poster]').dataset.copper, 'true');
-  assert.equal(get('[data-ink-toggle]').getAttribute('aria-pressed'), 'true');
-  fire('[data-ink-toggle]');
-  assert.equal(get('[data-poster]').dataset.copper, 'false');
-  fire('[data-ink-toggle]');
-  fire('[data-colour-reset]');
-  assert.equal(colour.value, '50');
-  assert.equal(spacing.value, '0.07');
-  assert.equal(get('[data-poster]').dataset.copper, 'true');
-  fire('[data-type-reset]');
-  assert.equal(spacing.value, '0.02');
-  assert.equal(get('[data-poster]').style.get('--spacing'), '0.02em');
-  assert.equal(get('[data-poster]').dataset.copper, 'false');
-  colour.value = '81'; spacing.value = '0.1'; sync();
-  assert.equal(get('#colour-output').value, '81%');
-  assert.equal(get('#spacing-output').value, '0.10 em');
-  assert.match(page, /addEventListener\('pageshow', sync\)/);
-});
 
 test('draft has explicit metadata, stays outside navigation and sitemap with indexing enabled', async () => {
   const metadata = pages['/playground.html'];
@@ -106,18 +54,18 @@ test('approved distinct motion and unchanged JPEG posters match their receipts',
   }
 });
 
-test('four studies use accessible defaults, existing artwork and the shared video lifecycle', () => {
+test('arcade replaces retired studies and retains the shared video lifecycle', () => {
   assert.equal((page.match(/<section /g) || []).length, 4);
-  assert.equal((page.match(/Draft interaction study/g) || []).length, 2);
+  assert.equal((page.match(/data-game=/g) || []).length, 2);
   assert.equal((page.match(/Studio motion/g) || []).length, 2);
   assert.equal((page.match(/<video controls playsinline muted preload="none" width=/g) || []).length, 2);
-  assert.doesNotMatch(page, /\bloop\b|\bautoplay\b|object-fit:cover/);
-  assert.match(page, /name="jerome-mono"/);
-  assert.match(page, /name="jerome-tint"/);
-  assert.match(page, /Dürer.*1514.*Colour added/);
+  assert.match(page, /<noscript>/);
   assert.equal((page.match(/data-controls hidden/g) || []).length, 2);
-  assert.match(page, /--reveal:50%/);
+  assert.equal((page.match(/role="status"/g) || []).length, 2);
   assert.match(page, /prefers-reduced-motion:reduce/);
-  assert.doesNotMatch(read('src/scripts/playground.js').toString(), /\.play\(|\.pause\(|keydown|preventDefault|requestAnimationFrame/);
-  assert.match(read('src/scripts/site.js').toString(), /const videos = \$\$\('video'\)/);
+  assert.doesNotMatch(page, /colour-range|spacing-range|data-poster|data-reveal|Pic |typographic rhythm/);
+  assert.doesNotMatch(read('src/scripts/playground.js').toString(), /new Audio|setInterval|setTimeout/);
+  assert.match(read('src/scripts/site.js').toString(), /const videos =/);
+  assert.ok(page.includes('Design &amp; motion: Rvysion studio. Strategy / project leadership: Chuka.'));
+  assert.ok(page.includes('Internal-product strategy / operations: Chuka.'));
 });

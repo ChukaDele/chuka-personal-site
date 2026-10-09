@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import Pic from '../components/Pic.astro';
 import media from '../../docs/playground-media.json';
 const [voxtell, rayna] = media;
 ---
@@ -9,47 +8,57 @@ const [voxtell, rayna] = media;
     <header class="intro">
       <p class="label">Workshop / Draft</p>
       <h1>Playground<span>.</span></h1>
-      <p class="opening">A little room to look, move and try things. Two new interaction studies, alongside selected motion from Rvysion.</p>
+      <p class="opening">Two familiar games. A small change of rules. Take a turn, find a route, make a little space.</p>
       <p class="label">Chuka Dele-Oyeleru · Strategy &amp; Operations</p>
     </header>
 
     <div class="studies">
-      <section class="colour" aria-labelledby="colour-title">
-        <p class="label">01 / Draft interaction study</p>
-        <h2 id="colour-title">From ink to colour.</h2>
-        <figure>
-          <div class="reveal" data-reveal>
-            <Pic name="jerome-mono" alt="Saint Jerome writing in his study, with a lion resting in the foreground." eager sizes="(min-width: 900px) 58vw, 100vw" />
-            <div class="colour-layer" aria-hidden="true"><Pic name="jerome-tint" alt="" eager sizes="(min-width: 900px) 58vw, 100vw" /></div>
+      <section class="arcade loopline" data-game="snake" aria-labelledby="loopline-title">
+        <div class="game-heading">
+          <p class="label">01 / Snake, with a shortcut</p>
+          <h2 id="loopline-title">Loopline<span>↳</span></h2>
+          <p id="snake-rules" class="rules">Collect copper marks. Avoid the walls and your own trail. Enter A, leave B (or B to A), still heading the same way. The pair moves every third mark; watch the letters. If there aren’t two new free cells, the pair stays put. Fill every non-portal cell to win.</p>
+          <p class="instruction">Arrow keys or WASD while focused here. Or use the direction buttons. Escape pauses.</p>
+        </div>
+        <div class="machine">
+          <div class="scoreboard"><p>Marks <strong data-score>0</strong></p><p><span data-storage>Best on this device</span> <strong data-best>0</strong></p></div>
+          <canvas width="432" height="432" tabindex="0" role="img" aria-label="Loopline game board: snake, copper mark and paired portals A and B" aria-describedby="snake-rules snake-status">Loopline requires JavaScript and Canvas support.</canvas>
+          <p class="board-detail" data-detail>Portals A ↔ B. New routes every third mark.</p>
+          <p class="status" id="snake-status" data-status role="status" aria-live="polite" aria-atomic="true">Ready when you are.</p>
+          <div data-controls hidden>
+            <div class="actions"><button type="button" data-start>Start</button><button type="button" data-pause disabled>Pause</button><button type="button" data-restart disabled>Restart</button></div>
+            <div class="directions compass" aria-label="Loopline directions">
+              <button type="button" data-direction="up" aria-label="Turn up">↑</button>
+              <button type="button" data-direction="left" aria-label="Turn left">←</button>
+              <button type="button" data-direction="down" aria-label="Turn down">↓</button>
+              <button type="button" data-direction="right" aria-label="Turn right">→</button>
+            </div>
           </div>
-          <figcaption>Albrecht Dürer, <cite>Saint Jerome in His Study</cite>, 1514. Public domain. Colour added.</figcaption>
-        </figure>
-        <p class="instruction">Move the dividing line to see the added colour. Half revealed to begin.</p>
-        <div class="controls" data-controls hidden>
-          <label for="colour-range">Colour revealed <output id="colour-output" for="colour-range">50%</output></label>
-          <input id="colour-range" type="range" min="0" max="100" step="1" value="50" aria-controls="colour-output" />
-          <button type="button" data-colour-reset>Reset colour</button>
         </div>
       </section>
 
-      <section class="type-study" aria-labelledby="type-title">
-        <p class="label">02 / Draft interaction study</p>
-        <h2 id="type-title">Space to think.</h2>
-        <div class="poster" data-poster>
-          <p class="poster-note">Observation / structure</p>
-          <p class="poster-words">Look.<br />Think.<br />Make.</p>
-          <p class="poster-note">A study in typographic rhythm.</p>
+      <section class="arcade ricochet" data-game="breakout" aria-labelledby="ricochet-title">
+        <div class="game-heading">
+          <p class="label">02 / Breakout, with a chain reaction</p>
+          <h2 id="ricochet-title">Ricochet<span>↗</span></h2>
+          <p id="breakout-rules" class="rules">Clear the wall in three lives. The paddle’s edges aim the bounce. Copper bricks marked + clear their immediate neighbours above, below, left and right. Reach another + and the chain continues. Every brick is worth 10.</p>
+          <p class="instruction">Hold ← / → or A / D while focused here. Drag on the board, or hold the buttons below. Escape pauses. After a miss, Resume serves the next ball.</p>
         </div>
-        <p class="instruction">Give the letters room. Change the ink.</p>
-        <div class="controls" data-controls hidden>
-          <label for="spacing-range">Letter spacing <output id="spacing-output" for="spacing-range">0.02 em</output></label>
-          <input id="spacing-range" type="range" min="-0.02" max="0.12" step="0.01" value="0.02" aria-controls="spacing-output" />
-          <div class="actions">
-            <button type="button" data-ink-toggle aria-pressed="false">Copper ink</button>
-            <button type="button" data-type-reset>Reset type</button>
+        <div class="machine">
+          <div class="scoreboard"><p>Score <strong data-score>0</strong></p><p><span data-storage>Best on this device</span> <strong data-best>0</strong></p></div>
+          <canvas width="480" height="360" tabindex="0" role="img" aria-label="Ricochet game board: paddle, ball and brick wall with copper charged bricks" aria-describedby="breakout-rules breakout-status">Ricochet requires JavaScript and Canvas support.</canvas>
+          <p class="board-detail" data-detail>3 lives · 40 bricks</p>
+          <p class="status" id="breakout-status" data-status role="status" aria-live="polite" aria-atomic="true">Ready when you are.</p>
+          <div data-controls hidden>
+            <div class="actions"><button type="button" data-start>Start</button><button type="button" data-pause disabled>Pause</button><button type="button" data-restart disabled>Restart</button></div>
+            <div class="directions paddle-controls" aria-label="Ricochet paddle">
+              <button type="button" data-direction="left">← Left</button><button type="button" data-direction="right">Right →</button>
+            </div>
           </div>
         </div>
       </section>
+
+      <noscript><p class="no-js">The games need JavaScript. The rules and both studio films are still here; use each film’s playback controls.</p></noscript>
 
       <section class="motion voxtell" aria-labelledby="voxtell-title">
         <p class="label">03 / Studio motion</p>
@@ -83,43 +92,55 @@ const [voxtell, rayna] = media;
   import { enhancePlayground } from '../scripts/playground.js';
   const root = document.querySelector('[data-playground]');
   if (root) {
-    const sync = enhancePlayground(root);
-    window.addEventListener('pageshow', sync);
+    enhancePlayground(root);
   }
 </script>
 
 <style>
   .playground{max-width:1600px;margin:auto;padding:clamp(130px,14vw,200px) var(--gut) 64px}
-  .intro{max-width:900px;margin-bottom:clamp(48px,8vw,120px)}
-  h1{font-family:var(--display);font-size:clamp(76px,15vw,210px);font-weight:400;line-height:.95;margin:20px 0 28px}
-  h1 span{color:var(--mark)}
+  .intro{max-width:1000px;margin-bottom:clamp(48px,7vw,100px)}
+  h1{font-family:var(--display);font-size:clamp(70px,14vw,190px);font-weight:400;line-height:.95;margin:20px 0 28px}
+  h1 span,h2 span{color:var(--mark)}
   .opening{font-size:clamp(22px,2.4vw,32px);line-height:1.25;max-width:38ch;margin-bottom:20px}
   .studies{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(56px,8vw,120px) clamp(24px,4vw,64px);align-items:start}
   section{min-width:0}
-  .colour{grid-column:1 / 8}
-  .type-study{grid-column:9 / 13;margin-top:clamp(40px,12vw,180px)}
+  .arcade{border-top:1px solid var(--line);padding-top:20px}
+  .loopline{grid-column:1 / 8}
+  .ricochet{grid-column:8 / -1;margin-top:clamp(80px,17vw,260px)}
+  .game-heading{max-width:56ch}
+  h2{font-weight:400;line-height:1.05;margin:8px 0 24px;font-size:clamp(24px,2.4vw,34px)}
+  .arcade h2{font-family:var(--display);font-size:clamp(48px,6vw,88px);display:flex;justify-content:space-between;gap:10px}
+  .rules{font-size:18px;line-height:1.5}
+  .instruction{font-size:16px;line-height:1.5;margin:16px 0 24px;color:var(--mute)}
+  .machine{border:1px solid var(--line);padding:clamp(12px,2vw,24px)}
+  .scoreboard{display:flex;justify-content:space-between;gap:16px;margin-bottom:16px;font-size:14px}
+  .scoreboard p{display:grid;gap:4px}
+  .scoreboard p:last-child{text-align:right}
+  .scoreboard strong{font-family:var(--display);font-size:32px;font-weight:400;line-height:1;font-variant-numeric:tabular-nums}
+  canvas{display:block;width:100%;height:auto;background:#eee8db;border:2px solid #91472f}
+  .ricochet canvas{touch-action:none}
+  .board-detail{font-size:14px;line-height:1.4;margin-top:12px;color:var(--mute)}
+  .status{font-size:16px;line-height:1.4;min-height:3em;margin:12px 0}
+  .actions,.directions{display:flex;flex-wrap:wrap;gap:8px}
+  .directions{margin-top:16px}
+  button{min-width:44px;min-height:44px;border:1px solid var(--line);padding:10px 14px;font:inherit;touch-action:manipulation}
+  button[data-start]{background:var(--paper);color:var(--bg)}
+  button:disabled{opacity:.45;cursor:default}
+  button:focus-visible,canvas:focus-visible{outline:3px solid var(--mark);outline-offset:4px}
+  .compass{display:grid;grid-template-columns:repeat(3,48px);justify-content:center}
+  .compass button:first-child{grid-column:2}
+  .compass button:nth-child(2){grid-column:1}
+  .paddle-controls{justify-content:space-between}
+  .paddle-controls button{min-width:100px;touch-action:none;user-select:none}
+  [hidden]{display:none!important}
   .voxtell{grid-column:3 / 12}
   .rayna{grid-column:1 / -1}
-  h2{font-size:clamp(24px,2.4vw,34px);font-weight:400;line-height:1.15;margin:8px 0 24px}
-  .reveal{position:relative;--reveal:50%;background:var(--paper)}
-  .reveal :global(img){width:100%;height:auto}
-  .colour-layer{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--reveal)) 0 0)}
-  .poster{--spacing:.02em;background:var(--paper);color:var(--bg);padding:clamp(20px,3vw,44px);display:grid;gap:40px;color-scheme:light}
-  .poster[data-copper="true"]{color:#8b3e25}
-  .poster-words{font-family:var(--display);font-size:clamp(64px,7.2vw,110px);line-height:1.04;letter-spacing:var(--spacing);transition:color .18s var(--ease)}
-  .poster-note{font-size:16px;line-height:1.25}
   figcaption{font-size:16px;line-height:1.4;color:var(--mute);margin-top:12px;max-width:76ch}
   figcaption a,.closing a{text-decoration:underline;text-underline-offset:.2em}
-  .instruction{font-size:17px;margin-top:20px;max-width:44ch}
-  .controls{display:grid;gap:8px;margin-top:16px;border-top:1px solid var(--line);padding-top:16px}
-  label{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
-  output{color:var(--mark);font-variant-numeric:tabular-nums}
-  input{width:100%;min-width:0;min-height:44px;margin:0;accent-color:var(--mark);cursor:ew-resize}
-  button{min-height:44px;border:1px solid var(--line);padding:8px 14px;justify-self:start}
-  button[aria-pressed="true"]{border-color:var(--mark);color:var(--mark)}
-  .actions{display:flex;flex-wrap:wrap;gap:10px}
   video{display:block;width:100%;height:auto;object-fit:contain;background:var(--panel)}
+  noscript{grid-column:1 / -1}
   .closing{margin-top:clamp(56px,8vw,120px);color:var(--mute)}
-  @media(max-width:899px){.studies{grid-template-columns:minmax(0,1fr)}.colour,.type-study,.voxtell,.rayna{grid-column:1}.type-study{margin-top:0;width:min(100%,440px);justify-self:end}.poster-words{font-size:clamp(70px,17vw,110px)}}
-  @media(prefers-reduced-motion:reduce){.poster-words{transition:none}}
+  @media(max-width:1099px){.loopline{grid-column:1 / 9}.ricochet{grid-column:4 / -1;margin-top:0}}
+  @media(max-width:699px){.studies{grid-template-columns:minmax(0,1fr)}.loopline,.ricochet,.voxtell,.rayna{grid-column:1}.arcade h2{font-size:clamp(44px,12vw,72px)}}
+  @media(prefers-reduced-motion:reduce){.arcade *{animation:none;transition:none;scroll-behavior:auto}}
 </style>
