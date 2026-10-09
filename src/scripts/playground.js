@@ -89,13 +89,29 @@ export function enhancePlayground(root) {
         sessions.release(session); sync(`Paused. ${reason} Choose Resume to continue.`); paint();
       },
     };
+    function positionForPlay() {
+      const board = canvas.getBoundingClientRect(), controls = find('[data-controls]').getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const top = (viewport?.offsetTop ?? 0) + 12;
+      const bottom = (viewport?.offsetTop ?? 0) + (viewport?.height ?? window.innerHeight) - 12;
+      const end = Math.max(board.bottom, controls.bottom);
+      // Include controls when they fit. Otherwise keep the board's top visible;
+      // this one-time alignment never takes ownership of subsequent page scrolling.
+      const delta = end - board.top > bottom - top
+        ? board.top - top
+        : Math.min(Math.max(0, end - bottom), board.top - top);
+      if (delta) window.scrollBy({ top: delta, left: 0, behavior: 'instant' });
+    }
     function run(fresh = false) {
-      if (document.hidden || !visible()) return;
+      if (document.hidden) return;
       if (fresh || mode === 'over') state = make();
       if (state.phase === 'serve') state.phase = 'playing';
       clearInput(); sessions.start(session); mode = 'running'; previous = null; elapsed = 0;
-      cancelAnimationFrame(frame); canvas.focus({ preventScroll: true });
-      sync('Playing. Escape pauses.'); paint(); frame = requestAnimationFrame(tick);
+      cancelAnimationFrame(frame);
+      sync('Playing. Escape pauses.');
+      positionForPlay(); canvas.focus({ preventScroll: true });
+      if (!visible()) { session.pause('Board left view.'); return; }
+      paint(); frame = requestAnimationFrame(tick);
     }
     function tick(time) {
       if (mode !== 'running') return;

@@ -112,12 +112,13 @@ const [voxtell, rayna] = media;
   .arcade h2{font-family:var(--display);font-size:clamp(48px,6vw,88px);display:flex;justify-content:space-between;gap:10px}
   .rules{font-size:18px;line-height:1.5}
   .instruction{font-size:16px;line-height:1.5;margin:16px 0 24px;color:var(--mute)}
-  .machine{border:1px solid var(--line);padding:clamp(12px,2vw,24px)}
+  .machine{--board-size:432px;--machine-padding:clamp(12px,2vw,24px);max-width:calc(var(--board-size) + 2 * var(--machine-padding) + 2px);border:1px solid var(--line);padding:var(--machine-padding)}
+  .ricochet .machine{--board-size:480px}
   .scoreboard{display:flex;justify-content:space-between;gap:16px;margin-bottom:16px;font-size:14px}
   .scoreboard p{display:grid;gap:4px}
   .scoreboard p:last-child{text-align:right}
   .scoreboard strong{font-family:var(--display);font-size:32px;font-weight:400;line-height:1;font-variant-numeric:tabular-nums}
-  canvas{display:block;width:100%;height:auto;background:#eee8db;border:2px solid #91472f}
+  canvas{display:block;width:100%;max-width:var(--board-size);height:auto;background:#eee8db;border:2px solid #91472f}
   .ricochet canvas{touch-action:none}
   .board-detail{font-size:14px;line-height:1.4;margin-top:12px;color:var(--mute)}
   .status{font-size:16px;line-height:1.4;min-height:3em;margin:12px 0}

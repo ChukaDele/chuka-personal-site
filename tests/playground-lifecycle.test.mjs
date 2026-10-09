@@ -9,7 +9,8 @@ class Element extends EventTarget {
   setPointerCapture(id) { this.captured.add(id); }
   hasPointerCapture(id) { return this.captured.has(id); }
   releasePointerCapture(id) { this.captured.delete(id); }
-  focus() {}
+  focus(options) { this.focusOptions = options; }
+  getBoundingClientRect() { return { top: 450, bottom: 700 }; }
 }
 function game(kind) {
   const section = new Element(), elements = new Map(), canvas = new Element();
@@ -39,7 +40,8 @@ test('actual adapter: explicit start, focused keys, hold/drag cancellation, all 
   let dispose = () => {};
   t.after(() => { dispose(); for (const [key, descriptor] of originals) { if (descriptor) Object.defineProperty(globalThis, key, descriptor); else delete globalThis[key]; } });
   const win = new EventTarget(), doc = new EventTarget(), motion = new EventTarget();
-  Object.assign(win, { innerWidth: 1000, innerHeight: 1000, matchMedia: () => motion });
+  const scrolls = [];
+  Object.assign(win, { innerWidth: 1000, innerHeight: 1000, matchMedia: () => motion, scrollBy: options => scrolls.push(options) });
   Object.defineProperty(win, 'localStorage', { get: () => { throw new Error('blocked'); } });
   doc.hidden = false;
   const frames = new Map(), observers = []; let next = 0, now = 0;
@@ -54,7 +56,33 @@ test('actual adapter: explicit start, focused keys, hold/drag cancellation, all 
   dispose = enhancePlayground({ querySelectorAll: () => [snake.section, breakout.section] });
   assert.equal(frames.size, 0); assert.match(snake.get('status').textContent, /Ready/);
   assert.match(breakout.get('storage').textContent, /storage unavailable/);
+  // Reproduce native Start scrolling the upper board out of view. Rects move
+  // synchronously with the immediate scroll, as they do in the browser.
+  let boardTop = -328.789, controlsBottom = 371.875 + 240;
+  snake.canvas.getBoundingClientRect = () => ({ left: 0, right: 432, width: 432, height: 432, top: boardTop, bottom: boardTop + 432 });
+  snake.get('controls').getBoundingClientRect = () => ({ bottom: controlsBottom });
+  win.scrollBy = options => { scrolls.push(options); boardTop -= options.top; controlsBottom -= options.top; };
   fire(snake.get('start'), 'click'); assert.equal(frames.size, 1);
+  assert.equal(boardTop, 12); assert.ok(controlsBottom <= win.innerHeight - 12);
+  assert.equal(scrolls.at(-1).behavior, 'instant');
+  assert.deepEqual(snake.canvas.focusOptions, { preventScroll: true });
+  boardTop = 500; controlsBottom = 1200;
+  fire(snake.get('restart'), 'click');
+  assert.equal(controlsBottom, 988); assert.ok(boardTop >= 12);
+  const alreadyVisible = scrolls.length;
+  fire(snake.get('restart'), 'click');
+  assert.equal(scrolls.length, alreadyVisible, 'leave an already visible board and controls in place');
+  fire(snake.get('pause'), 'click');
+  win.innerHeight = 500; boardTop = -180; controlsBottom = 520;
+  fire(snake.get('pause'), 'click');
+  assert.equal(boardTop, 12); assert.ok(controlsBottom > win.innerHeight);
+  win.visualViewport = { offsetTop: 20, height: 400 };
+  boardTop = -100; controlsBottom = 600;
+  fire(snake.get('restart'), 'click'); assert.equal(boardTop, 32);
+  const positioned = scrolls.length;
+  advance(); assert.equal(scrolls.length, positioned, 'animation does not reclaim page scrolling');
+  delete win.visualViewport; win.innerHeight = 1000;
+  win.scrollBy = options => scrolls.push(options);
   assert.equal(fire(snake.section, 'keydown', { key: 'ArrowUp' }).defaultPrevented, true);
   assert.equal(fire(win, 'keydown', { key: 'ArrowUp' }).defaultPrevented, false);
   fire(breakout.get('start'), 'click'); assert.equal(frames.size, 1);
