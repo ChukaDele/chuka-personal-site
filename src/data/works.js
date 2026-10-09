@@ -174,7 +174,7 @@ export const works = [
     brief: ['The Bredge is a senior embedded data partner for growing businesses. It connects fragmented systems, builds reliable data foundations, automates reporting and turns complex data into answers teams can act on.',
       'My work is turning that proposition into a service that can be run.'],
     setting: { text: ['The promise on the door: when your numbers disagree, we find out why. Finance, sales, operations and product each report a different figure. The work is to connect the systems, reconcile the numbers and build reporting the team stops arguing with.'],
-      facts: [['For', 'Growing companies whose teams report conflicting numbers'], ['Stack', 'Python, SQL, PostgreSQL, Power BI, GitHub'], ['Pace', 'Most engagements ship something usable inside the first month']],
+      facts: [['For', 'Growing companies whose teams report conflicting numbers'], ['Stack', 'Python, SQL, PostgreSQL, Power BI, GitHub']],
       source: 'Service facts from the company’s public material.' },
     parts: [
       { word: 'Position', title: 'Position the problem',

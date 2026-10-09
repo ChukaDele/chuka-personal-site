@@ -26,7 +26,7 @@ test('only the narrowed whitelist is integrated, once each, without duplicate ga
   assert.deepEqual(readdirSync(new URL('../public/video/', import.meta.url)).sort(), media.filter(m => m.kind === 'video').map(m => `${m.src}.mp4`).sort());
 });
 
-test('approved MP4 bytes and full-aspect WebP dimensions survive integration', async () => {
+test('approved source or delivery MP4 hashes and full-aspect WebP dimensions survive integration', async () => {
   for (const m of media) {
     const image = await sharp(new URL(`../public/img/${m.name}.webp`, import.meta.url).pathname).metadata();
     assert.equal(image.format, 'webp');
@@ -41,7 +41,7 @@ test('approved MP4 bytes and full-aspect WebP dimensions survive integration', a
     }
     if (m.kind === 'video') {
       const bytes = readFileSync(new URL(`../public/video/${m.src}.mp4`, import.meta.url));
-      assert.equal(createHash('sha256').update(bytes).digest('hex'), m.sourceSha256, m.id);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), m.deliverySha256 ?? m.sourceSha256, m.id);
       const v = videos.find(v => v.src === m.src);
       assert.ok(v?.label && v?.caption && v?.poster);
       assert.equal(v.width, m.width);
@@ -49,6 +49,34 @@ test('approved MP4 bytes and full-aspect WebP dimensions survive integration', a
       assert.ok(Math.abs(image.width / image.height - m.width / m.height) < .01);
     }
   }
+});
+
+test('only Lateral uses the approved delivery derivative; every video stays below 25 MiB', () => {
+  const sourceHashes = {
+    'H-V1': 'fc6e2ea9fc9008c490e971073ebb716faffb316d710794411ad1e41bb0f95e0a',
+    'I-V1': '0b7c5317adffc61384fd88a95f458cfd20291ae981c457886ed52daf2a60a620',
+    'E-V1': '46b83857d6910fa75dee0f3bd567866e3799f227997fd30e073e81a06958b537',
+    'R-V2': '4fe365159fac9846090aa1e79c14adb5c377ce1ced0dd8bb5c60cad6d7dfb7c4',
+  };
+  for (const m of media.filter(m => m.kind === 'video')) {
+    assert.equal(m.sourceSha256, sourceHashes[m.id], `${m.id} approved source`);
+    const bytes = readFileSync(new URL(`../public/video/${m.src}.mp4`, import.meta.url));
+    assert.ok(bytes.length < 25 * 1024 * 1024, `${m.id} below 25 MiB`);
+    if (m.id === 'R-V2') {
+      assert.equal(m.deliverySha256, 'b539ff7fd1ab02d60c9ed54ec96923a412bcd344b8bc9924236ef87a91d1aa04');
+      assert.equal(m.deliveryBytes, 11192609);
+      assert.equal(bytes.length, m.deliveryBytes);
+      assert.equal(m.sourceBytes, 40806875);
+    } else {
+      assert.equal(m.deliverySha256, undefined, `${m.id} remains original bytes`);
+    }
+  }
+});
+
+test('Bredge excludes the unsupported first-month engagement delivery claim', () => {
+  const bredge = work('the-bredge');
+  assert.ok(bredge.setting.facts.every(([label]) => label !== 'Pace'));
+  assert.doesNotMatch(JSON.stringify(bredge), /most engagements|first[\s-]+month|30[\s-]+days/i);
 });
 
 test('Part video contract is responsive, labelled and manual-play even with reduced motion', () => {
