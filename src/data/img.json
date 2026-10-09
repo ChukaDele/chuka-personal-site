@@ -228,5 +228,10 @@
   "w": 1200,
   "h": 676,
   "sm": true
+ },
+ "voxtell-website-comparison": {
+  "w": 2228,
+  "h": 1091,
+  "sm": true
  }
 }

@@ -8,22 +8,22 @@ The owner selected **USE SUPPLIED OUTCOME, NO QUOTE**. The added outcome attribu
 
 PR6 is available locally at `origin/content/surface-talent-release-20261008`, exact commit `a9d2ab2f73a0709efe4c8fd2048a66e04b72bad4`. Its two-file diff matches `.launch-input/pr6-exact.diff` byte for byte. The verified reliability contribution, post-internship brief, **8 October 2026** release milestone and relevant regression test are integrated into the `184a32a` draft, preserving the supplied client-attributed outcome without a quote and the current `v=c-mark-v2` favicon tests. The internship dates remain **15 June–4 September 2026**; the **8 September** website handover and **8 October** post-internship application release remain separate events. This is local source integration only; PR6 has not been merged or published by this task.
 
-## Owner-approved curated integration — 9 October 2026
+## Earlier curated integration — superseded placements noted below
 
 Goal: d3ffd0fc-c9d8-43f6-8a75-20b4cb77929e. Implementation branch: codex/project-updates-review-20261009, clean baseline 72027c7ded8354880d103995aee52bbf7a54ce46.
 
-The owner approved the recommended pack, then explicitly narrowed the main portfolio to the strongest work rather than a portfolio dump. This selection supersedes the broader selected_ids and older placement suggestions in the local approval receipts. Exact integrated whitelist: **S-I1 S-I2 H-I2 H-I3 H-V1 I-I1 I-V1 E-V1 B-I2 R-I2 R-V2**.
+The owner approved the recommended pack, then explicitly narrowed the main portfolio to the strongest work rather than a portfolio dump. This selection supersedes the broader selected_ids and older placement suggestions in the local approval receipts. Initial whitelist: **S-I1 S-I2 H-I2 H-I3 H-V1 I-I1 I-V1 E-V1 B-I2 R-I2 R-V2**. The later case-alignment approval below adds R-I1 and restores the two preexisting Rayna images.
 
 | Case | Curated placement |
 | --- | --- |
 | Surface Talent | S-I1 website homepage becomes the case hero. S-I2 replaces the older candidate capture. Both are public staging captures dated 9 October 2026, not production proof. Existing role/import captures retain their 22 September date. |
 | HoneyCoin | H-I2 accounts/withdrawal and H-I3 funding/payment replace the older gallery; one H-V1 overview in Delivery. Existing hero remains for product context. Studio interface figures are not operating results. |
 | Idara | I-I1 website/order interface becomes the hero; I-V1 service-entry motion in Service. Older gallery removed to avoid repetition. Chuka’s product/service leadership is distinct from studio authorship. |
-| Rvysion | R-I2 Lateral Frontiers hero replaces Rayna imagery; a small Client part includes the full original R-V2 and reviewed poster. Approved role: “I led strategy and the project for the Lateral Frontiers rebrand and new website.” Studio designers and engineers receive design/build credit. Existing factual Rayna own-product narrative and results remain. |
+| Rvysion | Superseded by case alignment: image-free introduction; named Lateral Frontiers section with R-I2 and R-V2, Voxtell section with R-I1, and Rayna UI section with restored rayna-1 and rayna-2. |
 | ETAP | Only E-V1, the approved 12-second excerpt from original 00:05 to 00:17, replaces the launch still. Credit identifies co-presentation with a colleague. Existing fleet and event evidence remain. |
 | The Bredge | B-I2 problem illustration replaces the B-I1 hero carrying an unsupported engagement claim. Existing B-I3 sample remains, explicitly labelled illustrative figures, not client data or results. No new outcome claims. |
 
-Do not integrate H-I1, I-I2, E-I1, E-I2, Voxtell, new Rayna media, alternates or a Bredge brand film. Future design explorations belong in a **separate playground**, not this main portfolio. That is local planning only: no new playground route or publishing is included here. No new quote or gift material is included.
+Do not integrate H-I1, I-I2, E-I1, E-I2, new Rayna candidates, alternates or a Bredge brand film. The former Voxtell exclusion and removal of preexisting Rayna imagery are superseded by the later owner approval below. Future design explorations belong in a **separate playground**, not this main portfolio. That is local planning only: no new playground route or publishing is included here. No new quote or gift material is included.
 
 ## Provenance and rendering
 
@@ -70,3 +70,27 @@ The shared case renderer changes only `preload="metadata"` to `preload="none"` f
 Controller handoff: build the same exact new commit remotely once, then verify in the actual root browser network that each of the four cases requests no initial video resources until native play, followed by successful actual playback. This network/playback verification is pending. The prior source approval and 20-screenshot report apply to baseline `4e5a281`; updated exact-SHA review must cover this attribute-only change and newly captured browser states. Unchanged visual assets may be reused only as continuity evidence, not as browser approval of the new commit.
 
 Correction validation: all 12 curated-media source checks pass with no skips, including approved media hashes and caption evidence; both source-only identity/Surface regressions pass. `npm run lint` could not read its launcher (EPERM), so all five declared lint commands were run directly with `node --check` and passed, as did the focused test syntax check and whitespace check. The diff is confined to the shared renderer's preload attribute, focused test and this document. One writer performed sequential edits. No Major, build, FFmpeg, browser, push or deployment was run. Git operations use `GIT_CONFIG_GLOBAL=/dev/null` after the initial read failed on the inaccessible global configuration.
+
+## Case-story alignment — latest owner approval, 9 October 2026
+
+Branch: `codex/case-story-alignment-20261009`. Clean starting main: `aaa7652b2a6a8eafca31972dd504e08606011745`. This mutable owner-approved Workshop correction supersedes the Lateral-only placement/exclusion. The adversarial review is editorial advice; its Studio Projects recommendation was expressly rejected. No Studio Projects collection, duplicate cases, Playground or navigation additions are included.
+
+Rvysion now consolidates Brief/Setting into one introduction to the role and operating challenge. Commercial and operating contributions remain substantive: +35% studio client base; the lower-priced offer's 22% increase in revenue opportunities within six months (not booked revenue); 12% lower studio operating expenses. Lateral Frontiers has its own rebrand/website account with approved R-I2 and the unchanged full R-V2 film. Voxtell has a separate website account with the exact approved R-I1 comparison. Both client accounts credit strategy/project leadership to Chuka and design/build to studio designers and engineers. Rayna UI has its own open-source design-system account, the existing bounded internal-product contribution and 11,000+ user figure, with unchanged preexisting `rayna-1` and `rayna-2`. That figure is not evidence of sole creation or individual effect.
+
+The local R-I1 receipt is `.launch-input/rvysion-update-20261009/voxtell-selection.json`. Its approved caption and role are used verbatim. The website description derives from the v2 review and the visible earlier/redesigned website comparison: AI call-assistant messaging versus the broader phone-system proposition and communication channels. This is a studio presentation, not current authenticated live product proof. No new metric, testimonial, delivery date or commercial outcome is inferred. The two supplied full-aspect WebPs were copied unchanged; no original was added to the public tree. The ledger records the source hash, derivative hashes and intrinsic dimensions (2228×1091). Restored Rayna entries record existing delivery hashes separately from unknown original-source hashes; they are not the unapproved R-I3 or R-V1 candidates.
+
+The existing Part/Pic renderer receives only an opt-in full-width image layout and matching responsive sizes for Lateral and Voxtell. Full-aspect, uncropped rendering already exists. Rayna retains a two-image composition. GSAP, reveal behavior, artwork, reduced-motion handling, native video markup and all four video bytes are unchanged, including manual controls, preload none, mute defaults, and ETAP captions/transcript.
+
+### Audit of the other five cases
+
+- ETAP: its own app hero, enterprise film beside Channel, claims-flow and expansion diagrams beside those accounts, explicitly captioned event and fleet gallery. No cross-project mismatch; unchanged.
+- Idara: website/order hero and service-entry film match the rebuild and customer-service account. Unchanged.
+- Surface Talent: homepage, role/import and empty candidate intake images remain tied to that case. Dates, internship/release distinction, client-attributed outcome and recruiter authority are unchanged.
+- HoneyCoin: peer-app context, business-dashboard Delivery film and accounts/payment gallery all belong to HoneyCoin, with studio/interface limitations retained. Unchanged.
+- The Bredge: problem illustration and sample reporting support the operating-model account; both remain illustrative. In-build status and no-outcome boundary are unchanged. Work index wording now accommodates ongoing work.
+
+### Local validation and controller handoff
+
+17 focused curated-media/association tests pass, including all local receipt/audio evidence checks with no skips. Six source-only identity, Surface, metadata, library and icon checks pass. The supplied R-I1 original hash matches its receipt; copied derivatives match byte-for-byte. The existing provenance, dimensions, dated Surface and video/caption gates remain in force. Declared lint commands run directly through Node, with changed JS/tests also syntax-checked; whitespace checks pass.
+
+No build, browser, network, deployment, push or paid operation was performed. Controller owns the build slot, authenticated transport, GitHub/Cloudflare operations, remote visual and functional QA, and fresh independent exact-SHA review before publication. Full-width composition and responsive readability remain to be checked remotely; source tests cannot establish visual acceptance.

@@ -9,18 +9,18 @@ const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const media = JSON.parse(read('../docs/curated-media.json'));
 const meta = JSON.parse(read('../src/data/img.json'));
 const work = id => works.find(w => w.id === id);
-const images = w => [w.shot, ...w.shots.map(([s]) => s), ...w.parts.flatMap(p => (p.shots || []).map(([s]) => s))];
+const images = w => [w.shot, ...w.shots.map(([s]) => s), ...w.parts.flatMap(p => (p.shots || []).map(([s]) => s))].filter(Boolean);
 const videos = works.flatMap(w => w.parts.flatMap(p => p.video ? [p.video] : []));
 
 test('only the narrowed whitelist is integrated, once each, without duplicate galleries', () => {
-  assert.deepEqual(media.map(m => m.id).sort(), ['S-I1', 'S-I2', 'H-I2', 'H-I3', 'H-V1', 'I-I1', 'I-V1', 'E-V1', 'B-I2', 'R-I2', 'R-V2'].sort());
+  assert.deepEqual(media.map(m => m.id).sort(), ['S-I1', 'S-I2', 'H-I2', 'H-I3', 'H-V1', 'I-I1', 'I-V1', 'E-V1', 'B-I2', 'R-I2', 'R-V2', 'R-I1', 'R-existing-rayna-1', 'R-existing-rayna-2'].sort());
   const references = [...works.flatMap(images), ...videos.map(v => v.poster)];
   for (const m of media) assert.equal(references.filter(n => n === m.name).length, 1, m.id);
   for (const w of works) assert.equal(new Set(images(w)).size, images(w).length, w.id);
   assert.deepEqual(images(work('surface-talent')), ['surface-home-20261009', 'surface-1', 'surface-2', 'surface-candidates-20261009']);
   assert.deepEqual(images(work('honeycoin')), ['honey-1', 'honeycoin-product-13', 'honeycoin-product-15']);
   assert.deepEqual(images(work('idara')), ['idara-product-08']);
-  assert.deepEqual(images(work('rvysion')), ['lateral-product-14']);
+  assert.deepEqual(images(work('rvysion')), ['lateral-product-14', 'voxtell-website-comparison', 'rayna-1', 'rayna-2']);
   assert.deepEqual(images(work('etap')), ['etap-1', 'etap-event', 'etap-2']);
   assert.deepEqual(images(work('the-bredge')), ['bredge-2', 'bredge-3']);
   assert.deepEqual(readdirSync(new URL('../public/video/', import.meta.url)).sort(), media.filter(m => m.kind === 'video').map(m => `${m.src}.mp4`).sort());
@@ -114,7 +114,7 @@ test('captions separate presentation figures, personal role, studio authorship a
   assert.match(client.text, /I led strategy and the project for the Lateral Frontiers rebrand and new website/);
   assert.match(client.text, /studio designers and engineers delivered the design and build/);
   assert.equal(client.video.caption, 'Full 30-second Rvysion studio presentation of the Lateral Frontiers website.');
-  assert.doesNotMatch(work('rvysion').shotNote + client.video.caption, /not authenticated|led strategy|designers and engineers/);
+  assert.doesNotMatch(client.shots[0][1] + client.video.caption, /not authenticated|led strategy|designers and engineers/);
   assert.equal(media.find(m => m.id === 'R-V2').duration, 30);
   assert.match(work('rvysion').parts.find(p => p.word === 'Venture').result[1], /Rayna UI/);
   const etap = work('etap').parts.find(p => p.video).video;

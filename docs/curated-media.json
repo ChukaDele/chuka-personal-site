@@ -498,5 +498,44 @@
     "caption": "Full 30-second Rvysion studio presentation of the Lateral Frontiers website.",
     "imageWidth": 1200,
     "imageHeight": 676
+  },
+  {
+    "id": "R-I1",
+    "kind": "image",
+    "name": "voxtell-website-comparison",
+    "source": "https://www.rvysion.co/case-studies/voxtell-product",
+    "sourceType": "Studio presentation",
+    "approval": "Owner-approved case alignment, 9 October 2026",
+    "imageWidth": 2228,
+    "imageHeight": 1091,
+    "deliverySha256": "b5fea76fc877168f15bd1f934e18f50bc02a7a84f34939bab0ce2d43bdef4656",
+    "smallDeliverySha256": "6bfce9b3bdf83c0424da9f51121be2b0030759c91379110c8a73c71d0cddbf11",
+    "sourceSha256": "4cce147dbdae6bfa2f5c9073cf8c3aa49dcd9ac9cb02ded53d92d0b43b003767",
+    "caption": "Voxtell’s earlier website and redesign, presented by Rvysion studio."
+  },
+  {
+    "id": "R-existing-rayna-1",
+    "kind": "image",
+    "name": "rayna-1",
+    "source": "Owner-supplied, preexisting approved Rayna UI image",
+    "sourceType": "Studio presentation",
+    "approval": "Owner-approved case alignment, 9 October 2026",
+    "imageWidth": 1280,
+    "imageHeight": 800,
+    "deliverySha256": "a23e9b3dc7d8fd8cf7a95934dc72a9a9d4e74be56d8995de8f48a2284ed077bd",
+    "smallDeliverySha256": "bef3089ab4ba642d59cd399019afa5e5705a53bee87101a88cf50348d3862136",
+    "provenance": "Restored unchanged from aaa7652b2a6a8eafca31972dd504e08606011745; original source hash not recorded. Delivery hash identifies the existing approved WebP, not an original."
+  },
+  {
+    "id": "R-existing-rayna-2",
+    "kind": "image",
+    "name": "rayna-2",
+    "source": "Owner-supplied, preexisting approved Rayna UI image",
+    "sourceType": "Studio presentation",
+    "approval": "Owner-approved case alignment, 9 October 2026",
+    "imageWidth": 986,
+    "imageHeight": 515,
+    "deliverySha256": "74ad84b08a427df25a0215ae7be0936e1c9c0b0e3a7c8a91deca99de07ed9770",
+    "provenance": "Restored unchanged from aaa7652b2a6a8eafca31972dd504e08606011745; original source hash not recorded. Delivery hash identifies the existing approved WebP, not an original."
   }
 ]

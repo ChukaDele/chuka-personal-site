@@ -56,7 +56,7 @@ const ask = { etap: ['Hiring for operations?', 'hiring'], 'surface-talent': ['Hi
           <Note dir="up">{p.code.note}</Note>
         </div>
       )}
-      {p.shots && <div class={`shots n${Math.min(3, p.shots.length)}`}>{p.shots.map(([s, c]) => <figure><div class="f"><Pic name={s} alt={c} sizes="(max-width:820px) 92vw, 30vw" /></div><figcaption>{c}</figcaption></figure>)}</div>}
+      {p.shots && <div class={`shots n${Math.min(3, p.shots.length)}${p.shotsFullWidth ? ' full-width' : ''}`}>{p.shots.map(([s, c]) => <figure><div class="f"><Pic name={s} alt={c} sizes={p.shotsFullWidth ? '(max-width:820px) 92vw, 80vw' : '(max-width:820px) 92vw, 30vw'} /></div><figcaption>{c}</figcaption></figure>)}</div>}
       {p.quote && <figure class="said"><blockquote>“{p.quote[0]}”</blockquote><figcaption class="label">{p.quote[1]}</figcaption></figure>}
       {p.result && <p class="result" data-see><b>{p.result[0]}<Fragment set:html={ring} /></b><span>{p.result[1]}</span></p>}
     </Part>
@@ -77,3 +77,7 @@ const ask = { etap: ['Hiring for operations?', 'hiring'], 'surface-talent': ['Hi
 
   <End label={ask[0]} path={ask[1]} kicker="Next work" next={[next.name, `work-${next.id}.html`]} />
 </Base>
+
+<style>
+  .shots.full-width { grid-template-columns: minmax(0, 1fr); }
+</style>
