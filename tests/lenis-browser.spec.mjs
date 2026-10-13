@@ -36,7 +36,7 @@ test('opening and closing the contact dialog retains usable scrolling', async ({
   await page.goto('/?lenis-preview=1', { waitUntil: 'domcontentloaded' });
   await expect.poll(() => pilotState(page)).toBe('lenis-preview');
   // Desktop menu-letter is intentionally hidden; use the visible hero CTA.
-  await page.locator('.plate button[data-letter="hello"]').click();
+  await page.locator('#top button[data-letter="hello"]').click();
   await expect(page.locator('#letter')).toHaveAttribute('open', '');
   await page.keyboard.press('Escape');
   await expect(page.locator('#letter')).not.toHaveAttribute('open', '');
