@@ -22,7 +22,8 @@ test('explicit desktop opt-in initializes and scrolls correctly', async ({ page 
 
   await page.evaluate(() => {
     const anchor = document.createElement('a');
-    anchor.href = '#work';
+    // <base href="/"> makes a bare fragment discard the opt-in query.
+    anchor.href = location.pathname + location.search + '#work';
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();
@@ -34,7 +35,8 @@ test('explicit desktop opt-in initializes and scrolls correctly', async ({ page 
 test('opening and closing the contact dialog retains usable scrolling', async ({ page }) => {
   await page.goto('/?lenis-preview=1', { waitUntil: 'domcontentloaded' });
   await expect.poll(() => pilotState(page)).toBe('lenis-preview');
-  await page.locator('button.menu-letter').click();
+  // Desktop menu-letter is intentionally hidden; use the visible hero CTA.
+  await page.locator('.plate button[data-letter="hello"]').click();
   await expect(page.locator('#letter')).toHaveAttribute('open', '');
   await page.keyboard.press('Escape');
   await expect(page.locator('#letter')).not.toHaveAttribute('open', '');
