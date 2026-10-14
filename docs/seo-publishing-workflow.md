@@ -41,3 +41,7 @@ The sample query is a **hypothesis**: “CV parsing mistakes before candidate sc
 - This checks the real deployed page; it does not establish whether Google currently indexes it, what position it ranks, or whether traffic converts.
 - Changes to article content, social publishing and production website deployments must use existing site review and Cloudflare release safeguards.
 - Google Search Central's current people-first and AI content guidance takes precedence over short-form SEO hacks: https://developers.google.com/search/docs/fundamentals/creating-helpful-content and https://developers.google.com/search/docs/fundamentals/using-gen-ai-content .
+
+## Unpublished working drafts
+
+Store draft article copy outside the public Git repository until the owner confirms editorial and any client approval. The current Surface Talent pilot is held in the owner-local private review directory ~/Documents/SEO-Pilot-Review/. A technical preflight or GitHub CI result does not permit public posting.
