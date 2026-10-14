@@ -39,3 +39,8 @@ test('local-production-release: npm deploy refuses outside protected GitHub prod
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /Production releases require the approved GitHub production workflow/);
 });
+
+// Deliberate negative validation. Never merge.
+test('INTENTIONAL NEGATIVE RELEASE GATE', () => {
+  assert.fail('EXPECTED FAILURE: site-quality must block a broken candidate');
+});
