@@ -39,3 +39,5 @@ holds canonical paths, metadata and legacy redirects. `content/artworks.ts`
 records historical-image provenance and the limits of the supplied archive.
 Older design/QA documents describe the replaced direction and are historical,
 not acceptance evidence for this launch candidate.
+
+For evidence-led organic search content, owned-page improvements, and distinct LinkedIn distribution experiments, follow [the SEO publishing workflow](docs/seo-publishing-workflow.md). It uses the canonical Major `seo-os` skill and an executable live technical preflight; no third-party indexing shortcuts or automatic social publication.
