@@ -49,7 +49,7 @@ The active GitHub branch ruleset requires three successful check contexts: `vali
 
 - `validate`: existing Astro builds (default noindex and indexable), Node tests and syntax/diff checks.
 - `site-quality`: indexable Astro build, deterministic site-quality tests, static rendered checks of all 14 pages (12 indexable), metadata, self-canonicals, protected noindex pages, images and internal URLs, plus `npm audit --audit-level=high` covering both production and development dependencies. This is a static check, not live browser or Core Web Vitals QA.
-- `secret-scan`: Gitleaks v3 scanning the checked-out Git history/PR for committed secrets. Any finding must be assessed, removed/rotated as appropriate and rerun rather than ignored.
+- `secret-scan`: Gitleaks v3 scanning newly introduced commits on PR and push events for secrets; existing historical commits are outside the routine scan. Any finding must be assessed, removed/rotated as appropriate and rerun rather than ignored. A separate full-history scan is needed to audit older commits.
 - Independent human review and an approved HTTPS Cloudflare preview/browser pass remain distinct release gates. Before production promotion, verify browser console/network, responsive UI, keyboard navigation, reduced motion, real redirects and runtime Worker indexing.
 
 After PR checks succeed, confirm required human approval and preview QA before merging and deploying through the existing `deploy:enable-indexing` safeguard. Never use the plain deploy path for an already indexable production site because it can temporarily emit noindex output. Keep new article content private until explicit editorial/client clearance.

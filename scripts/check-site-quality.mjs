@@ -69,7 +69,8 @@ export function checkPage(route, html, dist = root) {
       if (path.includes('\0') || path.includes('..')) { errors.push('Unsafe path: ' + raw); continue; }
       const file = fileFor(dist, path);
       const alternative = redirects[path] ? fileFor(dist, redirects[path]) : null;
-      if (!existsSync(file) && !(alternative && existsSync(alternative)))
+      const isRealFile = candidate => candidate && existsSync(candidate) && statSync(candidate).isFile();
+      if (!isRealFile(file) && !isRealFile(alternative))
         errors.push('Broken internal ' + key + ': ' + raw);
       checkedUrls += 1;
     }

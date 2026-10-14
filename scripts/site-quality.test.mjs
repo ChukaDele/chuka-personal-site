@@ -26,12 +26,22 @@ test('site quality gate rejects incorrect canonical and broken local hyperlinks'
   assert.ok(checkPage('/', wrong).errors.some(e => e.includes('canonical')));
   const broken = home.replace('</main>', '<a href="/missing-site-quality-qa-20261015.html">broken</a></main>');
   assert.ok(checkPage('/', broken).errors.some(e => e.includes('Broken internal')));
+  const directoryLink = home.replace('</main>', '<a href="/img/">broken directory</a></main>');
+  assert.ok(checkPage('/', directoryLink).errors.some(e => e.includes('Broken internal')));
 });
 
 test('site quality gate enforces image alt on rendered pages', () => {
   assert.equal(checkPage('/about.html', about).errors.length, 0);
   const invalid = about.replace(/(<img\b[^>]*?)\balt="[^"]*"/i, '$1');
   assert.ok(checkPage('/about.html', invalid).errors.some(e => e.includes('alt')));
+});
+
+test('case diagrams with mobile horizontal scrolling are keyboard focusable', () => {
+  const surface = readFileSync('dist/work-surface-talent.html', 'utf8');
+  const accessibleSketch = /<figure\b(?=[^>]*\bclass="sketch")(?=[^>]*\btabindex="0")[^>]*>/;
+  assert.match(surface, accessibleSketch);
+  const broken = surface.replace('<figure class="sketch" tabindex="0"', '<figure class="sketch"');
+  assert.doesNotMatch(broken, accessibleSketch);
 });
 
 test('notes route stays noindex and validates other markup', () => {
