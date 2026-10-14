@@ -13,7 +13,12 @@
     "deploy:enable-indexing": "node scripts/deploy-production.mjs --enable-indexing",
     "test": "npm run build && node --test tests/*.test.mjs",
     "test:unit": "node --test tests/worker.test.mjs",
-    "lint": "node --check worker/index.mjs && node --check scripts/deploy-production.mjs && node --check src/data/routes.js && node --check src/scripts/site.js && node --check src/scripts/sheet.js",
+    "test:browser": "npm run build && playwright test",
+    "qa:preview": "node scripts/start-qa-preview.mjs",
+    "qa:site": "bash scripts/qa-site-release local",
+    "qa:live-smoke": "node scripts/live-site-smoke.mjs",
+    "qa:evidence": "node scripts/generate-qa-evidence.mjs",
+    "lint": "node --check worker/index.mjs && node --check scripts/deploy-production.mjs && node --check scripts/start-qa-preview.mjs && node --check scripts/live-site-smoke.mjs && node --check scripts/generate-qa-evidence.mjs && node --check playwright.config.mjs && node --check tests/browser/site-quality.spec.mjs && node --check src/data/routes.js && node --check src/scripts/site.js && node --check src/scripts/sheet.js",
     "diff-check": "git diff --check"
   },
   "keywords": [],
@@ -31,6 +36,8 @@
     "node": ">=22.13.0"
   },
   "devDependencies": {
-    "wrangler": "4.92.0"
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.64.1",
+    "wrangler": "4.151.0"
   }
 }

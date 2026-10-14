@@ -1,0 +1,13 @@
+# Any edit that changes a website release expectation or runnable gate requires accountable review.
+# Deliberately broad so a PR cannot bypass checks by editing test inputs or package scripts.
+/.github/CODEOWNERS @ChukaDele
+/.github/workflows/ @ChukaDele
+/.website-qa/ @ChukaDele
+/package.json @ChukaDele
+/package-lock.json @ChukaDele
+/playwright.config.mjs @ChukaDele
+/scripts/ @ChukaDele
+/tests/ @ChukaDele
+/src/data/ @ChukaDele
+/worker/ @ChukaDele
+/wrangler.jsonc @ChukaDele

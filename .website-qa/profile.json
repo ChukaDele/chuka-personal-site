@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "standard": "Website Launch QA v2.0",
+  "project": "Chuka Dele personal site",
+  "repository": "ChukaDele/chuka-personal-site",
+  "site_type": "personal portfolio",
+  "production_url": "https://chukadele.com",
+  "staging_url": "https://chuka-personal-site-atelier-v1.thebredge.workers.dev",
+  "markets": ["Global"],
+  "critical_journeys": [
+    "Browse the selected work and open a case study",
+    "Open the contact letter and resolve it through the implemented mailto or clipboard-copy path",
+    "Recover from an unknown URL to the home page"
+  ],
+  "owners": {
+    "builder": "Codex foreground implementation session",
+    "reviewer": "PENDING",
+    "approver": "Chuka Dele, owner acceptance PENDING"
+  },
+  "enforcement": {
+    "status": "ENFORCEMENT_PARTIAL",
+    "reason": "The repository workflow is implemented locally. Required GitHub checks, authenticated approvals and Cloudflare deployment protections were not inspected or changed."
+  }
+}

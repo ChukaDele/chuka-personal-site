@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  echo "Usage: scripts/qa-site-release <local|live-smoke|evidence> [arguments]" >&2
+  exit 2
+}
+
+case "${1:-}" in
+  local)
+    echo "BUILD: default noindex tests"
+    npm test
+    echo "BUILD: indexing-enabled tests"
+    ALLOW_INDEXING=true npm test
+    echo "BUILD: lint and whitespace"
+    npm run lint
+    npm run diff-check
+    echo "BUILD: dependency audit"
+    npm audit --audit-level=high
+    echo "PRELAUNCH: Worker-aware Chromium checks"
+    npm run test:browser
+    echo "AUTOMATED_SITE_CHECKS_PASS: scoped local checks passed. The 47-control release and owner acceptance remain blocked."
+    ;;
+  live-smoke)
+    [[ -n "${2:-}" ]] || usage
+    node scripts/live-site-smoke.mjs --sha "$2"
+    ;;
+  evidence)
+    [[ -n "${2:-}" && -n "${3:-}" ]] || usage
+    node scripts/generate-qa-evidence.mjs "$2" "$3"
+    ;;
+  *) usage ;;
+esac

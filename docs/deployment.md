@@ -16,6 +16,25 @@ No GitHub, keychain or remote Git access is needed to implement or build.
 
 ## Controller commands
 
+The release quality gate is documented in `docs/site-quality-gate.md`. Run the
+local gate before any preview or production procedure. The gate does not deploy:
+
+```sh
+npm ci
+npx playwright install chromium
+npm run qa:site
+```
+
+After a deployment, bind the public smoke to the exact reviewed release SHA:
+
+```sh
+npm run qa:live-smoke -- --sha "$(git rev-parse HEAD)"
+```
+
+A passing smoke proves only the checked public responses and exact
+`X-Deploy-SHA`. It does not prove owner acceptance, WCAG certification, required
+GitHub checks or Cloudflare deployment protection.
+
 First synchronize the archive lockfile with the added pinned Wrangler dependency
 using `npm install --package-lock-only --ignore-scripts`, then `npm ci`.
 Commit the synchronized lockfile with the source. Run `npm test`,

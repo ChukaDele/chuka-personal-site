@@ -30,8 +30,16 @@ npm run preview:worker -- --var "DEPLOY_SHA:$(git rev-parse HEAD)"
 ```
 
 Astro preview serves files only; Worker headers, redirects, robots and sitemap
-require the Worker-aware preview or remote deployment. No server or browser was
-started during implementation. See [deployment](docs/deployment.md) for remote
+require the Worker-aware preview or remote deployment. The executable quality
+gate uses that Worker-aware preview with Playwright Chromium:
+
+```sh
+npx playwright install chromium
+npm run qa:site
+```
+
+See [site quality gate](docs/site-quality-gate.md) for the exact local, CI,
+live-SHA and evidence commands. See [deployment](docs/deployment.md) for remote
 commands and [provider decisions](docs/prior-art-decisions.md) for the bridge.
 
 `src/data/works.js` and `src/data/site.js` hold supplied content. `src/data/routes.js`
