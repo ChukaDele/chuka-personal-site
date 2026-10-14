@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { spawnSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createEvidence } from '../scripts/generate-qa-evidence.mjs';
@@ -25,4 +26,16 @@ test('live smoke rejects a wrong deployment SHA before accepting page content', 
   const actualSha = 'a'.repeat(40);
   const wrongSha = 'b'.repeat(40);
   assert.throws(() => assertDeploySha(new Headers({ 'X-Deploy-SHA': actualSha }), wrongSha), /does not equal/);
+});
+
+
+test('local-production-release: npm deploy refuses outside protected GitHub production job', () => {
+  const result = spawnSync(process.execPath, ['scripts/deploy-production.mjs', '--enable-indexing'], {
+    cwd: process.cwd(), encoding: 'utf8',
+    env: { ...process.env, GITHUB_ACTIONS: 'false', GITHUB_JOB: '', GITHUB_RUN_ID: '',
+      INDEXING_APPROVED_SHA: '0000000000000000000000000000000000000000' },
+    timeout: 8000,
+  });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /Production releases require the approved GitHub production workflow/);
 });

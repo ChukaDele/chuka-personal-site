@@ -6,7 +6,9 @@
   "site_type": "personal portfolio",
   "production_url": "https://chukadele.com",
   "staging_url": "https://chuka-personal-site-atelier-v1.thebredge.workers.dev",
-  "markets": ["Global"],
+  "markets": [
+    "Global"
+  ],
   "critical_journeys": [
     "Browse the selected work and open a case study",
     "Open the contact letter and resolve it through the implemented mailto or clipboard-copy path",
@@ -19,6 +21,6 @@
   },
   "enforcement": {
     "status": "ENFORCEMENT_PARTIAL",
-    "reason": "The repository workflow is implemented locally. Required GitHub checks, authenticated approvals and Cloudflare deployment protections were not inspected or changed."
+    "reason": "GitHub main ruleset 25099076 requires validated build, browser QA, secret scanning and independent code-owner review. The production environment requires explicit approval. The production release workflow has not executed, its scoped Cloudflare token is not provisioned, and existing local OAuth can still bypass the hosted release. Closeout remains blocked."
   }
 }

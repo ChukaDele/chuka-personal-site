@@ -76,3 +76,15 @@ The generator creates all 47 controls as `NOT_TESTED` and all three approvals as
 The GitHub job also bundles the Worker using `wrangler deploy --dry-run` (never publishes). This checks compatibility with the pinned Wrangler toolchain.
 
 The workflow uploads a compact Playwright JSON result on every run. It uploads traces, screenshots, videos and the Wrangler log when `site-quality` fails. A green workflow is scoped automated test evidence. It is not a 47-control pass, owner acceptance or proof that GitHub or Cloudflare prevents bypass. The `secret-scan` CI job runs pinned Gitleaks v3 against the configured PR and branch commit scope. It is not evidence that all historical or unrecognized secrets are absent. Confirm the real GitHub run and make this check required before marking the P0 secret-scanning control PASS.
+
+
+## Protected production release (conditional until credentials and reviewer exist)
+
+The canonical production release path is `.github/workflows/production-release.yml`, manually dispatched from the protected `main` branch with an exact reviewed `release_sha`. The job waits for approval in GitHub's `production` environment, checks that the requested SHA still equals `main`, verifies the three GitHub Actions check results for that SHA, reruns the site QA, bundles the Worker without publishing, then deploys with a production-scoped Cloudflare token and rechecks every public route against the actual deployed SHA.
+
+**Required external configuration:** Add a narrowly scoped `CLOUDFLARE_API_TOKEN` as a **GitHub production environment secret** and `CLOUDFLARE_ACCOUNT_ID` as an environment variable. The workflow fails closed if either is absent. The npm deployment entrypoint also rejects normal local production releases. This script check is a guardrail against accidental releases; administrators with direct Cloudflare API rights can bypass GitHub. Avoid a general account-owner token. Check the Cloudflare permissions needed for Workers scripts, assets and the current zone before provisioning. The existing local Wrangler OAuth still permits direct deployment; revoke or restrict that permission only after the protected CI release has been proven. Neither a repository script nor a GitHub rule can eliminate independent Cloudflare admin access.
+
+**Current status:** The production workflow has been prepared, but it is **NOT production-validated**. The site PR must pass real hosted checks and an independent code-owner review, then the owner must supply credentials, approve a test production run, and verify that direct developer credentials can no longer bypass the intended pathway. Do not infer a completed deployment or project closeout from a green GitHub CI badge.
+
+
+Production deployment builds final indexable assets and dry-runs the same indexability setting before obtaining the Cloudflare deployment token. The publish script excludes Cloudflare credentials from its npm/Astro build child process and sends the token only to Wrangler. Use the manual rollback procedure in deployment.md if any post-deploy smoke fails; do not report CLOSED merely because the previous site was restored.

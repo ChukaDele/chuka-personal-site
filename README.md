@@ -47,3 +47,5 @@ holds canonical paths, metadata and legacy redirects. `content/artworks.ts`
 records historical-image provenance and the limits of the supplied archive.
 Older design/QA documents describe the replaced direction and are historical,
 not acceptance evidence for this launch candidate.
+
+The QA-only release proposal adds [GitHub-hosted site quality checks](docs/site-quality-gate.md), a protected manual production workflow, and [fail-closed closeout evidence](docs/website-qa-closeout.md). Production release and owner sign-off remain separate from automated test passes.
