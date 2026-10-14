@@ -30,8 +30,16 @@ npm run preview:worker -- --var "DEPLOY_SHA:$(git rev-parse HEAD)"
 ```
 
 Astro preview serves files only; Worker headers, redirects, robots and sitemap
-require the Worker-aware preview or remote deployment. No server or browser was
-started during implementation. See [deployment](docs/deployment.md) for remote
+require the Worker-aware preview or remote deployment. The executable quality
+gate uses that Worker-aware preview with Playwright Chromium:
+
+```sh
+npx playwright install chromium
+npm run qa:site
+```
+
+See [site quality gate](docs/site-quality-gate.md) for the exact local, CI,
+live-SHA and evidence commands. See [deployment](docs/deployment.md) for remote
 commands and [provider decisions](docs/prior-art-decisions.md) for the bridge.
 
 `src/data/works.js` and `src/data/site.js` hold supplied content. `src/data/routes.js`
@@ -39,3 +47,5 @@ holds canonical paths, metadata and legacy redirects. `content/artworks.ts`
 records historical-image provenance and the limits of the supplied archive.
 Older design/QA documents describe the replaced direction and are historical,
 not acceptance evidence for this launch candidate.
+
+The QA-only release proposal adds [GitHub-hosted site quality checks](docs/site-quality-gate.md), a protected manual production workflow, and [fail-closed closeout evidence](docs/website-qa-closeout.md). Production release and owner sign-off remain separate from automated test passes.

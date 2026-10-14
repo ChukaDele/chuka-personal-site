@@ -1,0 +1,87 @@
+name: Site quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secret-scan:
+    name: secret-scan
+    permissions:
+      contents: read
+      pull-requests: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout complete history for secret scanning
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Scan committed secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: 'false'
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: 'false'
+
+  site-quality:
+    name: site-quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reject PR whitespace defects
+        if: github.event_name == 'pull_request'
+        run: git diff --check origin/main...HEAD
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run build, source, security and browser checks
+        run: npm run qa:site
+        env:
+          CI: 'true'
+          QA_DEPLOY_SHA: ${{ github.sha }}
+          WRANGLER_LOG_PATH: ${{ runner.temp }}/chuka-site-qa-wrangler.log
+          WRANGLER_REGISTRY_PATH: ${{ runner.temp }}/chuka-site-wrangler-registry
+          MINIFLARE_REGISTRY_PATH: ${{ runner.temp }}/chuka-site-miniflare-registry
+      - name: Upload Playwright machine report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: site-quality-results-${{ github.run_id }}-${{ github.run_attempt }}
+          path: test-results/site-quality/results.json
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Verify Cloudflare Worker bundle without deployment
+        run: |
+          ./node_modules/.bin/wrangler deploy --dry-run \
+            --config wrangler.jsonc \
+            --name chuka-personal-site \
+            --var "DEPLOY_SHA:$(git rev-parse HEAD)" \
+            --var 'ALLOW_INDEXING:false'
+      - name: Upload Playwright failure evidence
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: site-quality-playwright-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            playwright-report/
+            test-results/site-quality/
+            ${{ runner.temp }}/chuka-site-qa-wrangler.log
+          if-no-files-found: warn
+          retention-days: 7

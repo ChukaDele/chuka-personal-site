@@ -16,6 +16,25 @@ No GitHub, keychain or remote Git access is needed to implement or build.
 
 ## Controller commands
 
+The release quality gate is documented in `docs/site-quality-gate.md`. Run the
+local gate before any preview or production procedure. The gate does not deploy:
+
+```sh
+npm ci
+npx playwright install chromium
+npm run qa:site
+```
+
+After a deployment, bind the public smoke to the exact reviewed release SHA:
+
+```sh
+npm run qa:live-smoke -- --sha "$(git rev-parse HEAD)"
+```
+
+A passing smoke proves only the checked public responses and exact
+`X-Deploy-SHA`. It does not prove owner acceptance, WCAG certification, required
+GitHub checks or Cloudflare deployment protection.
+
 First synchronize the archive lockfile with the added pinned Wrangler dependency
 using `npm install --package-lock-only --ignore-scripts`, then `npm ci`.
 Commit the synchronized lockfile with the source. Run `npm test`,
@@ -146,3 +165,20 @@ could not be read in this runtime (`Operation not permitted`); diagnosis used
 the controller's reported trace and source inspection. No build, server, browser,
 commit, push or deployment was run. Delayed-image fast-scroll, early-pointer and
 touch regressions remain controller remote QA checks.
+
+
+## Protected production release route (14 October 2026)
+
+The reviewed and preferred release path is the manual GitHub `Protected production release` workflow on the protected `main` branch. It demands a matching source SHA, successful GitHub check-run provenance, an approving `production` environment reviewer, complete Worker-aware QA, Cloudflare bundle dry-run, a production-scoped GitHub environment token, and an exact-SHA live smoke. This does not change the current live Worker until an authorized release is explicitly run.
+
+**Do not treat this route as enforced yet.** The protected environment currently lacks a Cloudflare API token; the old local Wrangler OAuth can still deploy independently. The source workflow is pending hosted execution. Provision a least-privilege environment token and verify the protected workflow before restricting legacy local deploy rights. Until then, report `ENFORCEMENT_PARTIAL`.
+
+
+## Rollback after a failed production smoke
+
+1. Confirm the failing Protected production release run, affected routes and exact deployed SHA. Log the incident before changing deployment state.
+2. In Cloudflare Workers deployments for chuka-personal-site, obtain the actual last known-good Worker version ID and its date. Never guess a version ID. In an emergency, an authorized operator may use the Cloudflare dashboard Rollback action or the CLI: wrangler rollback <verified-healthy-version-id> --name chuka-personal-site. Record who approved and performed this break-glass operation.
+3. Recheck https://chukadele.com/ for the restored Worker deployment, critical routes, contact, 404, robots, sitemap and required security headers. Record the observed SHA and actual Worker version.
+4. File an incident and corrective pull request. Approve the new main commit only after normal quality, secret and independent-review checks pass again.
+
+A failed live smoke leaves release status BLOCKED even after rollback. Cloudflare rollback is an exceptional direct-account action and is outside the normal GitHub environment approval boundary. Restrict direct credentials after the protected workflow is proven.

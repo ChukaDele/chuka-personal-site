@@ -6,6 +6,15 @@ const enableIndexing = process.argv.includes('--enable-indexing');
 const sha = git('rev-parse', 'HEAD');
 const branch = git('branch', '--show-current');
 function assertReleaseTree() {
+  // This protects against accidental local npm deployments. The real trust
+  // boundary is GitHub's protected environment and Cloudflare credentials.
+  if (!preview && !(
+    process.env.GITHUB_ACTIONS === 'true' &&
+    process.env.GITHUB_REF === 'refs/heads/main' &&
+    process.env.GITHUB_SHA === sha &&
+    process.env.GITHUB_JOB === 'production-deploy' &&
+    process.env.GITHUB_RUN_ID
+  )) throw new Error('Production releases require the approved GitHub production workflow; local npm deploy is disabled.');
   if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Expected a full Git SHA.');
   if (git('rev-parse', 'HEAD') !== sha || git('status', '--porcelain')) throw new Error('Deploy requires an unchanged, clean committed worktree.');
   if (!preview && branch !== 'main') throw new Error('Production deploy requires main.');
@@ -19,7 +28,13 @@ function run(command, args, env) {
 const env = { ...process.env, ALLOW_INDEXING: enableIndexing ? 'true' : 'false', WRANGLER_LOG_PATH: '.wrangler/wrangler.log' };
 if (!preview) env.UI_STRESS_QA = 'false';
 assertReleaseTree();
-run('npm', ['run', 'build'], env);
+// Keep deployment credentials out of npm/Astro build plugins.
+// Only the final Wrangler process may receive the Cloudflare API token.
+const buildEnv = { ...env };
+for (const key of ['CLOUDFLARE_API_TOKEN', 'CLOUDFLARE_API_KEY', 'CLOUDFLARE_ACCOUNT_ID', 'CLOUDFLARE_EMAIL', 'CF_API_TOKEN']) {
+  delete buildEnv[key];
+}
+run('npm', ['run', 'build'], buildEnv);
 assertReleaseTree();
 run('./node_modules/.bin/wrangler', [
   'deploy', '--config', 'wrangler.jsonc',
