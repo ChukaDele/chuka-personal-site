@@ -42,6 +42,20 @@ The sample query is a **hypothesis**: “CV parsing mistakes before candidate sc
 - Changes to article content, social publishing and production website deployments must use existing site review and Cloudflare release safeguards.
 - Google Search Central's current people-first and AI content guidance takes precedence over short-form SEO hacks: https://developers.google.com/search/docs/fundamentals/creating-helpful-content and https://developers.google.com/search/docs/fundamentals/using-gen-ai-content .
 
+
+## Mandatory website closeout checks
+
+The active GitHub branch ruleset requires three successful check contexts: `validate`, `site-quality` and `secret-scan`, plus one independent approving review. No agent may waive or fabricate these checks. An open PR is **not** a deployed or approved website update.
+
+- `validate`: existing Astro builds (default noindex and indexable), Node tests and syntax/diff checks.
+- `site-quality`: indexable Astro build, deterministic site-quality tests, static rendered checks of all 14 pages (12 indexable), metadata, self-canonicals, protected noindex pages, images and internal URLs, plus `npm audit --omit=dev --audit-level=high`. This is a static check, not live browser or Core Web Vitals QA.
+- `secret-scan`: Gitleaks v3 scanning the checked-out Git history/PR for committed secrets. Any finding must be assessed, removed/rotated as appropriate and rerun rather than ignored.
+- Independent human review and an approved HTTPS Cloudflare preview/browser pass remain distinct release gates. Before production promotion, verify browser console/network, responsive UI, keyboard navigation, reduced motion, real redirects and runtime Worker indexing.
+
+After PR checks succeed, confirm required human approval and preview QA before merging and deploying through the existing `deploy:enable-indexing` safeguard. Never use the plain deploy path for an already indexable production site because it can temporarily emit noindex output. Keep new article content private until explicit editorial/client clearance.
+
+Security maintenance note (October 2026): the Astro transitive `http-cache-semantics` dependency was updated from 4.2.0 to patched 4.3.0 in the lockfile after a high-severity advisory; runtime dependency audit now reports no high/critical findings. The older pinned Wrangler dev tool retains separate development-dependency advisories and requires a scoped upgrade/verification before being considered fully cleared.
+
 ## Unpublished working drafts
 
 Store draft article copy outside the public Git repository until the owner confirms editorial and any client approval. The current Surface Talent pilot is held in the owner-local private review directory ~/Documents/SEO-Pilot-Review/. A technical preflight or GitHub CI result does not permit public posting.
