@@ -46,8 +46,8 @@ jobs:
         run: |
           node --test scripts/site-quality.test.mjs
           node scripts/check-site-quality.mjs
-      - name: Block high/critical production dependency advisories
-        run: npm audit --omit=dev --audit-level=high
+      - name: Block high/critical production and development dependency advisories
+        run: npm audit --audit-level=high
       - run: npm run lint
 
   secret-scan:

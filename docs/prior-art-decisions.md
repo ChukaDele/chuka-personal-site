@@ -13,7 +13,7 @@ The old React/vinext runtime, frontend and tests were removed.
 ## ADOPT — Cloudflare Static Assets and maintained Wrangler
 
 Use Cloudflare's existing static asset storage, caching and binding with Wrangler
-`4.92.0` (exact pin retained from the existing project). No custom hosting service,
+`4.151.0` (exact pinned October 2026 security update, validated against the existing Worker contract). No custom hosting service,
 DNS migration, account creation, transport credentials or contact backend.
 
 Provider documentation:
