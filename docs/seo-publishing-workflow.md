@@ -56,6 +56,14 @@ After PR checks succeed, confirm required human approval and preview QA before m
 
 Security maintenance note (October 2026): Astro's transitive `http-cache-semantics` dependency was updated from 4.2.0 to 4.3.0. Wrangler was updated from exact pin 4.92.0 to 4.151.0 after a full dependency audit identified additional high-severity development-tool advisories. A fresh `npm ci` followed by `npm audit --audit-level=high` reported zero vulnerabilities. Both build modes, Node tests, lints and rendered-page checks passed locally. Retain HTTPS Cloudflare preview verification before marking runtime compatibility complete.
 
+## Independent HTTPS browser release QA
+
+For a release PR with a valid Cloudflare staging build, first deploy the **exact PR head SHA** to the existing `chuka-personal-site-atelier-v1` Worker with `npm run deploy:preview` on a clean branch. Confirm `major web preflight` succeeds. Then add the GitHub PR label `browser-qa`. The CI workflow's `preview-browser-qa` job runs from an independent Ubuntu runner and requires `X-Deploy-SHA` to match `github.event.pull_request.head.sha`.
+
+This browser suite checks rendered content, first-party network/JS errors, response headers, default preview noindex, 404, canonical home redirect, mobile navigation, contact dialog without submission, focused diagram scrolling, responsive overflow and automated WCAG axe checks. The run uploads a JSON evidence receipt and four preview screenshots. Failed checks must be investigated and the same SHA retested. A skipped browser job does not count as release evidence, and the local Mac's intermittent Chromium TLS errors do not automatically establish a website regression.
+
+A green automated browser run still does **not** replace an accountable human's visual and release approval or a standard end-user browser/network check. It also cannot satisfy the GitHub ruleset's independent reviewing-human requirement when the connected account authored the PR. Never alter that review rule or misattribute a review merely to merge.
+
 ## Unpublished working drafts
 
 Store draft article copy outside the public Git repository until the owner confirms editorial and any client approval. The current Surface Talent pilot is held in the owner-local private review directory ~/Documents/SEO-Pilot-Review/. A technical preflight or GitHub CI result does not permit public posting.
