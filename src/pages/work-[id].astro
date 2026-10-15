@@ -49,7 +49,7 @@ const ask = { etap: ['Hiring for operations?', 'hiring'], 'surface-talent': ['Hi
       </figure>}
       {p.steps && <div class="steps">{p.steps.map(([k, t]) => <div><h3>{k}</h3><p>{t}</p></div>)}</div>}
       {p.list && <ul class="plain">{p.list.map(([k, v]) => <li><b>{k}</b><span>{v}</span></li>)}</ul>}
-      {p.sketch && <figure class="sketch"><Fragment set:html={p.sketch} />{p.caption && <figcaption>{p.caption}</figcaption>}</figure>}
+      {p.sketch && <figure class="sketch" tabindex="0"><Fragment set:html={p.sketch} />{p.caption && <figcaption>{p.caption}</figcaption>}</figure>}
       {p.code && (
         <div class="with-note">
           <div class="code"><header><b>{p.code.file}</b><span>{p.code.tag}</span></header><pre set:html={p.code.body} /></div>

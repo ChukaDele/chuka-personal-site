@@ -13,6 +13,7 @@
     "deploy:enable-indexing": "node scripts/deploy-production.mjs --enable-indexing",
     "test": "npm run build && node --test tests/*.test.mjs",
     "test:unit": "node --test tests/worker.test.mjs",
+    "qa:preview": "node scripts/preview-browser-qa.mjs",
     "lint": "node --check worker/index.mjs && node --check scripts/deploy-production.mjs && node --check src/data/routes.js && node --check src/scripts/site.js && node --check src/scripts/sheet.js",
     "diff-check": "git diff --check"
   },
@@ -31,6 +32,8 @@
     "node": ">=22.13.0"
   },
   "devDependencies": {
-    "wrangler": "4.92.0"
+    "@playwright/test": "1.64.1",
+    "axe-core": "4.14.0",
+    "wrangler": "4.151.0"
   }
 }

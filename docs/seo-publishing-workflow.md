@@ -1,0 +1,69 @@
+# Evidence-led SEO publishing workflow
+
+Status: operational research and live technical preflight validated on 14 October 2026. A new article has **not** been published or approved, and no ranking, GSC traffic or LinkedIn reach result has been established.
+
+## Source of truth and trigger
+
+Canonical orchestration: `~/Projects/project-baracks/skills/internal/seo-os/SKILL.md`
+Playbook: `~/Projects/project-baracks/skills/internal/seo-os/references/founder-led-search-experiment.md`
+Runnable preflight: `~/Projects/project-baracks/scripts/seo-content-experiment.mjs`
+Pilot input: `~/Projects/project-baracks/examples/seo-chukadele-surface-talent.json`
+
+Use the same route when asked to grow organic search, research specific keywords, write articles based on actual work, test LinkedIn search distribution or make site content discoverable. The site remains primarily a Strategy & Operations portfolio. Research should make positioning more specific without changing that classification.
+
+## Experiment operating procedure
+
+1. Find an existing high-value question using GSC impressions and a documented UK search result, when data is available. If no GSC evidence exists, label the keyword as a hypothesis, not a verified opportunity.
+2. Examine relevant pages and note search intent, weak coverage and competitor arguments. Record URLs, dates, the limitations of the evidence and any unverified SERP positions.
+3. Use a public, owner-approved first-person case. No invented metrics, testimonials, client claims or fabricated anecdotes. Keep confidential material out of marketing artifacts.
+4. Improve the relevant owned page before creating a new URL. Each indexable article must include sufficient helpful original material, contextual internal links, descriptive title, canonical, crawl permission and a meaningful contact/next-action path.
+5. Prepare a distinct native LinkedIn article with a relevant link back to the owned page. Editorial and client clearance are mandatory before publishing.
+6. Run the deterministic preflight, then publish only with approval. Manually inspect mobile rendering and internal/external links. Confirm HTTP 200, robots, canonical and sitemap membership. Search Console recrawl requests are allowed; do not use Google's restricted Indexing API for ordinary content.
+7. Record actual published URLs and monitor GSC clicks, impressions, query/page positions, LinkedIn referrals and qualified enquiries after 7 and 30 days. Record unknowns rather than zeroes. Rank screenshots alone do not establish value.
+
+## Proven dry run
+
+From the Major repository:
+
+```sh
+node --test scripts/seo-content-experiment.test.mjs
+node scripts/seo-content-experiment.mjs examples/seo-chukadele-surface-talent.json --live --out /tmp/major-seo-chukadele-20261014
+```
+
+Executed on 14 October 2026. Five deterministic tests passed. The live page `https://chukadele.com/work-surface-talent.html` returned HTTP 200, one title and H1, one matching canonical, no noindex, accessible robots and sitemap, with the page in the 12-URL sitemap. The generated package was `ready-for-editorial-review`, with no blocker on sourcing or public technical checks.
+
+The sample query is a **hypothesis**: “CV parsing mistakes before candidate scoring”. The input contains two dated relevant source articles, not claimed measured top-ranked results. The firsthand input links to existing public Surface Talent case and notes pages. Owner/client approvals remain false. No new site article or LinkedIn article was published.
+
+## Known boundaries
+
+- The Notes page remains noindex under the existing content approval rule. Do not change it as a shortcut for the experiment.
+- Google Search Console performance data has not been pulled into the runner; connecting it and measuring demand remains necessary.
+- This checks the real deployed page; it does not establish whether Google currently indexes it, what position it ranks, or whether traffic converts.
+- Changes to article content, social publishing and production website deployments must use existing site review and Cloudflare release safeguards.
+- Google Search Central's current people-first and AI content guidance takes precedence over short-form SEO hacks: https://developers.google.com/search/docs/fundamentals/creating-helpful-content and https://developers.google.com/search/docs/fundamentals/using-gen-ai-content .
+
+
+## Mandatory website closeout checks
+
+The active GitHub branch ruleset requires three successful check contexts: `validate`, `site-quality` and `secret-scan`, plus one independent approving review. No agent may waive or fabricate these checks. An open PR is **not** a deployed or approved website update.
+
+- `validate`: existing Astro builds (default noindex and indexable), Node tests and syntax/diff checks.
+- `site-quality`: indexable Astro build, deterministic site-quality tests, static rendered checks of all 14 pages (12 indexable), metadata, self-canonicals, protected noindex pages, images and internal URLs, plus `npm audit --audit-level=high` covering both production and development dependencies. This is a static check, not live browser or Core Web Vitals QA.
+- `secret-scan`: Gitleaks v3 scanning newly introduced commits on PR and push events for secrets; existing historical commits are outside the routine scan. Any finding must be assessed, removed/rotated as appropriate and rerun rather than ignored. A separate full-history scan is needed to audit older commits.
+- Independent human review and an approved HTTPS Cloudflare preview/browser pass remain distinct release gates. Before production promotion, verify browser console/network, responsive UI, keyboard navigation, reduced motion, real redirects and runtime Worker indexing.
+
+After PR checks succeed, confirm required human approval and preview QA before merging and deploying through the existing `deploy:enable-indexing` safeguard. Never use the plain deploy path for an already indexable production site because it can temporarily emit noindex output. Keep new article content private until explicit editorial/client clearance.
+
+Security maintenance note (October 2026): Astro's transitive `http-cache-semantics` dependency was updated from 4.2.0 to 4.3.0. Wrangler was updated from exact pin 4.92.0 to 4.151.0 after a full dependency audit identified additional high-severity development-tool advisories. A fresh `npm ci` followed by `npm audit --audit-level=high` reported zero vulnerabilities. Both build modes, Node tests, lints and rendered-page checks passed locally. Retain HTTPS Cloudflare preview verification before marking runtime compatibility complete.
+
+## Independent HTTPS browser release QA
+
+For a release PR with a valid Cloudflare staging build, first deploy the **exact PR head SHA** to the existing `chuka-personal-site-atelier-v1` Worker with `npm run deploy:preview` on a clean branch. Confirm `major web preflight` succeeds. Then add the GitHub PR label `browser-qa`. The CI workflow's `preview-browser-qa` job runs from an independent Ubuntu runner and requires `X-Deploy-SHA` to match `github.event.pull_request.head.sha`.
+
+This browser suite checks rendered content, first-party network/JS errors, response headers, default preview noindex, 404, canonical home redirect, mobile navigation, contact dialog without submission, focused diagram scrolling, responsive overflow and automated WCAG axe checks. The run uploads a JSON evidence receipt and four preview screenshots. Failed checks must be investigated and the same SHA retested. A skipped browser job does not count as release evidence, and the local Mac's intermittent Chromium TLS errors do not automatically establish a website regression.
+
+A green automated browser run still does **not** replace an accountable human's visual and release approval or a standard end-user browser/network check. It also cannot satisfy the GitHub ruleset's independent reviewing-human requirement when the connected account authored the PR. Never alter that review rule or misattribute a review merely to merge.
+
+## Unpublished working drafts
+
+Store draft article copy outside the public Git repository until the owner confirms editorial and any client approval. The current Surface Talent pilot is held in the owner-local private review directory ~/Documents/SEO-Pilot-Review/. A technical preflight or GitHub CI result does not permit public posting.

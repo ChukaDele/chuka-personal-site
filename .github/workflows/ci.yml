@@ -2,6 +2,7 @@ name: CI
 
 on:
   pull_request:
+    types: [opened, reopened, synchronize, labeled]
   push:
     branches:
       - main
@@ -15,8 +16,8 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
@@ -27,3 +28,84 @@ jobs:
           ALLOW_INDEXING: 'true'
       - run: npm run lint
       - run: npm run diff-check
+
+  site-quality:
+    name: site-quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Render indexable production candidate
+        run: npm run build
+        env:
+          ALLOW_INDEXING: 'true'
+      - name: Run page, indexability, internal-link and asset quality gates
+        run: |
+          node --test scripts/site-quality.test.mjs
+          node scripts/check-site-quality.mjs
+      - name: Block high/critical production and development dependency advisories
+        run: npm audit --audit-level=high
+      - run: npm run lint
+
+
+  preview-browser-qa:
+    name: preview-browser-qa
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'browser-qa')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PREVIEW_URL: https://chuka-personal-site-atelier-v1.thebredge.workers.dev/
+      EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+      QA_OUTPUT_DIR: qa-artifacts
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install Playwright headless Chromium on independent Linux runner
+        run: npx playwright install --with-deps chromium --only-shell
+      - name: Wait for exact PR commit to reach Cloudflare preview
+        shell: bash
+        run: |
+          for attempt in $(seq 1 36); do
+            found="$(curl -fsSI --max-time 12 "$PREVIEW_URL" 2>/dev/null | awk 'tolower($1)=="x-deploy-sha:"{gsub("\\r","",$2); print $2}' | tail -1 || true)"
+            if [ "$found" = "$EXPECTED_SHA" ]; then
+              echo "Exact Cloudflare preview revision verified."
+              exit 0
+            fi
+            echo "Preview not at expected SHA; retry ${attempt}/36."
+            sleep 5
+          done
+          echo "::error::Preview never reached the exact PR HEAD SHA."
+          exit 1
+      - name: Require exact SHA and run browser QA against Cloudflare HTTPS preview
+        run: node scripts/preview-browser-qa.mjs
+      - name: Store read-only QA receipts and screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: preview-browser-qa-${{ github.event.pull_request.number }}
+          path: qa-artifacts/
+          retention-days: 14
+          if-no-files-found: warn
+
+  secret-scan:
+    name: secret-scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+      - name: Scan new PR and push commits for secrets
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
