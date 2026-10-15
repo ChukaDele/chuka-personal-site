@@ -21,7 +21,7 @@ import { shelves } from '../data/library.js';
         <div class="shelfrow">
           <ul class="shelf" aria-label={name}>
             {volumes.map(({id, kind, title, by, cloth, ink, h, t}) => (
-              <li><a href={`library.html#${id}`} class="book" data-book aria-controls={id} aria-label={`${kind}: ${title}, ${by}`}
+              <li><a href={`library.html#${id}`} class="book" data-book aria-controls={id} aria-label={`${kind} ${title} ${by}`}
                 style={`--h:${h};--t:${t};--fs:${Math.min(t * 0.44, (0.66 * h) / (title.length * 0.4)).toFixed(1)};--cloth:${cloth};--ink:${ink}`}>
                 <span class="spine" aria-hidden="true"><i class="kind">{kind}</i><b>{title}</b><i class="by">{by.split('.')[0].split(' with ')[0]}</i></span>
                 <span class="cover" aria-hidden="true"><i class="kind">{kind}</i><b>{title}</b><i class="by">{by}</i></span>

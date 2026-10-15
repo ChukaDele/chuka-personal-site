@@ -44,6 +44,29 @@ test('case diagrams with mobile horizontal scrolling are keyboard focusable', ()
   assert.doesNotMatch(broken, accessibleSketch);
 });
 
+
+test('About print captions meet normal-size WCAG contrast against their paper background', () => {
+  const css=readFileSync('src/styles/global.css','utf8');
+  const paper=css.match(/\.print-p\{[^}]*background:(#[a-f0-9]{6})/i)?.[1];
+  const ink=css.match(/\.print-p figcaption span\{[^}]*color:(#[a-f0-9]{6})/i)?.[1];
+  assert.ok(paper && ink,'expected explicit paper and caption colors');
+  const relativeLuminance=hex=>{
+    const s=hex.replace('#','');
+    const rgb=[0,2,4].map(i=>parseInt(s.slice(i,i+2),16)/255)
+      .map(v=>v<=0.04045?v/12.92:((v+0.055)/1.055)**2.4);
+    return 0.2126*rgb[0]+0.7152*rgb[1]+0.0722*rgb[2];
+  };
+  const values=[relativeLuminance(paper),relativeLuminance(ink)].sort((a,b)=>b-a);
+  assert.ok((values[0]+0.05)/(values[1]+0.05)>=4.5,'caption fails WCAG AA normal-text contrast');
+});
+
+test('Library volume accessible names include their visible spine labels', () => {
+  const library=readFileSync('dist/library.html','utf8');
+  assert.match(library,/aria-label="Book The Alchemist Paulo Coelho"/);
+  assert.match(library,/aria-label="Book Zero to One Peter Thiel with Blake Masters"/);
+  assert.doesNotMatch(library,/aria-label="Book: The Alchemist, Paulo Coelho"/);
+});
+
 test('notes route stays noindex and validates other markup', () => {
   assert.equal(checkPage('/notes.html', notes).errors.length, 0);
   const exposed = notes.replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, '');

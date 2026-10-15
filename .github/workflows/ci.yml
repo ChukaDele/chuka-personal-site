@@ -70,6 +70,20 @@ jobs:
       - run: npm ci
       - name: Install Playwright headless Chromium on independent Linux runner
         run: npx playwright install --with-deps chromium --only-shell
+      - name: Wait for exact PR commit to reach Cloudflare preview
+        shell: bash
+        run: |
+          for attempt in $(seq 1 36); do
+            found="$(curl -fsSI --max-time 12 "$PREVIEW_URL" 2>/dev/null | awk 'tolower($1)=="x-deploy-sha:"{gsub("\\r","",$2); print $2}' | tail -1 || true)"
+            if [ "$found" = "$EXPECTED_SHA" ]; then
+              echo "Exact Cloudflare preview revision verified."
+              exit 0
+            fi
+            echo "Preview not at expected SHA; retry ${attempt}/36."
+            sleep 5
+          done
+          echo "::error::Preview never reached the exact PR HEAD SHA."
+          exit 1
       - name: Require exact SHA and run browser QA against Cloudflare HTTPS preview
         run: node scripts/preview-browser-qa.mjs
       - name: Store read-only QA receipts and screenshots

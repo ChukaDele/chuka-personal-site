@@ -151,7 +151,7 @@ async function interactionChecks(browser) {
       await visible.click({timeout:7000});
       const dialog=page.locator('dialog.letter');
       if (!(await dialog.evaluate(x=>x.open)))record('contact-open','/','desktop','Contact dialog did not open');
-      await dialog.locator('button[data-close]').click({timeout:7000});
+      await dialog.locator('button[data-close]').first().click({timeout:7000});
       if (await dialog.evaluate(x=>x.open))record('contact-close','/','desktop','Contact dialog did not close');
       // Do not submit the form or create any real third-party records.
     }catch(e){record('contact','/','desktop',e.message)}
