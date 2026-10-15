@@ -60,11 +60,12 @@ test('About print captions meet normal-size WCAG contrast against their paper ba
   assert.ok((values[0]+0.05)/(values[1]+0.05)>=4.5,'caption fails WCAG AA normal-text contrast');
 });
 
-test('Library volume accessible names include their visible spine labels', () => {
+test('Library volume accessible names come from visible spine text without duplicate covers', () => {
   const library=readFileSync('dist/library.html','utf8');
-  assert.match(library,/aria-label="Book The Alchemist Paulo Coelho"/);
-  assert.match(library,/aria-label="Book Zero to One Peter Thiel with Blake Masters"/);
-  assert.doesNotMatch(library,/aria-label="Book: The Alchemist, Paulo Coelho"/);
+  assert.match(library, /aria-controls="library-note-1"[^>]*><span class="spine"><i class="kind">Book<\/i><b>The Alchemist<\/b>/);
+  assert.match(library, /aria-controls="library-note-2"[^>]*><span class="spine"><i class="kind">Book<\/i><b>Zero to One<\/b>/);
+  assert.doesNotMatch(library, /aria-controls="library-note-1"[^>]*aria-label=/);
+  assert.match(library, /<span class="cover" aria-hidden="true">/);
 });
 
 test('notes route stays noindex and validates other markup', () => {
