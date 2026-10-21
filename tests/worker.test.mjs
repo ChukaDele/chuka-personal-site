@@ -87,6 +87,8 @@ test('indexing requires canonical HTTPS origin and explicit runtime promotion', 
   const sitemap = await (await fetch('/sitemap.xml')).text();
   assert.match(sitemap, /https:\/\/chukadele.com\/work-etap.html/);
   assert.doesNotMatch(sitemap, /notes|404/);
+  assert.match(sitemap, /https:\/\/chukadele.com\/offerdesk\/<\/loc>/);
+  assert.match(sitemap, /https:\/\/chukadele.com\/offerdesk\/help<\/loc>/);
 });
 test('404, HEAD, rejected methods and errors retain security and provenance', async () => {
   const missing = await fetch('/missing');

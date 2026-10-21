@@ -21,7 +21,7 @@ export const site = {
     ['CV', 'resume.html'],
   ],
   // every page, for the foot of each page, so nothing is hidden
-  all: [['Home', 'index.html'], ['Work', 'work.html'], ['About', 'about.html'], ['Library', 'library.html'], ['Notes', 'notes.html'], ['Press', 'press.html'], ['CV', 'resume.html']],
+  all: [['Home', 'index.html'], ['Work', 'work.html'], ['About', 'about.html'], ['Library', 'library.html'], ['Notes', 'notes.html'], ['Press', 'press.html'], ['CV', 'resume.html'], ['Offer Desk', '/offerdesk/']],
 };
 
 // people: [x%, y%, half-width%, half-height% of the picture, swing (rad), speed, phase, bob px, scribble px, breathing, redraw key]
