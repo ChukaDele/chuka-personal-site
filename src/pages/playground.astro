@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import media from '../../docs/playground-media.json';
+const [voxtell, rayna] = media;
+---
+<Base noindex>
+  <div class="playground" data-playground>
+    <header class="intro">
+      <p class="label">Workshop / Draft</p>
+      <h1>Playground<span>.</span></h1>
+      <p class="opening">Two familiar games. A small change of rules. Take a turn, find a route, make a little space.</p>
+      <p class="label">Chuka Dele-Oyeleru · Strategy &amp; Operations</p>
+    </header>
+
+    <div class="studies">
+      <section class="arcade loopline" data-game="snake" aria-labelledby="loopline-title">
+        <div class="game-heading">
+          <p class="label">01 / Snake, with a shortcut</p>
+          <h2 id="loopline-title">Loopline<span>↳</span></h2>
+          <p id="snake-rules" class="rules">Collect copper marks. Avoid the walls and your own trail. Enter A, leave B (or B to A), still heading the same way. The pair moves every third mark; watch the letters. If there aren’t two new free cells, the pair stays put. Fill every non-portal cell to win.</p>
+          <p class="instruction">Arrow keys or WASD while focused here. Or use the direction buttons. Escape pauses.</p>
+        </div>
+        <div class="machine">
+          <div class="scoreboard"><p>Marks <strong data-score>0</strong></p><p><span data-storage>Best on this device</span> <strong data-best>0</strong></p></div>
+          <canvas width="432" height="432" tabindex="0" role="img" aria-label="Loopline game board: snake, copper mark and paired portals A and B" aria-describedby="snake-rules snake-status">Loopline requires JavaScript and Canvas support.</canvas>
+          <p class="board-detail" data-detail>Portals A ↔ B. New routes every third mark.</p>
+          <p class="status" id="snake-status" data-status role="status" aria-live="polite" aria-atomic="true">Ready when you are.</p>
+          <div data-controls hidden>
+            <div class="actions"><button type="button" data-start>Start</button><button type="button" data-pause disabled>Pause</button><button type="button" data-restart disabled>Restart</button></div>
+            <div class="directions compass" aria-label="Loopline directions">
+              <button type="button" data-direction="up" aria-label="Turn up">↑</button>
+              <button type="button" data-direction="left" aria-label="Turn left">←</button>
+              <button type="button" data-direction="down" aria-label="Turn down">↓</button>
+              <button type="button" data-direction="right" aria-label="Turn right">→</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="arcade ricochet" data-game="breakout" aria-labelledby="ricochet-title">
+        <div class="game-heading">
+          <p class="label">02 / Breakout, with a chain reaction</p>
+          <h2 id="ricochet-title">Ricochet<span>↗</span></h2>
+          <p id="breakout-rules" class="rules">Clear the wall in three lives. The paddle’s edges aim the bounce. Copper bricks marked + clear their immediate neighbours above, below, left and right. Reach another + and the chain continues. Every brick is worth 10.</p>
+          <p class="instruction">Hold ← / → or A / D while focused here. Drag on the board, or hold the buttons below. Escape pauses. After a miss, Resume serves the next ball.</p>
+        </div>
+        <div class="machine">
+          <div class="scoreboard"><p>Score <strong data-score>0</strong></p><p><span data-storage>Best on this device</span> <strong data-best>0</strong></p></div>
+          <canvas width="480" height="360" tabindex="0" role="img" aria-label="Ricochet game board: paddle, ball and brick wall with copper charged bricks" aria-describedby="breakout-rules breakout-status">Ricochet requires JavaScript and Canvas support.</canvas>
+          <p class="board-detail" data-detail>3 lives · 40 bricks</p>
+          <p class="status" id="breakout-status" data-status role="status" aria-live="polite" aria-atomic="true">Ready when you are.</p>
+          <div data-controls hidden>
+            <div class="actions"><button type="button" data-start>Start</button><button type="button" data-pause disabled>Pause</button><button type="button" data-restart disabled>Restart</button></div>
+            <div class="directions paddle-controls" aria-label="Ricochet paddle">
+              <button type="button" data-direction="left">← Left</button><button type="button" data-direction="right">Right →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <noscript><p class="no-js">The games need JavaScript. The rules and both studio films are still here; use each film’s playback controls.</p></noscript>
+
+      <section class="motion voxtell" aria-labelledby="voxtell-title">
+        <p class="label">03 / Studio motion</p>
+        <h2 id="voxtell-title">Voxtell / Stay connected.</h2>
+        <figure>
+          <video controls playsinline muted preload="none" width={voxtell.width} height={voxtell.height} poster={voxtell.poster} aria-labelledby="voxtell-title" aria-describedby="voxtell-credit">
+            <source src={voxtell.delivery} type="video/mp4" />
+            <a href={voxtell.delivery}>Watch the Voxtell motion clip</a>
+          </video>
+          <figcaption id="voxtell-credit">Design &amp; motion: Rvysion studio. Strategy / project leadership: Chuka. <a href={voxtell.sourcePage}>Studio source ↗</a></figcaption>
+        </figure>
+      </section>
+
+      <section class="motion rayna" aria-labelledby="rayna-title">
+        <p class="label">04 / Studio motion</p>
+        <h2 id="rayna-title">Rayna / Identity in motion.</h2>
+        <figure>
+          <video controls playsinline muted preload="none" width={rayna.width} height={rayna.height} poster={rayna.poster} aria-labelledby="rayna-title" aria-describedby="rayna-credit">
+            <source src={rayna.delivery} type="video/mp4" />
+            <a href={rayna.delivery}>Watch the Rayna motion clip</a>
+          </video>
+          <figcaption id="rayna-credit">Design &amp; motion: Rvysion studio. Internal-product strategy / operations: Chuka. <a href={rayna.sourcePage}>Studio source ↗</a></figcaption>
+        </figure>
+      </section>
+    </div>
+    <p class="closing">A working draft. <a href="work.html" data-name="Work">Back to selected work ↗</a></p>
+  </div>
+</Base>
+
+<script>
+  import { enhancePlayground } from '../scripts/playground.js';
+  const root = document.querySelector('[data-playground]');
+  if (root) {
+    enhancePlayground(root);
+  }
+</script>
+
+<style>
+  .playground{max-width:1600px;margin:auto;padding:clamp(130px,14vw,200px) var(--gut) 64px}
+  .intro{max-width:1000px;margin-bottom:clamp(48px,7vw,100px)}
+  h1{font-family:var(--display);font-size:clamp(70px,14vw,190px);font-weight:400;line-height:.95;margin:20px 0 28px}
+  h1 span,h2 span{color:var(--mark)}
+  .opening{font-size:clamp(22px,2.4vw,32px);line-height:1.25;max-width:38ch;margin-bottom:20px}
+  .studies{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(56px,8vw,120px) clamp(24px,4vw,64px);align-items:start}
+  section{min-width:0}
+  .arcade{border-top:1px solid var(--line);padding-top:20px}
+  .loopline{grid-column:1 / 8}
+  .ricochet{grid-column:8 / -1;margin-top:clamp(80px,17vw,260px)}
+  .game-heading{max-width:56ch}
+  h2{font-weight:400;line-height:1.05;margin:8px 0 24px;font-size:clamp(24px,2.4vw,34px)}
+  .arcade h2{font-family:var(--display);font-size:clamp(48px,6vw,88px);display:flex;justify-content:space-between;gap:10px}
+  .rules{font-size:18px;line-height:1.5}
+  .instruction{font-size:16px;line-height:1.5;margin:16px 0 24px;color:var(--mute)}
+  .machine{--board-size:432px;--machine-padding:clamp(12px,2vw,24px);max-width:calc(var(--board-size) + 2 * var(--machine-padding) + 2px);border:1px solid var(--line);padding:var(--machine-padding)}
+  .ricochet .machine{--board-size:480px}
+  .scoreboard{display:flex;justify-content:space-between;gap:16px;margin-bottom:16px;font-size:14px}
+  .scoreboard p{display:grid;gap:4px}
+  .scoreboard p:last-child{text-align:right}
+  .scoreboard strong{font-family:var(--display);font-size:32px;font-weight:400;line-height:1;font-variant-numeric:tabular-nums}
+  canvas{display:block;width:100%;max-width:var(--board-size);height:auto;background:#eee8db;border:2px solid #91472f}
+  .ricochet canvas{touch-action:none}
+  .board-detail{font-size:14px;line-height:1.4;margin-top:12px;color:var(--mute)}
+  .status{font-size:16px;line-height:1.4;min-height:3em;margin:12px 0}
+  .actions,.directions{display:flex;flex-wrap:wrap;gap:8px}
+  .directions{margin-top:16px}
+  button{min-width:44px;min-height:44px;border:1px solid var(--line);padding:10px 14px;font:inherit;touch-action:manipulation}
+  button[data-start]{background:var(--paper);color:var(--bg)}
+  button:disabled{opacity:.45;cursor:default}
+  button:focus-visible,canvas:focus-visible{outline:3px solid var(--mark);outline-offset:4px}
+  .compass{display:grid;grid-template-columns:repeat(3,48px);justify-content:center}
+  .compass button:first-child{grid-column:2}
+  .compass button:nth-child(2){grid-column:1}
+  .paddle-controls{justify-content:space-between}
+  .paddle-controls button{min-width:100px;touch-action:none;user-select:none}
+  [hidden]{display:none!important}
+  .voxtell{grid-column:3 / 12}
+  .rayna{grid-column:1 / -1}
+  figcaption{font-size:16px;line-height:1.4;color:var(--mute);margin-top:12px;max-width:76ch}
+  figcaption a,.closing a{text-decoration:underline;text-underline-offset:.2em}
+  video{display:block;width:100%;height:auto;object-fit:contain;background:var(--panel)}
+  noscript{grid-column:1 / -1}
+  .closing{margin-top:clamp(56px,8vw,120px);color:var(--mute)}
+  @media(max-width:1099px){.loopline{grid-column:1 / 9}.ricochet{grid-column:4 / -1;margin-top:0}}
+  @media(max-width:699px){.studies{grid-template-columns:minmax(0,1fr)}.loopline,.ricochet,.voxtell,.rayna{grid-column:1}.arcade h2{font-size:clamp(44px,12vw,72px)}}
+  @media(prefers-reduced-motion:reduce){.arcade *{animation:none;transition:none;scroll-behavior:auto}}
+</style>

@@ -8,7 +8,7 @@ const metadata = pages[path];
 const { current = '', preload } = Astro.props;
 const title = metadata?.title ?? site.brand;
 const description = metadata?.description ?? site.fullName;
-const noindex = Astro.props.noindex || path === '/notes.html' || import.meta.env.ALLOW_INDEXING !== 'true';
+const noindex = Astro.props.noindex || metadata?.noindex || path === '/notes.html' || import.meta.env.ALLOW_INDEXING !== 'true';
 const canonical = new URL(path, origin).href;
 const imageMetadata = metadata ?? pages['/'];
 const socialImage = new URL(imageMetadata.image, origin).href;
