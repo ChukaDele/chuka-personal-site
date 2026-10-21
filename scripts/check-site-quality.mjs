@@ -3,7 +3,7 @@
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { indexablePaths, redirects, origin } from '../src/data/routes.js';
+import { indexablePaths, redirects, origin, servedElsewhere } from '../src/data/routes.js';
 
 const root = resolve(process.cwd(), 'dist');
 const decode = text => String(text ?? '')
@@ -67,6 +67,7 @@ export function checkPage(route, html, dist = root) {
       try { path = decodeURIComponent(url.pathname); }
       catch { errors.push('Invalid URL encoding: ' + raw); continue; }
       if (path.includes('\0') || path.includes('..')) { errors.push('Unsafe path: ' + raw); continue; }
+      if (servedElsewhere.some(prefix => path.startsWith(prefix))) { checkedUrls += 1; continue; } // served by another Worker
       const file = fileFor(dist, path);
       const alternative = redirects[path] ? fileFor(dist, redirects[path]) : null;
       const isRealFile = candidate => candidate && existsSync(candidate) && statSync(candidate).isFile();

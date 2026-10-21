@@ -1,4 +1,4 @@
-import { origin, redirects, indexablePaths } from '../src/data/routes.js';
+import { origin, redirects, indexablePaths, servedElsewherePaths } from '../src/data/routes.js';
 
 export default {
   async fetch(request, env) {
@@ -29,7 +29,7 @@ export default {
       return finish(new Response(indexable ? `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' } }));
     }
     if (url.pathname === '/sitemap.xml') {
-      return finish(new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${indexable ? indexablePaths.map(path => `<url><loc>${origin}${path}</loc></url>`).join('') : ''}</urlset>`, { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'no-store' } }));
+      return finish(new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${indexable ? [...indexablePaths, ...servedElsewherePaths].map(path => `<url><loc>${origin}${path}</loc></url>`).join('') : ''}</urlset>`, { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'no-store' } }));
     }
     try {
       const assetUrl = new URL(request.url);
