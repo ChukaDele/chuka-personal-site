@@ -1,0 +1,42 @@
+name: Lenis browser pilot QA
+
+on:
+  pull_request:
+    paths:
+      - 'src/scripts/lenis-pilot.js'
+      - 'src/scripts/lenis-pilot-policy.js'
+      - 'src/scripts/site.js'
+      - 'tests/lenis-browser.spec.mjs'
+      - '.github/workflows/lenis-browser-qa.yml'
+      - 'package*.json'
+
+permissions:
+  contents: read
+
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Add pinned browser test harness without changing the lockfile
+        run: npm install --no-save --package-lock=false --ignore-scripts @playwright/test@1.56.0
+      - name: Install browser engines
+        run: npx playwright install --with-deps chromium webkit
+      - name: Build static Astro site
+        run: npm run build
+      - name: Validate native baseline and desktop opt-in in real browser engines
+        run: npx playwright test --config=playwright.lenis.config.mjs
+      - name: Upload browser QA evidence if a test fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lenis-browser-qa-evidence
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
