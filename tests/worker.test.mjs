@@ -89,6 +89,7 @@ test('indexing requires canonical HTTPS origin and explicit runtime promotion', 
   assert.doesNotMatch(sitemap, /notes|404/);
   assert.match(sitemap, /https:\/\/chukadele.com\/offerdesk\/<\/loc>/);
   assert.match(sitemap, /https:\/\/chukadele.com\/offerdesk\/help<\/loc>/);
+  for (const slug of ['best-ai-for-job-search', 'ai-job-search-benchmark-method', 'ai-job-search-cheat-sheet', 'ai-job-search-data-and-records']) assert.match(sitemap, new RegExp(`https://chukadele.com/offerdesk/${slug}</loc>`));
 });
 test('404, HEAD, rejected methods and errors retain security and provenance', async () => {
   const missing = await fetch('/missing');

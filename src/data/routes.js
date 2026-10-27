@@ -92,7 +92,7 @@ export function structuredData(path, identity) {
 export const indexablePaths = Object.keys(pages).filter(path => path !== '/notes.html');
 // Same-origin pages served by another Worker on a more specific route (chukadele.com/offerdesk*), not by this build.
 export const servedElsewhere = ['/offerdesk/'];
-export const servedElsewherePaths = ['/offerdesk/', '/offerdesk/tour', '/offerdesk/setup', '/offerdesk/help', '/offerdesk/privacy'];
+export const servedElsewherePaths = ['/offerdesk/', '/offerdesk/tour', '/offerdesk/setup', '/offerdesk/help', '/offerdesk/privacy', '/offerdesk/best-ai-for-job-search', '/offerdesk/ai-job-search-benchmark-method', '/offerdesk/ai-job-search-cheat-sheet', '/offerdesk/ai-job-search-data-and-records'];
 export function canonicalPath(path) {
   if (path === '/' || path === '/index.html') return '/';
   return path.endsWith('.html') ? path : `${path.replace(/\/$/, '')}.html`;
